@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Política de Cookies | Libera Tu Móvil</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; background: #f9f9f9; color: #333; }
+    section { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h1 { color: #6b029b; margin-bottom: 20px; }
+    h2 { color: #6b029b; margin-top: 25px; margin-bottom: 10px; }
+    p { margin-bottom: 15px; line-height: 1.6; }
+    footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #555; }
+  </style>
+</head>
+<body>
+
+<section>
+  <h1>Política de Cookies</h1>
+
+  <p>En <strong>Libera Tu Móvil</strong> utilizamos cookies para mejorar tu experiencia en nuestro sitio web. Aquí te explicamos qué son, qué tipos usamos y cómo puedes gestionarlas.</p>
+
+  <h2>1. ¿Qué son las cookies?</h2>
+  <p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Nos ayudan a reconocer tu navegador y recordar tus preferencias.</p>
+
+  <h2>2. Tipos de cookies que usamos</h2>
+  <p>Usamos cookies propias y de terceros para:</p>
+  <ul>
+    <li>Recordar tus preferencias de idioma y sesión.</li>
+    <li>Analizar el tráfico y comportamiento en el sitio (Google Analytics).</li>
+    <li>Ofrecer contenidos personalizados y relevantes.</li>
+  </ul>
+
+  <h2>3. Cómo gestionar las cookies</h2>
+  <p>Puedes configurar tu navegador para aceptar, rechazar o eliminar cookies. Si las desactivas, algunas funciones del sitio podrían no estar disponibles.</p>
+
+  <h2>4. Cambios a esta política</h2>
+  <p>Podemos actualizar esta política de cookies en cualquier momento. Te recomendamos revisarla regularmente.</p>
+
+  <p><strong>Última actualización:</strong> Enero 2026</p>
+</section>
+
+</body>
+</html>
