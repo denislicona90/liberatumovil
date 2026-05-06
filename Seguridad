@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seguridad Móvil Avanzada</title>
+  <meta name="description" content="Capacitación profesional para técnicos en reparación de dispositivos móviles. Aprende gestión empresarial de dispositivos, diagnóstico avanzado y reparación de firmware. Cupos limitados." />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #0d1117;
+      --dark2: #161b22;
+      --card: #1c2333;
+      --border: #30363d;
+      --accent: #00d4aa;
+      --accent2: #0ea5e9;
+      --danger: #ef4444;
+      --warn: #f59e0b;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ───── HERO ───── */
+    header {
+      position: relative;
+      background: linear-gradient(135deg, #0d1117 0%, #0f2027 50%, #0d1117 100%);
+      padding: 80px 20px 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(0,212,170,.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(14,165,233,.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0,212,170,.15);
+      border: 1px solid rgba(0,212,170,.4);
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+    header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+    header p {
+      font-size: clamp(.95rem, 2.5vw, 1.2rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ───── VIDEO ───── */
+    .video-section {
+      max-width: 860px;
+      margin: -20px auto 0;
+      padding: 0 20px 60px;
+      position: relative;
+      z-index: 2;
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px var(--border),
+        0 24px 80px rgba(0,0,0,.6),
+        0 0 60px rgba(0,212,170,.08);
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ───── MAIN ───── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ───── PRICE BANNER ───── */
+    .price-banner {
+      background: linear-gradient(135deg, var(--card) 0%, #1a2a1a 100%);
+      border: 1px solid rgba(0,212,170,.3);
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .price-left .label {
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .price-left .old-price {
+      font-size: 1rem;
+      color: var(--danger);
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+    .price-left .new-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .price-left .cupos {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239,68,68,.12);
+      border: 1px solid rgba(239,68,68,.3);
+      color: var(--danger);
+      font-size: .8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-top: 8px;
+    }
+    .cupos::before {
+      content: '●';
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .3; }
+    }
+
+    /* ───── CTA ───── */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent) 0%, #00b890 100%);
+      color: var(--dark);
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 32px rgba(0,212,170,.3);
+      white-space: nowrap;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,212,170,.45);
+    }
+
+    /* ───── SECTIONS ───── */
+    section { margin-bottom: 48px; }
+    section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    section h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.2em;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ───── MODULES ───── */
+    .module-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .module-card:hover {
+      border-color: rgba(0,212,170,.35);
+      box-shadow: 0 4px 24px rgba(0,212,170,.06);
+    }
+    .module-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 16px;
+    }
+    .module-item {
+      margin-bottom: 20px;
+    }
+    .module-item:last-child { margin-bottom: 0; }
+
+    /* Thumbnail */
+    .module-thumb {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      display: block;
+      border: 1px solid var(--border);
+      background: var(--dark2);
+    }
+
+    .module-item .tema {
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .module-item .resumen {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      border-left: 2px solid var(--border);
+      padding-left: 12px;
+      margin-top: 6px;
+    }
+
+    /* ───── INSTRUCTORES ───── */
+    .instructors-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .instructor-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      width: 220px;
+      transition: border-color .2s;
+    }
+    .instructor-card:hover { border-color: rgba(0,212,170,.35); }
+    .instructor-avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--accent);
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #2a3a4a;
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .instructor-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .instructor-card .name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .instructor-card .role {
+      font-size: .83rem;
+      color: var(--muted);
+    }
+
+    /* ───── RECORDATORIOS ───── */
+    .recordatorios {
+      background: linear-gradient(135deg, rgba(14,165,233,.08) 0%, rgba(0,212,170,.06) 100%);
+      border: 1px solid rgba(14,165,233,.2);
+      padding: 24px 28px;
+      border-radius: 14px;
+    }
+    .recordatorios h2 { color: var(--accent2); }
+    .recordatorios h2::before { background: var(--accent2); }
+    .recordatorios li {
+      list-style: none;
+      color: var(--text);
+      padding: 6px 0;
+      font-size: .95rem;
+    }
+
+    /* ───── WHATSAPP ───── */
+    .whatsapp-bottom {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 48px;
+    }
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: #25D366;
+      border: 1.5px solid #25D366;
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: .88rem;
+      transition: background .2s, color .2s;
+    }
+    .whatsapp-btn:hover { background: rgba(37,211,102,.1); }
+
+    /* ───── FOOTER ───── */
+    footer {
+      background: #1a1a1a;
+      text-align: center;
+      padding: 28px 20px;
+      color: rgba(255,255,255,.4);
+      font-size: 13px;
+    }
+    footer a {
+      color: rgba(255,255,255,.4);
+      text-decoration: underline;
+      margin: 0 8px;
+      transition: color .2s;
+    }
+    footer a:hover { color: white; }
+    .footer-links { margin-bottom: 10px; }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 600px) {
+      header { padding: 60px 20px 40px; }
+      .price-banner { flex-direction: column; align-items: flex-start; }
+      .module-card { padding: 18px 20px; }
+      .instructor-card { width: 100%; max-width: 300px; }
+    }
+      .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .footer-social a { display: inline-block; }
+    .footer-social img {
+      width: 22px; height: 22px;
+      filter: brightness(0) invert(1);
+      opacity: .5;
+      transition: opacity .2s, transform .2s;
+    }
+    .footer-social a:hover img { opacity: 1; transform: scale(1.2); }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="hero-badge">Capacitación en vivo · Grabaciones disponibles</div>
+    <h1>Seguridad Móvil Avanzada</h1>
+    <p>Capacitación avanzada para técnicos que desean ampliar sus servicios y conocimientos</p>
+  </header>
+
+  <!-- VIDEO -->
+  <div class="video-section">
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/X8j3ZSgn68A"
+        title="Seguridad Móvil Avanzada – Presentación del curso"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- PRICE BANNER -->
+    <div class="price-banner">
+      <div class="price-left">
+        <div class="label">Precio especial</div>
+        <div class="old-price">$200.00 USD</div>
+        <div class="new-price">$150.00 USD</div>
+        <span class="cupos">Solo 20 cupos disponibles</span>
+      </div>
+      <a href="https://go.hotmart.com/Q100007293P?ap=4212" class="cta-btn" target="_blank" rel="noopener">
+        ¡Reservar mi cupo! →
+      </a>
+    </div>
+
+    <!-- ABOUT -->
+    <section>
+      <h2>¿Qué aprenderás en este curso?</h2>
+      <p style="color: var(--muted); line-height: 1.8; font-size: .97rem;">
+        Este curso en directo está diseñado para técnicos en reparación de dispositivos móviles que desean dominar la <strong style="color:var(--text)">gestión empresarial de dispositivos</strong>, el <strong style="color:var(--text)">diagnóstico avanzado de software</strong> y las herramientas profesionales del sector. Aprenderás a ofrecer nuevas soluciones a tus clientes de forma legal y profesional.
+      </p>
+    </section>
+
+    <!-- MODULES -->
+    <section>
+      <h2>Plan de Clases</h2>
+
+      <div class="module-card">
+        <h3>Módulo 1</h3>
+
+        <div class="module-item">
+          <img
+            src="https://i.imgur.com/iRs8w7l.jpg"
+            alt="Gestión integral de dispositivos móviles"
+            class="module-thumb"
+            loading="lazy"
+            onerror="this.style.display='none'">
+          <div class="tema">▪️ Gestión integral de dispositivos móviles: Seguridad, MDM/MDN y herramientas de diagnóstico profesional</div>
+          <div class="resumen">Introducción a medidas de seguridad empresarial y restricciones de operadores y fabricantes. Demostración de herramientas profesionales y flujos de trabajo para técnicos certificados.</div>
+        </div>
+
+        <div class="module-item">
+          <img
+            src="https://i.imgur.com/sccnbo6.jpg"
+            alt="Estrategias de Financiamiento Móvil"
+            class="module-thumb"
+            loading="lazy"
+            onerror="this.style.display='none'">
+          <div class="tema">▪️ Estrategias de Financiamiento Móvil y Gestión Profesional de Dispositivos Android</div>
+          <div class="resumen">Opciones de financiamiento para venta de dispositivos en México y demostración de técnicas avanzadas de diagnóstico y recuperación en dispositivos Android.</div>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <h3>Módulo 2</h3>
+
+        <div class="module-item">
+          <img
+            src="https://i.imgur.com/qiHA0Ji.jpg"
+            alt="Solución de Problemas Avanzados en Android"
+            class="module-thumb"
+            loading="lazy"
+            onerror="this.style.display='none'">
+          <div class="tema">▪️ Solución de Problemas Avanzados en Dispositivos Android: Conectividad, Software y Herramientas Profesionales</div>
+          <div class="resumen">Diagnóstico de problemas de conectividad, configuración ADB, resolución de DNS, licencias de software y estrategias de reparación rentables.</div>
+        </div>
+
+        <div class="module-item">
+          <img
+            src="https://i.imgur.com/sRVukPi.jpg"
+            alt="Técnicas Avanzadas de Administración Android"
+            class="module-thumb"
+            loading="lazy"
+            onerror="this.style.display='none'">
+          <div class="tema">▪️ Técnicas Avanzadas de Administración Android: Gestión MDM y Análisis de Firmware</div>
+          <div class="resumen">Exploración de métodos de gestión empresarial de dispositivos, análisis de particiones y estructura de firmware. Guía de resolución de problemas paso a paso.</div>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <h3>Módulo 3</h3>
+
+        <div class="module-item">
+          <img
+            src="https://i.imgur.com/jZ9hJIY.jpg"
+            alt="Soporte Técnico de Dispositivos Xiaomi"
+            class="module-thumb"
+            loading="lazy"
+            onerror="this.style.display='none'">
+          <div class="tema">▪️ Soporte Técnico de Dispositivos Xiaomi: Diagnóstico Avanzado y Reparación de Firmware</div>
+          <div class="resumen">Sesiones técnicas sobre diagnóstico de protecciones de fábrica, actualización de firmware y problemas de software de ingeniería en dispositivos Xiaomi.</div>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <h3>Módulo 4</h3>
+
+        <div class="module-item">
+          <img
+            src="https://i.imgur.com/kPrIvab.jpg"
+            alt="Reparación de Hardware y Software"
+            class="module-thumb"
+            loading="lazy"
+            onerror="this.style.display='none'">
+          <div class="tema">▪️ Reparación de Hardware y Software: Diagnóstico de Energía, Controladores y Procesos de Identificación de Dispositivos</div>
+          <div class="resumen">Técnicas de reparación incluyendo pruebas de fuente de alimentación, reemplazo de pantallas y procesos de reparación para distintas marcas y modelos.</div>
+        </div>
+
+        <div class="module-item">
+          <img
+            src="https://i.imgur.com/zMDLFxv.jpg"
+            alt="Administración Avanzada Motorola"
+            class="module-thumb"
+            loading="lazy"
+            onerror="this.style.display='none'">
+          <div class="tema">▪️ Administración Avanzada Motorola: Gestión de Bootloader, Comandos Fastboot y Configuración MDM</div>
+          <div class="resumen">Procedimientos para la gestión profesional de dispositivos Motorola: bootloader, compatibilidad de SIM y comandos Fastboot con orientación práctica de herramientas.</div>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <h3>Módulo 5</h3>
+
+        <div class="module-item">
+          <img
+            src="https://i.imgur.com/rEJ60cP.jpg"
+            alt="Actualización de Protocolos Xiaomi y Motorola"
+            class="module-thumb"
+            loading="lazy"
+            onerror="this.style.display='none'">
+          <div class="tema">▪️ Actualización de Protocolos: Nuevos Procedimientos en Xiaomi/Motorola y Reparación de Sony Xperia XZ</div>
+          <div class="resumen">Adaptación a nuevos procedimientos tras actualizaciones de software en Xiaomi y Motorola. Reparación exitosa de un Sony Xperia XZ Premium mediante múltiples técnicas de diagnóstico.</div>
+        </div>
+
+        <div class="module-item">
+          <div class="tema">▪️ [PRÓXIMAMENTE]</div>
+          <div class="resumen">Contenido en preparación...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTRUCTORES -->
+    <section>
+      <h2>¿Quiénes te apoyan?</h2>
+      <div class="instructors-grid">
+        <div class="instructor-card">
+          <div class="instructor-avatar">
+            <img
+              src="https://i.imgur.com/6EwyDR3.jpg"
+              alt="Gustavo Limas"
+              onerror="this.style.display='none';this.parentElement.innerHTML+='GL'">
+          </div>
+          <div class="name">Gustavo Limas</div>
+          <div class="role">Productor / Instructor — Experto en liberación de dispositivos móviles</div>
+        </div>
+        <div class="instructor-card">
+          <div class="instructor-avatar">
+            <img
+              src="https://i.imgur.com/2hh5Le0.jpg"
+              alt="Denis Licona"
+              onerror="this.style.display='none';this.parentElement.innerHTML+='DL'">
+          </div>
+          <div class="name">Denis Licona</div>
+          <div class="role">Editor / Soporte — Gestión de la comunidad y atención a los alumnos</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECORDATORIOS -->
+    <section class="recordatorios">
+      <h2>Recordatorios</h2>
+      <ul>
+        <li>🔹 Grabaciones ya están disponibles</li>
+      </ul>
+    </section>
+
+    <!-- WHATSAPP -->
+    <div class="whatsapp-bottom">
+      <a class="whatsapp-btn"
+         href="https://wa.me/50487987314?text=%C2%BFC%C3%B3mo%20reservo%20mi%20cupo%20a%20la%20capacitaci%C3%B3n%20Seguridad%20M%C3%B3vil%20Avanzada%3F"
+         title="Contáctanos por WhatsApp"
+         target="_blank"
+         rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M13.601 2.326A7.875 7.875 0 0 0 8.043 0C3.603 0 .067 3.542.068 7.983c0 1.408.365 2.786 1.055 4.005L0 16l4.073-1.069a7.934 7.934 0 0 0 3.954 1.008h.003c4.44 0 8.015-3.542 8.016-7.983a7.868 7.868 0 0 0-2.445-5.63Z"/>
+        </svg>
+        Escríbenos para más información
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+  <div class="footer-social">
+    <a href="https://www.youtube.com/@liberatumovilofficial" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube">
+    </a>
+    <a href="https://www.facebook.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+    <a href="https://t.me/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+    </a>
+    <a href="https://whatsapp.com/channel/0029Vam1XtvCXC3B0RPNE72l" target="_blank" rel="noopener" aria-label="Canal WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal WhatsApp">
+    </a>
+  </div>
+    <div class="footer-links">
+      <a href="https://liberatumovil.net/politicas-de-privacidad" target="_blank">Política de Privacidad</a> |
+      <a href="https://liberatumovil.net/terminos-y-condiciones" target="_blank">Términos y Condiciones</a> |
+      <a href="https://liberatumovil.net/politicas-de-cookies" target="_blank">Política de Cookies</a>
+    </div>
+<p>© 2026 Libera Tu Móvil — Todos los derechos reservados</p>
+  <p style="margin-top:6px; font-size:12px;">Curso vendido a través de Hotmart. Los resultados varían según la dedicación de cada alumno.</p>
+  </footer>
+
+</body>
+</html>
