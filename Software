@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de Software – Libera Tu Móvil | Aprende a desbloquear celulares</title>
+  <meta name="description" content="Aprende a liberar y desbloquear celulares con software profesional. Curso completo con 217 clases, 145 horas, soporte y herramientas incluidas. Garantía de 7 días. Desde $49.99 USD.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Questrial&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple: #6b029b;
+      --purple-light: #9c6eb1;
+      --orange: #f7680a;
+      --yellow: #ffde59;
+      --green-wa: #128c7e;
+      --green-wa-hover: #25d366;
+      --bg: #f7f9fc;
+      --white: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #555;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Comfortaa', cursive;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+
+    /* ===== UTILITY ===== */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 48px 0; }
+    .section-alt { background: var(--white); }
+    .text-center { text-align: center; }
+    .text-purple { color: var(--purple); }
+    .text-orange { color: var(--orange); }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(28px, 5vw, 48px);
+      color: var(--purple);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(22px, 4vw, 34px);
+      color: var(--purple);
+      margin-bottom: 16px;
+    }
+    h3 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(18px, 3vw, 24px);
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+    p { margin-bottom: 12px; }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      display: inline-block;
+      padding: 16px 36px;
+      background: var(--purple);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      animation: shake 0.6s ease-in-out infinite;
+      animation-delay: 4s;
+    }
+    .btn-primary:hover { background: var(--orange); transform: scale(1.04); }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: var(--green-wa);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      animation: shake 0.6s ease-in-out infinite;
+      animation-delay: 4s;
+    }
+    .btn-wa:hover { background: var(--green-wa-hover); transform: scale(1.04); }
+    .btn-wa svg { width: 22px; height: 22px; fill: white; flex-shrink: 0; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%,60% { transform: translateX(-5px); }
+      40%,80% { transform: translateX(5px); }
+    }
+
+    /* ===== NOTICE BAR ===== */
+    .notice-bar {
+      background: var(--orange);
+      color: white;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #2a004d 0%, #6b029b 60%, #9c6eb1 100%);
+      color: white;
+      padding: 60px 20px 52px;
+      text-align: center;
+    }
+    .hero h1 { color: white; }
+    .hero .subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: rgba(255,255,255,0.88);
+      max-width: 600px;
+      margin: 0 auto 28px;
+    }
+    .hero .price-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--text);
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      padding: 10px 32px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .stat-pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-size: 14px;
+      color: white;
+    }
+
+    /* ===== VIDEO ===== */
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .video-wrap iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ===== BENEFITS GRID ===== */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .benefit-card {
+      background: var(--white);
+      border: 2px solid var(--orange);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .benefit-icon { font-size: 36px; margin-bottom: 10px; }
+    .benefit-card h3 { font-size: 17px; margin-bottom: 6px; }
+    .benefit-card p { font-size: 14px; color: var(--text-muted); margin: 0; }
+
+    /* ===== TICKER ===== */
+    .ticker-wrap {
+      background: #fde5fd;
+      overflow: hidden;
+      height: 32px;
+      border-radius: 8px;
+      margin-top: 10px;
+      position: relative;
+    }
+    .ticker {
+      display: flex;
+      animation: ticker 12s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker span { padding: 6px 40px; font-size: 13px; color: var(--purple); font-weight: 700; }
+    @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .testimonial-img {
+      border-radius: 12px;
+      width: 100%;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    /* ===== ACCORDION ===== */
+    .accordion { max-width: 700px; margin: 24px auto 0; }
+    .accordion-item {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .accordion-item summary {
+      padding: 15px 20px;
+      font-size: 17px;
+      cursor: pointer;
+      list-style: none;
+      background: var(--purple-light);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-item summary::-webkit-details-marker { display: none; }
+    .accordion-item[open] summary { background: var(--purple); }
+    .accordion-item summary::after { content: '＋'; font-size: 18px; }
+    .accordion-item[open] summary::after { content: '－'; }
+    .accordion-content {
+      padding: 15px 20px;
+      font-size: 15px;
+      background: #f0f4f8;
+      color: #333;
+      border-top: 1px solid #ddd;
+    }
+    .accordion-content ul { padding-left: 18px; }
+    .accordion-content li { margin-bottom: 6px; }
+
+    /* ===== FAQ (dark accordion) ===== */
+    .faq-item summary { background: #1a1a1a; }
+    .faq-item[open] summary { background: var(--orange); }
+
+    /* ===== FREE TRIAL BOX ===== */
+    .free-trial-box {
+      background: #d6ffe6;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 700px;
+      margin: 24px auto 0;
+    }
+    .free-trial-box p { font-size: 15px; margin-bottom: 6px; }
+
+    /* ===== GUARANTEE ===== */
+    .guarantee-box {
+      background: var(--white);
+      border: 3px solid var(--purple);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .guarantee-box .badge-7 {
+      display: inline-block;
+      background: var(--purple);
+      color: white;
+      font-family: 'Questrial', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      margin-bottom: 16px;
+    }
+
+    /* ===== YELLOW CONTACT ===== */
+    .yellow-box {
+      background: var(--yellow);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .yellow-box p { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+
+    /* ===== INSTRUCTORS ===== */
+    .instructor-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 24px;
+    }
+    .instructor-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      width: 220px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .instructor-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--purple-light);
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-family: 'Questrial', sans-serif;
+      overflow: hidden;
+      border: 3px solid var(--purple);
+    }
+    .instructor-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .instructor-card h3 { font-size: 17px; color: var(--purple); margin-bottom: 4px; }
+    .instructor-card p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #1a1a1a;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 13px;
+    }
+    footer a {
+      color: rgba(255,255,255,.4);
+      text-decoration: underline;
+      margin: 0 8px;
+      transition: color .2s;
+    }
+    footer a:hover { color: white; }
+    .footer-links { margin-bottom: 10px; }
+
+    /* ===== STICKY CTA (mobile) ===== */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--purple);
+      padding: 12px 20px;
+      text-align: center;
+      z-index: 999;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+    }
+    .sticky-cta a {
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 17px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    @media (max-width: 640px) {
+      .sticky-cta { display: block; }
+      body { padding-bottom: 60px; }
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      border: none;
+      border-top: 2px dashed rgba(107,2,155,0.15);
+      margin: 0;
+    }
+      .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .footer-social a { display: inline-block; }
+    .footer-social img {
+      width: 22px; height: 22px;
+      filter: brightness(0) invert(1);
+      opacity: .5;
+      transition: opacity .2s, transform .2s;
+    }
+    .footer-social a:hover img { opacity: 1; transform: scale(1.2); }
+</style>
+</head>
+<body>
+
+<!-- AVISO SUPERIOR -->
+<div class="notice-bar">
+  🔒 Garantía de devolución de 7 días — Sin preguntas, sin problemas
+</div>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="container">
+    <h1>🔓 Gana dinero liberando celulares</h1>
+    <p class="subtitle">Aprende a usar software profesional para desbloquear cualquier dispositivo móvil — desde cero, con soporte real y herramientas incluidas</p>
+    <div class="price-badge">$49.99 USD — Pago único</div>
+    <br>
+    <a href="https://go.hotmart.com/F97652623G?ap=373e" target="_blank" rel="noopener" class="btn-primary">¡Quiero el curso ahora!</a>
+    <div class="hero-stats">
+      <span class="stat-pill">📚 217 clases</span>
+      <span class="stat-pill">⏱️ 145 horas de contenido</span>
+      <span class="stat-pill">🌎 Android e iOS</span>
+      <span class="stat-pill">🔄 Acceso permanente + actualizaciones</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== VIDEO PRINCIPAL ===================== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>🎥 Conoce el curso antes de comprar</h2>
+    <p style="color:var(--text-muted); max-width:600px; margin:0 auto 24px;">Mira cómo esta capacitación puede transformar tus ingresos:</p>
+    <div class="video-wrap" style="max-width:700px; margin:0 auto;">
+      <iframe src="https://www.youtube.com/embed/L5GhSB8C4rQ" allowfullscreen loading="lazy" title="Presentación del Curso Libera Tu Móvil"></iframe>
+    </div>
+    <div style="margin-top:28px;">
+      <a href="https://go.hotmart.com/F97652623G?ap=373e" target="_blank" rel="noopener" class="btn-primary">¡Lo quiero por $49.99!</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== BENEFICIOS ===================== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">¿Qué obtienes con el curso?</h2>
+    <p class="text-center" style="color:var(--text-muted);">Todo lo que necesitas para comenzar a cobrar por tus servicios</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">📱</div>
+        <h3>Android e iOS</h3>
+        <p>Aprende a trabajar con Samsung, iPhone, Motorola, Huawei, Xiaomi y más</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🔓</div>
+        <h3>FRP, MDM, KG, IMEI</h3>
+        <p>Domina todos los tipos de desbloqueo que el mercado demanda hoy</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🛠️</div>
+        <h3>Herramientas reales</h3>
+        <p>Acceso a los servidores, licencias y cajas de liberación que nosotros usamos</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🔄</div>
+        <h3>Siempre actualizado</h3>
+        <p>Clases en vivo periódicas para mantenerte al día con los nuevos métodos</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💬</div>
+        <h3>Soporte real</h3>
+        <p>Grupos de WhatsApp y Telegram con respaldo del equipo y la comunidad</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💰</div>
+        <h3>Gana desde casa</h3>
+        <p>Muchos alumnos generan entre $300 y $800 USD al mes trabajando unas horas al día</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== BONOS (visible siempre, con contexto claro) ===================== -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="text-center">🎁 Bonos adicionales incluidos en tu compra</h2>
+    <p class="text-center" style="color:var(--text-muted);">Durante el primer mes tras tu compra tienes acceso a estas herramientas profesionales sin costo adicional</p>
+    <div class="benefits-grid">
+
+      <div class="benefit-card">
+        <div class="benefit-icon">📡</div>
+        <h3>Box's y dongles</h3>
+        <p>Acceso remoto a cajas de liberación profesionales durante 30 días</p>
+        <div class="ticker-wrap">
+          <div class="ticker">
+            <span>EFT • FURIOUS • HYDRA • INFINITY • NCK • OCTOPLUS • SIGMA • UMT • Z3X </span>
+            <span>EFT • FURIOUS • HYDRA • INFINITY • NCK • OCTOPLUS • SIGMA • UMT • Z3X </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🗃️</div>
+        <h3>Licencias compartidas</h3>
+        <p>Acceso a licencias activas por 30 días, sin costo adicional</p>
+        <div class="ticker-wrap">
+          <div class="ticker">
+            <span>UnlockTool • RD Power Tool • Android Multi Tool • TMF Tool • DFT Tool </span>
+            <span>UnlockTool • RD Power Tool • Android Multi Tool • TMF Tool • DFT Tool </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">📂</div>
+        <h3>Archivos y Firmwares</h3>
+        <p>30 días de acceso a firmwares, archivos root, testpoint, FRP, MDM y más</p>
+        <div class="ticker-wrap">
+          <div class="ticker">
+            <span>HalabTech • Hosting Unlock • Easy Firmware </span>
+            <span>HalabTech • Hosting Unlock • Easy Firmware </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🎓</div>
+        <h3>Clase en directo</h3>
+        <p>Una clase virtual en directo, grabada para que puedas repasar las veces que necesites</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">💬</div>
+        <h3>Soporte 30 días</h3>
+        <p>Acceso al grupo de WhatsApp y Telegram con trato amigable y ambiente de apoyo mutuo</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🎁</div>
+        <h3>Un desbloqueo gratis</h3>
+        <p>Solicita un servicio de desbloqueo gratuito (no cubre compra de créditos)</p>
+      </div>
+
+    </div>
+    <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:16px;">
+      * Los bonos tienen una duración de 30 días desde la fecha de compra. El acceso al curso grabado y sus actualizaciones es permanente.
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== TESTIMONIOS ===================== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">💬 Lo que dicen nuestros alumnos</h2>
+    <p class="text-center" style="color:var(--text-muted);">Resultados reales de personas que ya trabajan con el curso</p>
+    <div class="testimonials-grid">
+      <img src="https://i.imgur.com/60HxQMT.png" alt="Testimonio de alumno 1" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/ZKlkUUu.png" alt="Testimonio de alumno 2" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/DajhImz.png" alt="Testimonio de alumno 3" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/xGFbKoM.png" alt="Testimonio de alumno 4" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/jzAqYYg.png" alt="Testimonio de alumno 5" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/JPqabxb.png" alt="Testimonio de alumno 6" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/c4XXRHm.png" alt="Testimonio de alumno 7" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/cpcxZzq.png" alt="Testimonio de alumno 8" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/4Aj8w5v.png" alt="Testimonio de alumno 9" class="testimonial-img" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== CONTENIDO (videos presentación) ===================== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>📋 Mira la presentación completa del curso</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-top:20px;">
+      <div class="video-wrap" style="max-width:420px; flex:1 1 300px;">
+        <iframe src="https://www.youtube.com/embed/wsjH4BbU81Y" allowfullscreen loading="lazy" title="Presentación del curso parte 1"></iframe>
+      </div>
+      <div class="video-wrap" style="max-width:420px; flex:1 1 300px;">
+        <iframe src="https://www.youtube.com/embed/oAv8ddzRUoQ" allowfullscreen loading="lazy" title="Presentación del curso parte 2"></iframe>
+      </div>
+    </div>
+
+    <!-- Prueba gratuita -->
+    <div class="free-trial-box" style="margin-top:28px;">
+      <h2 style="text-align:center; margin-bottom:14px;">🆓 Prueba Gratuita — Accede ahora sin pagar</h2>
+      <p>Antes de comprar, prueba estas clases gratis:</p>
+      <p>🔸 Detalles del curso</p>
+      <p>🔸 Flasheo y quitar MDM - Xiaomi MTK / Knox Mobile Enrollment - Samsung</p>
+      <p>🔸 MDM - HONOR</p>
+      <p>🔸 Samsung KG: Remover en procesadores Qualcomm - Últimas seguridades</p>
+      <p>🔸 Uso de servidores y Binance</p>
+      <p>🔸 Servicios disponibles para iPhone</p>
+      <p>🔸 iPhone - Menú Abierto</p>
+      <div style="margin-top:16px;">
+        <a href="https://liberatumovil.net/clases-gratuitas-para-aprender-a-liberar-celulares" target="_blank" rel="noopener" class="btn-primary" style="font-size:16px;">Ver clases gratis →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== TEMARIO ===================== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">📚 Temario del Curso</h2>
+    <p class="text-center" style="color:var(--text-muted);">Haz clic en cada módulo para ver el contenido</p>
+    <div class="accordion">
+
+      <details class="accordion-item">
+        <summary>Archivos y Manuales</summary>
+        <div class="accordion-content"><ul>
+          <li>Plan de Incorporación</li>
+          <li>Manual para instalación de Box's (NCK, UMT y más)</li>
+          <li>Acceso a programas con licencia compartida</li>
+          <li>Acceso a proveedores de firmwares y soluciones móviles</li>
+          <li>Programas para procesos en Xiaomi con créditos</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Pasos 1 al 3 — Fundamentos y preparación de PC</summary>
+        <div class="accordion-content"><ul>
+          <li>Hardware, componentes y términos del sector</li>
+          <li>Instalación de controladores y carpeta de exclusión</li>
+          <li>Colocar la PC en modo de prueba</li>
+          <li>Conectividad, redes y herramientas de desarrollo</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Paso 4 — Tus propias herramientas</summary>
+        <div class="accordion-content"><ul>
+          <li>Liberación a través de servidores</li>
+          <li>Registros, activaciones, licencias y créditos</li>
+          <li>Cómo comprar créditos · Crear cuenta en PayPal</li>
+          <li>Eliminar cuenta Mi de raíz con el servidor</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Paso 6 — Bloqueos de cuentas (FRP y cuenta Mi)</summary>
+        <div class="accordion-content"><ul>
+          <li>FRP Samsung un solo clic (varios modelos)</li>
+          <li>FRP Samsung con Samfirm, Odin y combinación</li>
+          <li>FRP Xiaomi EMUI 11/12 y Bypass Cuenta Mi MTK</li>
+          <li>SPD Flash Tool para procesadores Spreadtrum/Unisoc</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Paso 7 — Desbloqueos de red</summary>
+        <div class="accordion-content"><ul>
+          <li>¿Qué es liberar un móvil?</li>
+          <li>Liberación por aplicación, directa, por código y por IMEI</li>
+          <li>Global Unlocker, Sim Unlocker Pro, TMB Killer, Motokey, Samkey, MagicTool</li>
+          <li>Mi-bypass Tool, General Unlocker, Mtk GOGO</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Paso 8 — Reparación de IMEI</summary>
+        <div class="accordion-content"><ul>
+          <li>¿Qué es el IMEI? Cuándo está dañado. Lista negra</li>
+          <li>Chimera Tool: Samsung, Huawei, reparación y FRP</li>
+          <li>Unlock Tool: Samsung, Xiaomi, Huawei, Realme</li>
+          <li>DT Pro, TR Tools, Sigma, UMT, EFT PRO, NCK PRO, Octoplus</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Cajas de servicio y programas con licencia</summary>
+        <div class="accordion-content"><ul>
+          <li>¿Qué son las cajas de liberación? Activaciones y packs</li>
+          <li>Sigma, EFT PRO, NCK PRO, Octoplus, UMT</li>
+          <li>Samsung Android 11 última seguridad con Unlock Tool</li>
+          <li>FRP en Samsung con Marvel Tool</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Clases intensivas 2024 (Samsung, Motorola, Xiaomi, Huawei)</summary>
+        <div class="accordion-content"><ul>
+          <li>Modos de conexión y particiones de seguridad</li>
+          <li>Flasheo: Samsung, Motorola, Xiaomi, Huawei</li>
+          <li>FRP: Samsung, Motorola, Xiaomi, ZTE, Huawei, Infinix, Tecno, Itel, Oppo, Realme, Oneplus</li>
+          <li>MDM: Samsung, Infinix, Tecno, Honor, Huawei, Xiaomi, Motorola</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Clases en vivo — UnlockTool e iPhone</summary>
+        <div class="accordion-content"><ul>
+          <li>UnlockTool: Xiaomi, Huawei/Honor, Qualcomm, MediaTek, Samsung, Spreadtrum</li>
+          <li>iPhone: Passcode iOS 12–16, Bypass MDM, iCloud Open Menu, iRemoval Pro</li>
+          <li>Servicios de IMEI en iPhone · Bypass iPhone 6S y 6S+</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Clases en vivo — KG, IMEI y servidores</summary>
+        <div class="accordion-content"><ul>
+          <li>KG Samsung con Chimera, Alliance Shield, MDMFix Tool</li>
+          <li>Reparación de IMEI: Huawei, Xiaomi, Motorola, Samsung</li>
+          <li>Cómo usar Binance · Crear cuenta en servidor · Comprar créditos</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Trabajo remoto</summary>
+        <div class="accordion-content"><ul>
+          <li>Servicio remoto con TeamViewer, FlexiHub y USB Redirector</li>
+        </ul></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== INSTRUCTORES ===================== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>👥 ¿Quiénes te enseñan?</h2>
+    <p style="color:var(--text-muted);">Profesionales con experiencia real en el campo</p>
+    <div class="instructor-grid">
+      <div class="instructor-card">
+        <div class="instructor-avatar">
+          <img src="https://i.imgur.com/6EwyDR3.jpg" alt="Gustavo Limas" onerror="this.style.display='none';this.parentElement.innerHTML+='GL'">
+        </div>
+        <h3>Gustavo Limas</h3>
+        <p>Productor / Instructor — Experto en liberación de dispositivos móviles</p>
+      </div>
+      <div class="instructor-card">
+        <div class="instructor-avatar">
+          <img src="https://i.imgur.com/2hh5Le0.jpg" alt="Denis Licona" onerror="this.style.display='none';this.parentElement.innerHTML+='DL'">
+        </div>
+        <h3>Denis Licona</h3>
+        <p>Editor / Soporte — Gestión de la comunidad y atención a los alumnos</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== FAQ ===================== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">❓ Preguntas Frecuentes</h2>
+    <div class="accordion">
+
+      <details class="accordion-item faq-item">
+        <summary>¿Necesito conocimientos previos?</summary>
+        <div class="accordion-content"><p>No. El curso está diseñado para que cualquier persona pueda aprender desde cero, incluso sin experiencia previa en tecnología.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Cuánto puedo ganar con este servicio?</summary>
+        <div class="accordion-content"><p>Depende de tu dedicación. Algunos alumnos generan entre $300 y $800 USD mensuales desbloqueando móviles unas horas al día, trabajando desde casa o a domicilio.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Qué celulares podré desbloquear?</summary>
+        <div class="accordion-content"><p>Los modelos más populares del mercado: Samsung, iPhone, Motorola, Huawei, Xiaomi, Oppo, Oneplus, Realme, TCL, ZTE y más. El contenido se actualiza constantemente.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Por cuánto tiempo tengo acceso al curso?</summary>
+        <div class="accordion-content"><p>El acceso al curso grabado y a sus actualizaciones es <strong>permanente con un solo pago</strong>. Los bonos adicionales (box's, licencias, soporte en grupos, firmwares) tienen duración de 30 días desde la fecha de compra.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Puedo ofrecer el servicio desde casa?</summary>
+        <div class="accordion-content"><p>Sí. Muchos alumnos atienden clientes por redes sociales, WhatsApp o a domicilio sin tener tienda física. También puedes hacer trabajos de forma remota.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Qué pasa si no quiero seguir pagando los servicios mensuales?</summary>
+        <div class="accordion-content"><p>Sin problema. No hay compromiso de continuidad. Seguirás teniendo acceso permanente al curso grabado; solo perderás acceso a los servicios adicionales (grupos, box's, licencias compartidas, etc.).</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Puedo pedir ayuda al instructor para casos específicos?</summary>
+        <div class="accordion-content"><p>Sí. Puedes escribirle personalmente para que te apoye con trabajos concretos. Te hará una cotización y tú decides si la aceptas.</p></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== GARANTÍA ===================== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>🛡️ Garantía de satisfacción</h2>
+    <div class="guarantee-box" style="margin-top:20px;">
+      <div class="badge-7">7</div>
+      <h3 style="color:var(--purple); font-size:22px;">días de prueba gratuita</h3>
+      <p style="margin-top:12px; color:var(--text-muted);">Si en los primeros 7 días no estás satisfecho con el curso, te devolvemos el dinero sin preguntas. Sin letra pequeña.</p>
+      <div style="margin-top:20px;">
+        <a href="https://go.hotmart.com/F97652623G?ap=373e" target="_blank" rel="noopener" class="btn-primary">Comenzar ahora — Sin riesgo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== CONTACTO WA ===================== -->
+<section class="section">
+  <div class="container text-center">
+    <div class="yellow-box">
+      <p>¿Tienes dudas? ¡Hablemos por WhatsApp!</p>
+      <a href="https://wa.me/50487987314" class="btn-wa" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.52 3.48A11.855 11.855 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.12 1.6 5.91L0 24l6.19-1.6A11.85 11.85 0 0012 24c6.63 0 12-5.37 12-12 0-3.19-1.24-6.21-3.48-8.52zM12 22c-1.87 0-3.69-.51-5.26-1.47l-.38-.23-3.67.95.98-3.6-.25-.37A9.976 9.976 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.2-7.79l-1.44-.71c-.2-.1-.44-.07-.6.09l-.82.83a.46.46 0 01-.6.07c-.86-.43-2.84-1.68-3.96-3.95a.45.45 0 01.06-.6l.83-.82c.16-.16.19-.4.09-.6l-.71-1.44a.45.45 0 00-.56-.21c-.61.24-1.32.6-1.7 1-.52.52-.87 1.6.9 4.57 1.71 2.85 3.64 3.9 4.5 4.27.55.24 1.01.37 1.4.37.35 0 .64-.12.89-.35.4-.4.77-1.11 1-1.71a.45.45 0 00-.2-.56z"/></svg>
+        ¡Contáctanos ahora!
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-social">
+    <a href="https://www.youtube.com/@liberatumovilofficial" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube">
+    </a>
+    <a href="https://www.facebook.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+    <a href="https://t.me/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+    </a>
+    <a href="https://whatsapp.com/channel/0029Vam1XtvCXC3B0RPNE72l" target="_blank" rel="noopener" aria-label="Canal WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal WhatsApp">
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="https://liberatumovil.net/politicas-de-privacidad" target="_blank">Política de Privacidad</a> |
+    <a href="https://liberatumovil.net/terminos-y-condiciones" target="_blank">Términos y Condiciones</a> |
+    <a href="https://liberatumovil.net/politicas-de-cookies" target="_blank">Política de Cookies</a>
+  </div>
+<p>© 2026 Libera Tu Móvil — Todos los derechos reservados</p>
+  <p style="margin-top:6px; font-size:12px;">Curso vendido a través de Hotmart. Los resultados varían según la dedicación de cada alumno.</p>
+</footer>
+
+<!-- STICKY CTA MÓVIL -->
+<div class="sticky-cta">
+  <a href="https://go.hotmart.com/F97652623G?ap=373e" target="_blank" rel="noopener">🔓 Comprar curso — $49.99 USD</a>
+</div>
+
+</body>
+</html>
