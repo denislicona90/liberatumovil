@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clases Gratuitas | Aprende a liberar celulares — Libera Tu Móvil</title>
+  <meta name="description" content="7 clases gratuitas para aprender a desbloquear celulares. Bypass iPhone, MDM Samsung, Xiaomi, Honor, modos de conexión y más. Sin registro, sin costo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0e0e0e;
+      --surface: #161616;
+      --card:    #1e1e1e;
+      --border:  #2a2a2a;
+      --hover:   #252525;
+      --purple:  #9333ea;
+      --purple2: #7c3aed;
+      --orange:  #f7680a;
+      --yellow:  #facc15;
+      --green:   #128c7e;
+      --text:    #f0f0f0;
+      --muted:   #888;
+      --sub:     #bbb;
+      --white:   #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      background: var(--purple2);
+      color: rgba(255,255,255,.9);
+      text-align: center;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .top-bar a {
+      color: var(--yellow);
+      font-weight: 600;
+      text-decoration: underline;
+      margin-left: 4px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 24px 56px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(147,51,234,.18);
+      border: 1px solid rgba(147,51,234,.4);
+      color: #c084fc;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 22px;
+    }
+    .hero-badge::before { content: '▶'; font-size: 10px; }
+    .hero h1 {
+      font-size: clamp(1.9rem, 5vw, 3.2rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 14px;
+      letter-spacing: -.02em;
+    }
+    .hero h1 span { color: var(--purple); }
+    .hero-sub {
+      font-size: clamp(14px, 2vw, 17px);
+      color: var(--sub);
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto 36px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .hero-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--sub);
+    }
+    .hero-stat .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--purple);
+      flex-shrink: 0;
+    }
+    .btn-cta {
+      display: inline-block;
+      background: var(--purple);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px 32px;
+      border-radius: 8px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-cta:hover { background: var(--purple2); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      color: var(--sub);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 12px 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: border-color .2s, color .2s;
+      margin-left: 10px;
+    }
+    .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-right: 4px; }
+    .filter-chip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all .2s;
+      user-select: none;
+    }
+    .filter-chip:hover { border-color: var(--purple); color: var(--purple); }
+    .filter-chip.active { background: var(--purple); border-color: var(--purple); color: white; }
+
+    /* ── GRID ── */
+    .section { padding: 52px 0 72px; }
+    .grid-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── VIDEO CARD ── */
+    .v-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      cursor: pointer;
+    }
+    .v-card:hover {
+      border-color: rgba(147,51,234,.5);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.4);
+    }
+    .v-card.playing { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(147,51,234,.3); }
+
+    /* thumbnail / embed wrapper */
+    .v-thumb {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      background: #111;
+      flex-shrink: 0;
+    }
+    .v-thumb iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    /* play overlay shown before click */
+    .v-thumb .thumb-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .v-thumb .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.35);
+      transition: background .2s;
+    }
+    .v-card:hover .play-overlay { background: rgba(0,0,0,.18); }
+    .play-btn {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(147,51,234,.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .2s, background .2s;
+    }
+    .v-card:hover .play-btn { transform: scale(1.1); background: var(--purple); }
+    .play-btn svg { width: 20px; height: 20px; fill: white; margin-left: 3px; }
+
+    .v-body { padding: 18px 18px 20px; flex: 1; display: flex; flex-direction: column; }
+    .v-category {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 6px;
+    }
+    .v-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+    .v-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .v-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .v-free-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: #4ade80;
+      background: rgba(74,222,128,.1);
+      border: 1px solid rgba(74,222,128,.25);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+    .v-watch {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color .2s;
+    }
+    .v-card:hover .v-watch { color: #c084fc; }
+
+    /* ── CTA UPGRADE ── */
+    .upgrade-banner {
+      background: linear-gradient(135deg, #1a0030 0%, #2d0060 50%, #1a0030 100%);
+      border: 1px solid rgba(147,51,234,.3);
+      border-radius: 16px;
+      padding: 52px 36px;
+      text-align: center;
+      margin-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .upgrade-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(147,51,234,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .upgrade-banner .badge {
+      display: inline-block;
+      background: rgba(147,51,234,.2);
+      border: 1px solid rgba(147,51,234,.4);
+      color: #c084fc;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 50px;
+      margin-bottom: 18px;
+    }
+    .upgrade-banner h2 {
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 12px;
+      letter-spacing: -.01em;
+      line-height: 1.15;
+    }
+    .upgrade-banner p {
+      font-size: 15px;
+      color: rgba(255,255,255,.55);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      font-weight: 300;
+    }
+    .upgrade-courses {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .course-pill {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      padding: 12px 20px;
+      text-align: left;
+      min-width: 180px;
+      transition: background .2s, border-color .2s, transform .15s;
+    }
+    .course-pill:hover { background: rgba(147,51,234,.2); border-color: rgba(147,51,234,.5); transform: translateY(-2px); }
+    .course-pill .cp-name { font-size: 13px; font-weight: 600; color: var(--white); }
+    .course-pill .cp-price { font-size: 18px; font-weight: 700; color: var(--yellow); margin-top: 2px; }
+    .course-pill .cp-type { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 1px; }
+    .upgrade-cta-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .btn-upgrade {
+      display: inline-block;
+      background: var(--purple);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 8px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-upgrade:hover { background: var(--purple2); transform: translateY(-1px); }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--green);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 8px;
+      transition: background .2s;
+      animation: shake .6s ease-in-out infinite;
+      animation-delay: 5s;
+    }
+    .btn-wa:hover { background: #25d366; }
+    .btn-wa svg { width: 20px; height: 20px; fill: white; flex-shrink: 0; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%,60%  { transform: translateX(-4px); }
+      40%,80%  { transform: translateX(4px); }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a1a1a;
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 13px;
+      color: rgba(255,255,255,.4);
+    }
+    footer a { color: rgba(255,255,255,.4); text-decoration: underline; margin: 0 8px; transition: color .2s; }
+    footer a:hover { color: white; }
+    .footer-links { margin-bottom: 10px; }
+
+    @media(max-width:480px){
+      .video-grid { grid-template-columns: 1fr; }
+      .upgrade-banner { padding: 36px 20px; }
+      .course-pill { min-width: 140px; }
+    }
+      .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .footer-social a { display: inline-block; }
+    .footer-social img {
+      width: 22px; height: 22px;
+      filter: brightness(0) invert(1);
+      opacity: .5;
+      transition: opacity .2s, transform .2s;
+    }
+    .footer-social a:hover img { opacity: 1; transform: scale(1.2); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  ¿Quieres ir más lejos? Descubre nuestros
+  <a href="https://liberatumovil.net/formaciones-virtuales-aprender-a-desbloquear-dispositivos-moviles" target="_blank" rel="noopener">cursos completos →</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Acceso gratuito</div>
+    <h1>Aprende a liberar celulares<br><span>sin pagar nada</span></h1>
+    <p class="hero-sub">7 clases reales del contenido que enseñamos en nuestros cursos. Sin registro, sin tarjeta.</p>
+    <div class="hero-stats">
+      <span class="hero-stat"><span class="dot"></span>7 clases disponibles</span>
+      <span class="hero-stat"><span class="dot"></span>iPhone · Samsung · Xiaomi · Honor</span>
+      <span class="hero-stat"><span class="dot"></span>100% gratis · Sin registro</span>
+    </div>
+    <a href="https://liberatumovil.net/formaciones-virtuales-aprender-a-desbloquear-dispositivos-moviles" target="_blank" rel="noopener" class="btn-ghost">Ver cursos completos</a>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filtrar:</span>
+  <span class="filter-chip active" data-filter="all">Todas</span>
+  <span class="filter-chip" data-filter="iphone">iPhone</span>
+  <span class="filter-chip" data-filter="samsung">Samsung</span>
+  <span class="filter-chip" data-filter="android">Android</span>
+  <span class="filter-chip" data-filter="mdm">MDM</span>
+</div>
+
+<!-- ===== CLASES ===== -->
+<section class="section" id="clases">
+  <div class="container">
+    <div class="grid-label">7 clases gratuitas</div>
+    <div class="video-grid">
+
+      <!-- 1 -->
+      <div class="v-card" data-tags="iphone">
+        <div class="v-thumb" data-videoid="05TNfNB0Rao">
+          <img class="thumb-img" src="https://i.ytimg.com/vi/05TNfNB0Rao/hqdefault.jpg" alt="Bypass iPhone Parte 1" loading="lazy">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="v-body">
+          <div class="v-category">iPhone</div>
+          <div class="v-title">Bypass iPhone — Parte 1</div>
+          <p class="v-desc">Paso a paso para desbloquear cuenta iCloud en iPhone XR al 14 Plus.</p>
+          <div class="v-footer">
+            <span class="v-free-badge">Gratis</span>
+            <a href="https://www.youtube.com/watch?v=05TNfNB0Rao" target="_blank" rel="noopener" class="v-watch">Ver en YouTube →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="v-card" data-tags="iphone">
+        <div class="v-thumb" data-videoid="1WbKWWY0LLg">
+          <img class="thumb-img" src="https://i.ytimg.com/vi/1WbKWWY0LLg/hqdefault.jpg" alt="Bypass iPhone Parte 2" loading="lazy">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="v-body">
+          <div class="v-category">iPhone</div>
+          <div class="v-title">Bypass iPhone — Parte 2</div>
+          <p class="v-desc">Paso a paso para desbloquear cuenta iCloud en iPhone 6S al X.</p>
+          <div class="v-footer">
+            <span class="v-free-badge">Gratis</span>
+            <a href="https://www.youtube.com/watch?v=1WbKWWY0LLg" target="_blank" rel="noopener" class="v-watch">Ver en YouTube →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="v-card" data-tags="android">
+        <div class="v-thumb" data-videoid="7jeFveb1N0k">
+          <img class="thumb-img" src="https://i.ytimg.com/vi/7jeFveb1N0k/hqdefault.jpg" alt="Modos de conexión" loading="lazy">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="v-body">
+          <div class="v-category">Android — Fundamentos</div>
+          <div class="v-title">Modos de conexión</div>
+          <p class="v-desc">Explicación detallada de los diferentes tipos de conexión para Android.</p>
+          <div class="v-footer">
+            <span class="v-free-badge">Gratis</span>
+            <a href="https://www.youtube.com/watch?v=7jeFveb1N0k" target="_blank" rel="noopener" class="v-watch">Ver en YouTube →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="v-card" data-tags="android mdm">
+        <div class="v-thumb" data-videoid="COO7-Ab9_zQ">
+          <img class="thumb-img" src="https://i.ytimg.com/vi/COO7-Ab9_zQ/hqdefault.jpg" alt="Flasheo y MDM Xiaomi" loading="lazy">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="v-body">
+          <div class="v-category">Xiaomi · MDM</div>
+          <div class="v-title">Flasheo y MDM — Xiaomi</div>
+          <p class="v-desc">Método para flashear y quitar MDM en Xiaomi con procesador MediaTek.</p>
+          <div class="v-footer">
+            <span class="v-free-badge">Gratis</span>
+            <a href="https://www.youtube.com/watch?v=COO7-Ab9_zQ" target="_blank" rel="noopener" class="v-watch">Ver en YouTube →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="v-card" data-tags="android mdm">
+        <div class="v-thumb" data-videoid="GLMI4V-ORkg">
+          <img class="thumb-img" src="https://i.ytimg.com/vi/GLMI4V-ORkg/hqdefault.jpg" alt="MDM Honor" loading="lazy">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="v-body">
+          <div class="v-category">Honor · MDM</div>
+          <div class="v-title">MDM — Honor</div>
+          <p class="v-desc">Desbloqueo MDM en Honor. Además, una mirada al contenido del curso.</p>
+          <div class="v-footer">
+            <span class="v-free-badge">Gratis</span>
+            <a href="https://www.youtube.com/watch?v=GLMI4V-ORkg" target="_blank" rel="noopener" class="v-watch">Ver en YouTube →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="v-card" data-tags="samsung mdm">
+        <div class="v-thumb" data-videoid="x4Ck6LocuDM">
+          <img class="thumb-img" src="https://i.ytimg.com/vi/x4Ck6LocuDM/hqdefault.jpg" alt="MDM Samsung" loading="lazy">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="v-body">
+          <div class="v-category">Samsung · MDM</div>
+          <div class="v-title">MDM — Samsung</div>
+          <p class="v-desc">La forma actual de quitar el bloqueo MDM en dispositivos Samsung.</p>
+          <div class="v-footer">
+            <span class="v-free-badge">Gratis</span>
+            <a href="https://www.youtube.com/watch?v=x4Ck6LocuDM" target="_blank" rel="noopener" class="v-watch">Ver en YouTube →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="v-card" data-tags="iphone">
+        <div class="v-thumb" data-videoid="587CWdel3YA">
+          <img class="thumb-img" src="https://i.ytimg.com/vi/587CWdel3YA/hqdefault.jpg" alt="iPhone Menú Abierto" loading="lazy">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="v-body">
+          <div class="v-category">iPhone</div>
+          <div class="v-title">iPhone — Menú Abierto</div>
+          <p class="v-desc">Cómo liberar iPhone utilizando el método Open Menu.</p>
+          <div class="v-footer">
+            <span class="v-free-badge">Gratis</span>
+            <a href="https://www.youtube.com/watch?v=587CWdel3YA" target="_blank" rel="noopener" class="v-watch">Ver en YouTube →</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /video-grid -->
+
+    <!-- ===== UPGRADE CTA ===== -->
+    <div class="upgrade-banner">
+      <div class="badge">¿Te gustó lo que viste?</div>
+      <h2>Hay 200+ clases más<br>esperándote</h2>
+      <p>Estas 7 clases son solo una muestra. En nuestros cursos completos aprenderás todos los métodos, marcas y herramientas profesionales.</p>
+      <div class="upgrade-courses">
+        <a href="https://liberatumovil.net/curso-basico-para-liberacion-de-moviles" target="_blank" rel="noopener" class="course-pill">
+          <div class="cp-name">Curso para Principiantes</div>
+          <div class="cp-price">$19.99 USD</div>
+          <div class="cp-type">19 clases · Pago único</div>
+        </a>
+        <a href="https://liberatumovil.net/curso-de-software-libera-tu-movil" target="_blank" rel="noopener" class="course-pill">
+          <div class="cp-name">Curso de Software completo</div>
+          <div class="cp-price">$49.99 USD</div>
+          <div class="cp-type">217 clases · Pago único</div>
+        </a>
+        <a href="https://liberatumovil.net/comunidad-para-desbloqueo-de-moviles" target="_blank" rel="noopener" class="course-pill">
+          <div class="cp-name">Comunidad</div>
+          <div class="cp-price">$20 USD</div>
+          <div class="cp-type">Herramientas · Por mes</div>
+        </a>
+      </div>
+      <div class="upgrade-cta-row">
+        <a href="https://liberatumovil.net/formaciones-virtuales-aprender-a-desbloquear-dispositivos-moviles" target="_blank" rel="noopener" class="btn-upgrade">Ver todas las formaciones</a>
+        <a href="https://wa.me/50487987314?text=Vi+las+clases+gratuitas+y+quiero+saber+m%C3%A1s" target="_blank" rel="noopener" class="btn-wa">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.52 3.48A11.855 11.855 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.12 1.6 5.91L0 24l6.19-1.6A11.85 11.85 0 0012 24c6.63 0 12-5.37 12-12 0-3.19-1.24-6.21-3.48-8.52zM12 22c-1.87 0-3.69-.51-5.26-1.47l-.38-.23-3.67.95.98-3.6-.25-.37A9.976 9.976 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.2-7.79l-1.44-.71c-.2-.1-.44-.07-.6.09l-.82.83a.46.46 0 01-.6.07c-.86-.43-2.84-1.68-3.96-3.95a.45.45 0 01.06-.6l.83-.82c.16-.16.19-.4.09-.6l-.71-1.44a.45.45 0 00-.56-.21c-.61.24-1.32.6-1.7 1-.52.52-.87 1.6.9 4.57 1.71 2.85 3.64 3.9 4.5 4.27.55.24 1.01.37 1.4.37.35 0 .64-.12.89-.35.4-.4.77-1.11 1-1.71a.45.45 0 00-.2-.56z"/></svg>
+          Hablar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-social">
+    <a href="https://www.youtube.com/@liberatumovilofficial" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube">
+    </a>
+    <a href="https://www.facebook.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+    <a href="https://t.me/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+    </a>
+    <a href="https://whatsapp.com/channel/0029Vam1XtvCXC3B0RPNE72l" target="_blank" rel="noopener" aria-label="Canal WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal WhatsApp">
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="https://liberatumovil.net/politicas-de-privacidad" target="_blank">Política de Privacidad</a> |
+    <a href="https://liberatumovil.net/terminos-y-condiciones" target="_blank">Términos y Condiciones</a> |
+    <a href="https://liberatumovil.net/politicas-de-cookies" target="_blank">Política de Cookies</a>
+  </div>
+<p>© 2026 Libera Tu Móvil — Todos los derechos reservados</p>
+</footer>
+
+<script>
+  // ── LAZY LOAD: click thumbnail → load iframe ──
+  document.querySelectorAll('.v-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const id = thumb.dataset.videoid;
+      if (!id || thumb.querySelector('iframe')) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.allow = 'autoplay; encrypted-media; fullscreen';
+      iframe.allowFullscreen = true;
+      // remove thumbnail and overlay
+      thumb.querySelectorAll('.thumb-img, .play-overlay').forEach(el => el.remove());
+      thumb.appendChild(iframe);
+      thumb.closest('.v-card').classList.add('playing');
+    });
+  });
+
+  // ── FILTER CHIPS ──
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      document.querySelectorAll('.v-card').forEach(card => {
+        const tags = card.dataset.tags || '';
+        if (filter === 'all' || tags.includes(filter)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
