@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidad Libera Tu Móvil | Herramientas y soporte para técnicos de desbloqueo</title>
+  <meta name="description" content="Accede a box's, licencias, firmwares, clases en vivo y soporte profesional para técnicos de desbloqueo de móviles. Planes desde $20 USD/mes. Garantía de 7 días.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Questrial&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple: #6b029b;
+      --purple-light: #9c6eb1;
+      --orange: #f7680a;
+      --yellow: #ffde59;
+      --green-wa: #128c7e;
+      --green-wa-hover: #25d366;
+      --bg: #f7f9fc;
+      --white: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Comfortaa', cursive;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+
+    /* UTILITY */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 52px 0; }
+    .section-alt { background: var(--white); }
+    .text-center { text-align: center; }
+
+    /* TYPOGRAPHY */
+    h1 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(26px, 5vw, 46px);
+      color: var(--purple);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(20px, 4vw, 32px);
+      color: var(--purple);
+      margin-bottom: 14px;
+    }
+    h3 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(16px, 3vw, 22px);
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      display: inline-block;
+      padding: 15px 34px;
+      background: var(--purple);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      animation: shake 0.6s ease-in-out infinite;
+      animation-delay: 4s;
+    }
+    .btn-primary:hover { background: var(--orange); transform: scale(1.04); }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 13px 28px;
+      background: transparent;
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.15); transform: scale(1.03); }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: var(--green-wa);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      animation: shake 0.6s ease-in-out infinite;
+      animation-delay: 4s;
+    }
+    .btn-wa:hover { background: var(--green-wa-hover); transform: scale(1.04); }
+    .btn-wa svg { width: 22px; height: 22px; fill: white; flex-shrink: 0; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%,60% { transform: translateX(-5px); }
+      40%,80% { transform: translateX(5px); }
+    }
+
+    /* NOTICE BAR */
+    .notice-bar {
+      background: var(--orange);
+      color: white;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1a0030 0%, #6b029b 55%, #9c6eb1 100%);
+      color: white;
+      padding: 64px 20px 56px;
+      text-align: center;
+    }
+    .hero h1 { color: white; }
+    .hero .subtitle {
+      font-size: clamp(15px, 2.5vw, 19px);
+      color: rgba(255,255,255,0.88);
+      max-width: 620px;
+      margin: 0 auto 28px;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-bottom: 36px; }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .stat-pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 7px 18px;
+      font-size: 14px;
+      color: white;
+    }
+
+    /* DIFERENCIADOR — para quién es */
+    .for-who {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 28px;
+    }
+    @media(max-width:560px){ .for-who { grid-template-columns: 1fr; } }
+    .for-card {
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 15px;
+    }
+    .for-card.yes { background: #e8f8ef; border-left: 4px solid #2ecc71; }
+    .for-card.no  { background: #fdf0e8; border-left: 4px solid var(--orange); }
+    .for-card strong { display: block; font-size: 16px; margin-bottom: 8px; }
+    .for-card ul { padding-left: 18px; }
+    .for-card li { margin-bottom: 5px; }
+
+    /* VIDEO */
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .video-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:none; }
+
+    /* BENEFITS GRID */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .benefit-card {
+      background: var(--white);
+      border: 2px solid var(--orange);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .benefit-icon { font-size: 34px; margin-bottom: 10px; }
+    .benefit-card h3 { font-size: 16px; margin-bottom: 6px; }
+    .benefit-card p { font-size: 14px; color: var(--muted); margin: 0; }
+    .ticker-wrap {
+      background: #fde5fd;
+      overflow: hidden;
+      height: 30px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .ticker { display: flex; animation: ticker 12s linear infinite; white-space: nowrap; }
+    .ticker span { padding: 6px 40px; font-size: 12px; color: var(--purple); font-weight: 700; }
+    @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* PLANES */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .plan-card {
+      background: var(--white);
+      border: 2px solid var(--purple);
+      border-radius: 14px;
+      padding: 24px 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .plan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(107,2,155,0.15); }
+    .plan-card.featured {
+      border-color: var(--orange);
+      border-width: 3px;
+      position: relative;
+    }
+    .plan-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--orange);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .plan-name { font-family: 'Questrial', sans-serif; font-size: 18px; color: var(--purple); font-weight: 700; }
+    .plan-duration { font-size: 14px; color: var(--muted); }
+    .plan-price { font-family: 'Questrial', sans-serif; font-size: 28px; color: var(--text); font-weight: 700; }
+    .plan-price span { font-size: 14px; color: var(--muted); font-weight: 400; }
+    .plan-saving { font-size: 13px; color: #2ecc71; font-weight: 700; }
+    .btn-plan {
+      display: block;
+      padding: 11px 20px;
+      background: var(--purple);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+      margin-top: auto;
+    }
+    .btn-plan:hover { background: var(--orange); }
+
+    /* TOGGLE planes sin renovación */
+    .toggle-section { text-align: center; margin-top: 24px; }
+    .btn-toggle {
+      background: none;
+      border: 2px solid var(--purple);
+      color: var(--purple);
+      font-family: 'Comfortaa', cursive;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-toggle:hover { background: var(--purple); color: white; }
+    #non-renewable { display: none; margin-top: 28px; }
+    #non-renewable.visible { display: block; }
+    .note-box {
+      background: #fff8e1;
+      border-left: 4px solid var(--orange);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: var(--text);
+      margin-top: 20px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* TESTIMONIOS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .testimonial-img {
+      border-radius: 12px;
+      width: 100%;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    /* ACORDEÓN */
+    .accordion { max-width: 700px; margin: 24px auto 0; }
+    .accordion-item {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .accordion-item summary {
+      padding: 15px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      list-style: none;
+      background: var(--purple-light);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-item summary::-webkit-details-marker { display: none; }
+    .accordion-item[open] summary { background: var(--purple); }
+    .accordion-item summary::after { content: '＋'; font-size: 18px; }
+    .accordion-item[open] summary::after { content: '－'; }
+    .accordion-content {
+      padding: 15px 20px;
+      font-size: 15px;
+      background: #f0f4f8;
+      color: #333;
+      border-top: 1px solid #ddd;
+    }
+    .accordion-content ul { padding-left: 18px; }
+    .accordion-content li { margin-bottom: 6px; }
+
+    /* FAQ accordion — negro / naranja */
+    .faq-item summary { background: #1a1a1a; }
+    .faq-item[open] summary { background: var(--orange); }
+
+    /* CONTENIDO GRATUITO */
+    .free-box {
+      background: #d6ffe6;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 700px;
+      margin: 24px auto 0;
+    }
+    .free-box p { font-size: 15px; margin-bottom: 6px; }
+
+    /* GARANTÍA */
+    .guarantee-box {
+      background: var(--white);
+      border: 3px solid var(--purple);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .badge-7 {
+      display: inline-block;
+      background: var(--purple);
+      color: white;
+      font-family: 'Questrial', sans-serif;
+      font-size: 50px;
+      font-weight: 700;
+      border-radius: 50%;
+      width: 96px;
+      height: 96px;
+      line-height: 96px;
+      margin-bottom: 16px;
+    }
+
+    /* INSTRUCTORES */
+    .instructor-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 24px;
+    }
+    .instructor-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      width: 220px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .instructor-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--purple-light);
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-family: 'Questrial', sans-serif;
+      overflow: hidden;
+      border: 3px solid var(--purple);
+    }
+    .instructor-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+    .instructor-card h3 { font-size: 17px; color: var(--purple); margin-bottom: 4px; }
+    .instructor-card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+    /* YELLOW CONTACT */
+    .yellow-box {
+      background: var(--yellow);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .yellow-box p { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a1a;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 13px;
+    }
+    footer a { color: rgba(255,255,255,.4); text-decoration: underline; margin: 0 8px; transition: color .2s; }
+    footer a:hover { color: white; }
+    .footer-links { margin-bottom: 10px; }
+
+    /* STICKY CTA MÓVIL */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--purple);
+      padding: 12px 20px;
+      text-align: center;
+      z-index: 999;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+    }
+    .sticky-cta a { color: white; font-family: 'Comfortaa', cursive; font-size: 16px; font-weight: 700; text-decoration: none; }
+    @media(max-width:640px){ .sticky-cta { display: block; } body { padding-bottom: 58px; } }
+
+    hr.divider { border: none; border-top: 2px dashed rgba(107,2,155,0.12); margin: 0; }
+      .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .footer-social a { display: inline-block; }
+    .footer-social img {
+      width: 22px; height: 22px;
+      filter: brightness(0) invert(1);
+      opacity: .5;
+      transition: opacity .2s, transform .2s;
+    }
+    .footer-social a:hover img { opacity: 1; transform: scale(1.2); }
+</style>
+</head>
+<body>
+
+<!-- AVISO -->
+<div class="notice-bar">
+  🛡️ Garantía de devolución de 7 días — Sin preguntas, sin problemas
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <h1>🔧 Comunidad Libera Tu Móvil</h1>
+    <p class="subtitle">Herramientas profesionales, clases en vivo y soporte real para técnicos de desbloqueo. Mantente actualizado y trabaja con confianza.</p>
+    <div class="hero-stats">
+      <span class="stat-pill">📡 Box's y dongles remotos</span>
+      <span class="stat-pill">🗃️ Licencias compartidas</span>
+      <span class="stat-pill">🎓 Clases en vivo</span>
+      <span class="stat-pill">💬 Soporte WhatsApp y Telegram</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== PARA QUIÉN ES ===== -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="text-center">¿Esta Comunidad es para ti?</h2>
+    <p class="text-center" style="color:var(--muted);">La Comunidad está pensada para un perfil específico — lee esto antes de suscribirte</p>
+    <div class="for-who">
+      <div class="for-card yes">
+        <strong>✅ Sí es para ti si…</strong>
+        <ul>
+          <li>Ya tienes experiencia en desbloqueo o tomaste alguno de nuestros cursos</li>
+          <li>Necesitas acceso a herramientas profesionales sin comprarlas todas</li>
+          <li>Quieres mantenerte actualizado con nuevos métodos y dispositivos</li>
+          <li>Buscas soporte de colegas y expertos cuando te atascas en un caso</li>
+          <li>Quieres prioridad y precios preferenciales en servicios de reparación</li>
+        </ul>
+      </div>
+      <div class="for-card no">
+        <strong>📚 Mejor empieza por el Curso si…</strong>
+        <ul>
+          <li>Eres completamente nuevo en el mundo del desbloqueo de móviles</li>
+          <li>Nunca has trabajado con software de liberación</li>
+          <li>Necesitas aprender desde cero los conceptos y herramientas</li>
+        </ul>
+        <a href="https://liberatumovil.net/curso-de-software-libera-tu-movil" target="_blank" rel="noopener" style="display:inline-block; margin-top:12px; color:var(--orange); font-weight:700; font-size:14px;">Ver el Curso de Software →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== VIDEO ===== -->
+<section class="section">
+  <div class="container text-center">
+    <h2>🎥 Mira cómo la Comunidad puede ayudarte</h2>
+    <p style="color:var(--muted); max-width:580px; margin:0 auto 24px;">Un vistazo a todo lo que obtienes siendo miembro:</p>
+    <div class="video-wrap" style="max-width:700px; margin:0 auto;">
+      <iframe src="https://www.youtube.com/embed/GZwNbEEOK5A" allowfullscreen loading="lazy" title="Comunidad Libera Tu Móvil — qué obtienes"></iframe>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== QUÉ INCLUYE ===== -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="text-center">🎁 ¿Qué obtienes siendo miembro?</h2>
+    <p class="text-center" style="color:var(--muted);">Todo disponible mientras mantengas activa tu suscripción</p>
+    <div class="benefits-grid">
+
+      <div class="benefit-card">
+        <div class="benefit-icon">📡</div>
+        <h3>Box's y dongles</h3>
+        <p>Acceso remoto a cajas de liberación profesionales sin necesidad de comprarlas</p>
+        <div class="ticker-wrap"><div class="ticker">
+          <span>EFT • FURIOUS • HYDRA • INFINITY • NCK • OCTOPLUS • SIGMA • UMT • Z3X </span>
+          <span>EFT • FURIOUS • HYDRA • INFINITY • NCK • OCTOPLUS • SIGMA • UMT • Z3X </span>
+        </div></div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🗃️</div>
+        <h3>Licencias compartidas</h3>
+        <p>Acceso a licencias activas durante todo tu periodo de suscripción</p>
+        <div class="ticker-wrap"><div class="ticker">
+          <span>UnlockTool • RD Power Tool • Android Multi Tool • TMF Tool • DFT Tool </span>
+          <span>UnlockTool • RD Power Tool • Android Multi Tool • TMF Tool • DFT Tool </span>
+        </div></div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">📂</div>
+        <h3>Archivos y Firmwares</h3>
+        <p>Acceso continuo a firmwares, archivos root, testpoint, FRP, MDM y más</p>
+        <div class="ticker-wrap"><div class="ticker">
+          <span>HalabTech • Hosting Unlock • Easy Firmware </span>
+          <span>HalabTech • Hosting Unlock • Easy Firmware </span>
+        </div></div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🎓</div>
+        <h3>Clases en vivo</h3>
+        <p>Clases virtuales periódicas con los últimos métodos, grabadas para repasar</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">💬</div>
+        <h3>Soporte real</h3>
+        <p>Grupos de WhatsApp y Telegram con ambiente respetuoso y apoyo mutuo entre colegas</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">⭐</div>
+        <h3>Prioridad en servicios</h3>
+        <p>Los miembros tienen prioridad en consultas y precio preferencial en reparaciones</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== PLANES ===== -->
+<section class="section" id="planes">
+  <div class="container">
+    <h2 class="text-center">💳 Elige tu plan</h2>
+    <p class="text-center" style="color:var(--muted);">Todos los planes incluyen los mismos beneficios. Al acabar el periodo se renueva automáticamente para que no pierdas el acceso.</p>
+
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-name">Estándar</div>
+        <div class="plan-duration">1 mes</div>
+        <div class="plan-price">$20 <span>USD</span></div>
+        <div class="plan-saving">&nbsp;</div>
+        <a href="https://go.hotmart.com/U86437652D?ap=1d79" class="btn-plan" target="_blank" rel="noopener">Suscribirme</a>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Ahorro 10%</div>
+        <div class="plan-duration">2 meses</div>
+        <div class="plan-price">$36 <span>USD</span></div>
+        <div class="plan-saving">Ahorras $4</div>
+        <a href="https://go.hotmart.com/U86437652D?ap=372a" class="btn-plan" target="_blank" rel="noopener">Suscribirme</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">⭐ Más popular</div>
+        <div class="plan-name">Ahorro 15%</div>
+        <div class="plan-duration">3 meses</div>
+        <div class="plan-price">$51 <span>USD</span></div>
+        <div class="plan-saving">Ahorras $9</div>
+        <a href="https://go.hotmart.com/U86437652D?ap=ac24" class="btn-plan" target="_blank" rel="noopener">Suscribirme</a>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Ahorro 20%</div>
+        <div class="plan-duration">6 meses</div>
+        <div class="plan-price">$96 <span>USD</span></div>
+        <div class="plan-saving">Ahorras $24</div>
+        <a href="https://go.hotmart.com/U86437652D?ap=d974" class="btn-plan" target="_blank" rel="noopener">Suscribirme</a>
+      </div>
+    </div>
+
+    <div class="note-box">
+      ⚠️ <strong>Renovación automática:</strong> Al concluir el periodo se realiza un cobro automático para que no pierdas acceso. Recibirás un aviso por correo 5 días antes. Si prefieres un plan sin renovación automática, haz clic aquí:
+    </div>
+
+    <div class="toggle-section">
+      <button class="btn-toggle" onclick="document.getElementById('non-renewable').classList.toggle('visible')">
+        Ver planes sin renovación automática
+      </button>
+    </div>
+
+    <div id="non-renewable">
+      <p class="text-center" style="color:var(--muted); margin:16px 0 8px;">Al acabar el periodo dejas de tener acceso a las herramientas y servicios.</p>
+      <div class="plans-grid">
+        <div class="plan-card">
+          <div class="plan-name">Estándar</div>
+          <div class="plan-duration">1 mes</div>
+          <div class="plan-price">$20 <span>USD</span></div>
+          <a href="https://go.hotmart.com/U86437652D?ap=cbcd" class="btn-plan" target="_blank" rel="noopener">Sin renovación</a>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Ahorro 10%</div>
+          <div class="plan-duration">2 meses</div>
+          <div class="plan-price">$36 <span>USD</span></div>
+          <a href="https://go.hotmart.com/U86437652D?ap=29b1" class="btn-plan" target="_blank" rel="noopener">Sin renovación</a>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Ahorro 15%</div>
+          <div class="plan-duration">3 meses</div>
+          <div class="plan-price">$51 <span>USD</span></div>
+          <a href="https://go.hotmart.com/U86437652D?ap=3bc6" class="btn-plan" target="_blank" rel="noopener">Sin renovación</a>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Ahorro 20%</div>
+          <div class="plan-duration">6 meses</div>
+          <div class="plan-price">$96 <span>USD</span></div>
+          <a href="https://go.hotmart.com/U86437652D?ap=4843" class="btn-plan" target="_blank" rel="noopener">Sin renovación</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== GARANTÍA ===== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>🛡️ Garantía de satisfacción</h2>
+    <div class="guarantee-box" style="margin-top:20px;">
+      <div class="badge-7">7</div>
+      <h3 style="color:var(--purple); font-size:20px;">días de prueba sin riesgo</h3>
+      <p style="margin-top:12px; color:var(--muted);">Si en los primeros 7 días no estás satisfecho con la Comunidad, te devolvemos el dinero sin preguntas.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== TESTIMONIOS ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">💬 Lo que dicen nuestros miembros</h2>
+    <p class="text-center" style="color:var(--muted);">Resultados reales de personas que ya son parte de la Comunidad</p>
+    <div class="testimonials-grid">
+      <img src="https://i.imgur.com/60HxQMT.png" alt="Testimonio miembro 1" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/ZKlkUUu.png" alt="Testimonio miembro 2" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/DajhImz.png" alt="Testimonio miembro 3" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/xGFbKoM.png" alt="Testimonio miembro 4" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/jzAqYYg.png" alt="Testimonio miembro 5" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/JPqabxb.png" alt="Testimonio miembro 6" class="testimonial-img" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== CONTENIDO / CLASES GRATUITAS ===== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>📋 Mira el contenido de la Comunidad</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-top:20px;">
+      <div class="video-wrap" style="max-width:420px; flex:1 1 300px;">
+        <iframe src="https://www.youtube.com/embed/wsjH4BbU81Y" allowfullscreen loading="lazy" title="Contenido Comunidad parte 1"></iframe>
+      </div>
+      <div class="video-wrap" style="max-width:420px; flex:1 1 300px;">
+        <iframe src="https://www.youtube.com/embed/oAv8ddzRUoQ" allowfullscreen loading="lazy" title="Contenido Comunidad parte 2"></iframe>
+      </div>
+    </div>
+    <div class="free-box">
+      <h2 style="text-align:center; margin-bottom:14px;">🆓 Clases de Acceso Gratuito</h2>
+      <p>Prueba antes de suscribirte con estas clases sin costo:</p>
+      <p>🔸 Flasheo y quitar MDM — Xiaomi MTK / Knox Mobile Enrollment — Samsung</p>
+      <p>🔸 MDM — HONOR</p>
+      <p>🔸 Samsung KG: Remover en procesadores Qualcomm — Últimas seguridades</p>
+      <p>🔸 Uso de servidores y Binance</p>
+      <p>🔸 Servicios disponibles para iPhone</p>
+      <p>🔸 iPhone — Menú Abierto</p>
+      <div style="margin-top:16px;">
+        <a href="https://liberatumovil.net/clases-gratuitas-para-aprender-a-liberar-celulares" target="_blank" rel="noopener" class="btn-primary" style="font-size:15px;">Ver clases gratis →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== TEMARIO ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">📚 Temario de la Comunidad</h2>
+    <p class="text-center" style="color:var(--muted);">Todo el contenido al que tendrás acceso como miembro</p>
+    <div class="accordion">
+
+      <details class="accordion-item">
+        <summary>Archivos y Manuales</summary>
+        <div class="accordion-content"><ul>
+          <li>Plan de Incorporación</li>
+          <li>Manual para instalación de Box's (NCK, UMT y más)</li>
+          <li>Acceso a programas con licencia compartida</li>
+          <li>Acceso a proveedores de firmwares y soluciones móviles</li>
+          <li>Programas para procesos en Xiaomi con créditos</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Fundamentos — Pasos 1 al 4</summary>
+        <div class="accordion-content"><ul>
+          <li>Hardware, componentes y términos del sector</li>
+          <li>Instalación de controladores y preparación de PC</li>
+          <li>Liberación a través de servidores — registros, licencias y créditos</li>
+          <li>Eliminar cuenta Mi de raíz con el servidor</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Bloqueos de cuentas (FRP y cuenta Mi)</summary>
+        <div class="accordion-content"><ul>
+          <li>FRP Samsung (varios modelos y métodos)</li>
+          <li>FRP Xiaomi EMUI 11/12 y Bypass Cuenta Mi MTK</li>
+          <li>SPD Flash Tool para procesadores Spreadtrum/Unisoc</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Desbloqueos de red e IMEI</summary>
+        <div class="accordion-content"><ul>
+          <li>Liberación por aplicación, directa, por código y por IMEI</li>
+          <li>Global Unlocker, Sim Unlocker Pro, TMB Killer, Motokey, Samkey, MagicTool</li>
+          <li>¿Qué es el IMEI? Reparación y lista negra</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Programas con licencia y cajas de servicio</summary>
+        <div class="accordion-content"><ul>
+          <li>Chimera Tool, Unlock Tool, Marvel Tool</li>
+          <li>Sigma, EFT PRO, NCK PRO, Octoplus, UMT</li>
+          <li>DT Pro, TR Tools, MDMFix Tool, Alliance Shield</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Clases intensivas 2024 (Flasheo, FRP, MDM)</summary>
+        <div class="accordion-content"><ul>
+          <li>Flasheo: Samsung, Motorola, Xiaomi, Huawei</li>
+          <li>FRP: Samsung, Motorola, Xiaomi, ZTE, Huawei, Infinix, Tecno, Oppo, Realme, Oneplus</li>
+          <li>MDM: Samsung, Infinix, Tecno, Honor, Huawei, Xiaomi, Motorola</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Clases en vivo — UnlockTool e iPhone</summary>
+        <div class="accordion-content"><ul>
+          <li>UnlockTool: Xiaomi, Huawei/Honor, Qualcomm, MediaTek, Samsung, Spreadtrum</li>
+          <li>iPhone: Passcode iOS 12–16, Bypass MDM, iCloud Open Menu, iRemoval Pro</li>
+          <li>Servicios de IMEI en iPhone — Bypass iPhone 6S y 6S+</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Clases en vivo — KG, IMEI y servidores</summary>
+        <div class="accordion-content"><ul>
+          <li>KG Samsung con Chimera, Alliance Shield, MDMFix Tool</li>
+          <li>Reparación de IMEI: Huawei, Xiaomi, Motorola, Samsung</li>
+          <li>Cómo usar Binance · Comprar créditos · Servicios por IMEI</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Trabajo remoto</summary>
+        <div class="accordion-content"><ul>
+          <li>Servicio remoto con TeamViewer, FlexiHub y USB Redirector</li>
+        </ul></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== INSTRUCTORES ===== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>👥 ¿Quiénes te apoyan?</h2>
+    <p style="color:var(--muted);">El equipo detrás de la Comunidad y sus miembros</p>
+    <div class="instructor-grid">
+      <div class="instructor-card">
+        <div class="instructor-avatar">
+          <img src="https://i.imgur.com/6EwyDR3.jpg" alt="Gustavo Limas" onerror="this.style.display='none';this.parentElement.innerHTML+='GL'">
+        </div>
+        <h3>Gustavo Limas</h3>
+        <p>Productor / Instructor — Experto en liberación de dispositivos móviles</p>
+      </div>
+      <div class="instructor-card">
+        <div class="instructor-avatar">
+          <img src="https://i.imgur.com/2hh5Le0.jpg" alt="Denis Licona" onerror="this.style.display='none';this.parentElement.innerHTML+='DL'">
+        </div>
+        <h3>Denis Licona</h3>
+        <p>Editor / Soporte — Gestión de la comunidad y atención a los miembros</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== FAQ ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">❓ Preguntas Frecuentes</h2>
+    <div class="accordion">
+
+      <details class="accordion-item faq-item">
+        <summary>¿Cuánto tiempo puedo estar en la Comunidad?</summary>
+        <div class="accordion-content"><p>El tiempo que necesites. Puedes suscribirte por 1, 2, 3 o 6 meses, y renovar cuantas veces quieras. Hay colegas que llevan más de dos años con nosotros.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Por qué pago mensualidades?</summary>
+        <div class="accordion-content"><p>Las clases en vivo, el acceso remoto a las box's, las licencias compartidas, el soporte en grupos y los recursos actualizados tienen un costo de mantenimiento. Eso es lo que cubre tu suscripción. A cambio, nos comprometemos a que nunca te quedes obsoleto: siempre estarás al día con los últimos métodos.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Me cobran sin avisar?</summary>
+        <div class="accordion-content"><p>No. Enviamos una notificación a tu correo 5 días antes de cada renovación. Además, puedes habilitar o deshabilitar el cobro automático cuando configures tu pago. Si tienes dudas, contáctanos y te ayudamos.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Qué pasa si quiero salir de la Comunidad?</summary>
+        <div class="accordion-content"><p>Eres libre de cancelar cuando quieras, sin trabas ni penalizaciones. Simplemente dejarás de tener acceso a las herramientas y servicios al terminar tu periodo. Siempre serás bienvenido si decides volver.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Necesito haber tomado el Curso de Software primero?</summary>
+        <div class="accordion-content"><p>No es obligatorio, pero sí recomendable si eres nuevo. La Comunidad está orientada a técnicos con experiencia o conocimientos previos en desbloqueo. Si estás empezando desde cero, el Curso de Software es el mejor punto de partida.</p></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== CONTACTO ===== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <div class="yellow-box">
+      <p>¿Tienes dudas? ¡Hablemos por WhatsApp!</p>
+      <a href="https://wa.me/50487987314" class="btn-wa" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.52 3.48A11.855 11.855 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.12 1.6 5.91L0 24l6.19-1.6A11.85 11.85 0 0012 24c6.63 0 12-5.37 12-12 0-3.19-1.24-6.21-3.48-8.52zM12 22c-1.87 0-3.69-.51-5.26-1.47l-.38-.23-3.67.95.98-3.6-.25-.37A9.976 9.976 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.2-7.79l-1.44-.71c-.2-.1-.44-.07-.6.09l-.82.83a.46.46 0 01-.6.07c-.86-.43-2.84-1.68-3.96-3.95a.45.45 0 01.06-.6l.83-.82c.16-.16.19-.4.09-.6l-.71-1.44a.45.45 0 00-.56-.21c-.61.24-1.32.6-1.7 1-.52.52-.87 1.6.9 4.57 1.71 2.85 3.64 3.9 4.5 4.27.55.24 1.01.37 1.4.37.35 0 .64-.12.89-.35.4-.4.77-1.11 1-1.71a.45.45 0 00-.2-.56z"/></svg>
+        ¡Contáctanos ahora!
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-social">
+    <a href="https://www.youtube.com/@liberatumovilofficial" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube">
+    </a>
+    <a href="https://www.facebook.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+    <a href="https://t.me/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+    </a>
+    <a href="https://whatsapp.com/channel/0029Vam1XtvCXC3B0RPNE72l" target="_blank" rel="noopener" aria-label="Canal WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal WhatsApp">
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="https://liberatumovil.net/politicas-de-privacidad" target="_blank">Política de Privacidad</a> |
+    <a href="https://liberatumovil.net/terminos-y-condiciones" target="_blank">Términos y Condiciones</a> |
+    <a href="https://liberatumovil.net/politicas-de-cookies" target="_blank">Política de Cookies</a>
+  </div>
+<p>© 2026 Libera Tu Móvil — Todos los derechos reservados</p>
+  <p style="margin-top:6px; font-size:12px;">Servicios gestionados a través de Hotmart. La cancelación es libre en cualquier momento.</p>
+</footer>
+
+<!-- STICKY CTA MÓVIL -->
+<div class="sticky-cta">
+  <a href="https://go.hotmart.com/U86437652D?ap=1d79" target="_blank" rel="noopener">🔧 Suscribirme por $20 USD/mes</a>
+</div>
+
+
+</body>
+</html>
