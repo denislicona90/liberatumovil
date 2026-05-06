@@ -1,0 +1,728 @@
+<<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Servicio de Desbloqueo de Celulares | Libera Tu Móvil</title>
+  <meta name="description" content="Servicio profesional de desbloqueo de celulares: FRP, MDM, KG, IMEI, Flasheo. Rellena el formulario y recibe tu cotización por WhatsApp. Atención ética y legal.">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple:  #6b029b;
+      --purple2: #8a05c4;
+      --orange:  #f7680a;
+      --green:   #25d366;
+      --green2:  #128c7e;
+      --red:     #e53935;
+      --bg:      #f5f4f0;
+      --white:   #ffffff;
+      --text:    #1a1a1a;
+      --muted:   #6b7280;
+      --border:  #e0ddd8;
+      --success: #059669;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NOTICE BAR ── */
+    .notice-bar {
+      background: var(--purple);
+      color: rgba(255,255,255,.9);
+      text-align: center;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 48px 20px 64px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 40px;
+      align-items: start;
+    }
+    @media(max-width: 780px){
+      .page-wrap { grid-template-columns: 1fr; padding: 32px 16px 48px; }
+      .sidebar { order: -1; }
+    }
+
+    /* ── LEFT: INFO ── */
+    .info-col {}
+    .page-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 10px;
+    }
+    .page-title {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin-bottom: 14px;
+    }
+    .page-title span { color: var(--purple); }
+    .page-sub {
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 440px;
+    }
+
+    /* services list */
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      transition: border-color .2s;
+    }
+    .service-item:hover { border-color: var(--purple); }
+    .service-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: #f3e8ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .service-item h3 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .service-item p  { font-size: 13px; color: var(--muted); margin: 0; }
+
+    /* trust badges */
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .trust-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+
+    /* process steps */
+    .how-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .steps-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .step-item {
+      display: flex;
+      gap: 14px;
+      padding-bottom: 18px;
+      position: relative;
+    }
+    .step-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 32px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--purple);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-body h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .step-body p  { font-size: 13px; color: var(--muted); margin: 0; }
+
+    /* ── RIGHT: FORM CARD ── */
+    .form-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      position: sticky;
+      top: 24px;
+    }
+    .form-card-header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-card-header .icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: #f3e8ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin: 0 auto 10px;
+    }
+    .form-card-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .form-card-header p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* form fields */
+    .field-group {
+      margin-bottom: 16px;
+    }
+    .field-section {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin: 20px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .field-section::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #f0ebf8;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+    label .req { color: var(--red); margin-left: 2px; }
+    input[type="text"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(107,2,155,.08);
+    }
+    input.error, select.error, textarea.error {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(229,57,53,.07);
+    }
+    input.valid, select.valid, textarea.valid {
+      border-color: var(--success);
+    }
+    select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7280' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    textarea { resize: vertical; min-height: 90px; }
+    .iti { width: 100%; }
+    .iti__flag-container { z-index: 10; }
+
+    .error-msg {
+      font-size: 12px;
+      color: var(--red);
+      margin-top: 4px;
+      display: none;
+    }
+    .char-count {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    /* submit button */
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      background: var(--green2);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--green); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .btn-submit i { font-size: 18px; }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* success message */
+    .success-box {
+      display: none;
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .success-box .success-icon { font-size: 32px; margin-bottom: 8px; }
+    .success-box h3 { font-size: 16px; font-weight: 600; color: var(--success); margin-bottom: 6px; }
+    .success-box p { font-size: 13px; color: #374151; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a1a1a;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 13px;
+    }
+    footer a { color: rgba(255,255,255,.4); text-decoration: underline; margin: 0 8px; transition: color .2s; }
+    footer a:hover { color: white; }
+    .footer-links { margin-bottom: 8px; }
+
+    /* intl-tel-input override */
+    .iti--separate-dial-code .iti__selected-flag {
+      background: var(--bg);
+      border-radius: 6px 0 0 6px;
+    }
+
+    /* ── ETHICS BOX ── */
+    .ethics-box {
+      margin-top: 32px;
+      background: #fffbeb;
+      border: 1.5px solid #fcd34d;
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+    .ethics-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 10px;
+    }
+    .ethics-box p {
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+    .ethics-box ul {
+      padding-left: 18px;
+      margin-bottom: 10px;
+    }
+    .ethics-box li {
+      font-size: 13px;
+      color: #78350f;
+      margin-bottom: 5px;
+      line-height: 1.5;
+    }
+    .ethics-note {
+      font-size: 12px !important;
+      color: #92400e !important;
+      font-style: italic;
+      margin-bottom: 0 !important;
+    }
+      .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .footer-social a { display: inline-block; }
+    .footer-social img {
+      width: 22px; height: 22px;
+      filter: brightness(0) invert(1);
+      opacity: .5;
+      transition: opacity .2s, transform .2s;
+    }
+    .footer-social a:hover img { opacity: 1; transform: scale(1.2); }
+</style>
+</head>
+<body>
+
+<!-- NOTICE -->
+<div class="notice-bar">
+  🔒 Servicio 100% remoto · Sin enviar tu dispositivo · Atención ética y legal
+</div>
+
+<div class="page-wrap">
+
+  <!-- ── LEFT: INFO ── -->
+  <div class="info-col">
+    <div class="page-eyebrow">Servicio profesional</div>
+    <h1 class="page-title">Desbloqueo de<br><span>celulares</span> a distancia</h1>
+    <p class="page-sub">¿Tu celular tiene un bloqueo que no puedes quitar? Cuéntanos el problema y te cotizamos. Sin compromiso, sin enviar el dispositivo.</p>
+
+    <div class="trust-row">
+      <span class="trust-badge"><span class="dot"></span>Servicio remoto</span>
+      <span class="trust-badge"><span class="dot"></span>Respuesta rápida</span>
+      <span class="trust-badge"><span class="dot"></span>Sin enviar el equipo</span>
+      <span class="trust-badge"><span class="dot"></span>Latinoamérica</span>
+    </div>
+
+    <div class="services-list">
+      <div class="service-item">
+        <div class="service-icon">🔓</div>
+        <div>
+          <h3>FRP — Cuenta Google</h3>
+          <p>Bypass del bloqueo de verificación de cuenta Google en Samsung, Motorola, Xiaomi, Huawei y más.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">🏢</div>
+        <div>
+          <h3>MDM y KG — Bloqueo empresarial y mora</h3>
+          <p>Remoción de gestión empresarial (MDM) y bloqueo por mora (KG) en dispositivos Samsung y otras marcas.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">⚡</div>
+        <div>
+          <h3>Flasheo</h3>
+          <p>Reinstalación del sistema operativo para recuperar dispositivos con software dañado o bloqueado.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">📡</div>
+        <div>
+          <h3>Reparación de IMEI</h3>
+          <p>Restauración del IMEI dañado o inválido en dispositivos Android.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">🔧</div>
+        <div>
+          <h3>Otros servicios</h3>
+          <p>¿No encuentras tu caso? Descríbelo en el formulario y lo evaluamos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-title">¿Cómo funciona?</div>
+    <div class="steps-row">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Rellena el formulario</h4>
+          <p>Marca, modelo, tipo de bloqueo y descripción del problema.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Recibe la cotización</h4>
+          <p>Te respondemos por WhatsApp con el precio y el proceso a seguir.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Realizamos el trabajo</h4>
+          <p>Todo de forma remota. Sin enviar tu dispositivo a ningún lado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AVISO ÉTICO -->
+    <div class="ethics-box">
+      <div class="ethics-title">⚖️ Servicio legal y responsable</div>
+      <p>Ofrecemos exclusivamente servicios de desbloqueo legítimos. Antes de aceptar cualquier trabajo verificamos que el solicitante sea el propietario legítimo del dispositivo. Por esa razón <strong>no atendemos</strong> los siguientes casos:</p>
+      <ul>
+        <li>Dispositivos robados o extraviados que no pertenezcan al solicitante</li>
+        <li>Desbloqueos de KG o MDM motivados por negativa a pagar una deuda vigente con la operadora o empresa financiera</li>
+        <li>Cualquier proceso que implique evadir una obligación legal o contractual</li>
+      </ul>
+      <p class="ethics-note">Si no puedes demostrar que el dispositivo es tuyo, no podremos ayudarte. Nos reservamos el derecho de rechazar solicitudes que consideremos dudosas.</p>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: FORM ── -->
+  <div class="sidebar">
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="icon">🔓</div>
+        <h2>Solicita tu cotización</h2>
+        <p>Completa el formulario y te contactamos por WhatsApp</p>
+      </div>
+
+      <form id="formulario" onsubmit="enviarWhatsApp(); return false;" novalidate>
+
+        <div class="field-section">Información personal</div>
+
+        <div class="field-group">
+          <label for="nombre">Tu nombre <span class="req">*</span></label>
+          <input type="text" id="nombre" placeholder="Nombre completo" required autocomplete="name" />
+        </div>
+
+        <div class="field-group">
+          <label for="telefono">Tu número de WhatsApp <span class="req">*</span></label>
+          <input type="tel" id="telefono" inputmode="tel" required autocomplete="tel" />
+          <div id="error-telefono" class="error-msg">Número inválido. Verifica el código y el formato.</div>
+        </div>
+
+        <div class="field-section">Detalles del dispositivo</div>
+
+        <div class="field-group">
+          <label for="marca">Marca <span class="req">*</span></label>
+          <input type="text" id="marca" placeholder="Ej. Samsung, iPhone, Motorola" required />
+        </div>
+
+        <div class="field-group">
+          <label for="modelo">Modelo <span class="req">*</span></label>
+          <input type="text" id="modelo" placeholder="Ej. Galaxy A32, iPhone 12" required />
+        </div>
+
+        <div class="field-group">
+          <label for="trabajo">Tipo de trabajo <span class="req">*</span></label>
+          <select id="trabajo" required>
+            <option value="">Selecciona el tipo de servicio</option>
+            <option value="FRP">FRP — Cuenta Google</option>
+            <option value="MDM o KG">MDM o KG — Bloqueo empresarial / mora</option>
+            <option value="FLASHEO">Flasheo</option>
+            <option value="Reparar IMEI">Reparar IMEI</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="problema">Describe el problema <span class="req">*</span></label>
+          <textarea id="problema" rows="4" placeholder="Cuéntanos qué pasa con el dispositivo, qué has intentado ya..." required maxlength="500"></textarea>
+          <div class="char-count" id="contadorCaracteres">0 / 500</div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit" disabled>
+          <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+        </button>
+
+        <p class="form-note">
+          Al enviar, se abrirá WhatsApp con tu solicitud lista para enviar.<br>
+          Respondemos en cuanto nos sea posible según disponibilidad.
+        </p>
+
+      </form>
+
+      <div class="success-box" id="mensaje-confirmacion">
+        <div class="success-icon">✅</div>
+        <h3>¡Solicitud lista!</h3>
+        <p>Revisa WhatsApp para confirmar el envío. Te responderemos lo antes posible según nuestra disponibilidad.</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-social">
+    <a href="https://www.youtube.com/@liberatumovilofficial" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube">
+    </a>
+    <a href="https://www.facebook.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+    <a href="https://t.me/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+    </a>
+    <a href="https://whatsapp.com/channel/0029Vam1XtvCXC3B0RPNE72l" target="_blank" rel="noopener" aria-label="Canal WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal WhatsApp">
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="https://liberatumovil.net/politicas-de-privacidad" target="_blank">Política de Privacidad</a> |
+    <a href="https://liberatumovil.net/terminos-y-condiciones" target="_blank">Términos y Condiciones</a> |
+    <a href="https://liberatumovil.net/politicas-de-cookies" target="_blank">Política de Cookies</a>
+  </div>
+<p>© 2026 Libera Tu Móvil — Todos los derechos reservados</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script>
+  const inputTel  = document.querySelector("#telefono");
+  const errorTel  = document.getElementById("error-telefono");
+  const submitBtn = document.getElementById("btnEnviar");
+  const fieldIds  = ['nombre', 'marca', 'modelo', 'trabajo', 'problema'];
+  let itiReady    = false;
+  let iti;
+
+  // Init intlTelInput — utils loaded via callback so isValidNumber() works
+  iti = window.intlTelInput(inputTel, {
+    initialCountry: "auto",
+    preferredCountries: ["hn", "gt", "sv", "ni", "cr", "pa", "mx", "us"],
+    geoIpLookup: function(cb) {
+      fetch("https://ipinfo.io?token=5fc1ed6c41d635")
+        .then(r => r.json())
+        .then(d => cb((d.country || "us").toLowerCase()))
+        .catch(() => cb("us"));
+    },
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
+  });
+
+  // Mark ready once utils script fires the custom event
+  inputTel.addEventListener("countrychange", () => { itiReady = true; validarTodo(); });
+  // Also mark ready after a short delay as fallback
+  setTimeout(() => { itiReady = true; validarTodo(); }, 2000);
+
+  function validarTel() {
+    // If utils not loaded yet, accept non-empty as valid to unblock button
+    const raw = inputTel.value.trim();
+    if (!raw) {
+      inputTel.classList.add("error");
+      inputTel.classList.remove("valid");
+      errorTel.style.display = "block";
+      return false;
+    }
+    if (!itiReady) {
+      inputTel.classList.remove("error");
+      inputTel.classList.add("valid");
+      errorTel.style.display = "none";
+      return true;
+    }
+    const ok = iti.isValidNumber();
+    inputTel.classList.toggle("error", !ok);
+    inputTel.classList.toggle("valid", ok);
+    errorTel.style.display = ok ? "none" : "block";
+    return ok;
+  }
+
+  function validarTodo() {
+    let ok = validarTel();
+    fieldIds.forEach(id => {
+      const el = document.getElementById(id);
+      const empty = !el.value.trim();
+      el.classList.toggle("error", empty);
+      el.classList.toggle("valid", !empty);
+      if (empty) ok = false;
+    });
+    submitBtn.disabled = !ok;
+    return ok;
+  }
+
+  // Attach listeners to all fields
+  fieldIds.forEach(id => document.getElementById(id).addEventListener('input', validarTodo));
+  inputTel.addEventListener('input', validarTodo);
+  inputTel.addEventListener('countrychange', validarTodo);
+
+  // Character counter
+  document.getElementById("problema").addEventListener("input", function () {
+    document.getElementById("contadorCaracteres").textContent = `${this.value.length} / 500`;
+  });
+
+  function enviarWhatsApp() {
+    if (!validarTodo()) {
+      alert("Por favor, completa todos los campos correctamente.");
+      return;
+    }
+
+    const nombre   = document.getElementById('nombre').value.trim();
+    const tel      = iti.getNumber() || inputTel.value.trim();
+    const marca    = document.getElementById('marca').value.trim();
+    const modelo   = document.getElementById('modelo').value.trim();
+    const trabajo  = document.getElementById('trabajo').value;
+    const problema = document.getElementById('problema').value.trim();
+
+    const msg =
+      `*Solicitud de Desbloqueo — Libera Tu Móvil*\n\n` +
+      `*Nombre:* ${nombre}\n` +
+      `*Teléfono:* ${tel}\n` +
+      `*Marca:* ${marca}\n` +
+      `*Modelo:* ${modelo}\n` +
+      `*Trabajo:* ${trabajo}\n` +
+      `*Descripción:* ${problema}`;
+
+    const waUrl = `https://wa.me/50487987314?text=${encodeURIComponent(msg)}`;
+
+    // Show confirmation below the form, reset fields
+    document.getElementById('mensaje-confirmacion').style.display = 'block';
+    document.getElementById('formulario').reset();
+    iti.setNumber('');
+    errorTel.style.display = "none";
+    submitBtn.disabled = true;
+    document.getElementById('mensaje-confirmacion').scrollIntoView({ behavior: "smooth" });
+
+    // Open WhatsApp with short delay
+    setTimeout(() => { window.open(waUrl, '_blank'); }, 1000);
+
+    // Hide confirmation after 30 seconds
+    setTimeout(() => { document.getElementById('mensaje-confirmacion').style.display = 'none'; }, 30000);
+  }
+</script>
+</body>
+</html>
