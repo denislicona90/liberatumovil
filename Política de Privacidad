@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Política de Privacidad | Libera Tu Móvil</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; background: #f9f9f9; color: #333; }
+    section { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h1 { color: #6b029b; margin-bottom: 20px; }
+    h2 { color: #6b029b; margin-top: 25px; margin-bottom: 10px; }
+    p { margin-bottom: 15px; line-height: 1.6; }
+    footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #555; }
+  </style>
+</head>
+<body>
+
+<section>
+  <h1>Política de Privacidad</h1>
+
+  <p>En <strong>Libera Tu Móvil</strong> nos tomamos muy en serio la privacidad de tus datos. Esta política describe qué información recopilamos, cómo la usamos y cuáles son tus derechos.</p>
+
+  <h2>1. Información que recopilamos</h2>
+  <p>Podemos recopilar datos personales como nombre, correo electrónico, número de teléfono e información de pago cuando realizas una compra, te registras en el sitio o nos contactas.</p>
+
+  <h2>2. Cómo usamos tu información</h2>
+  <p>Usamos tu información para procesar pedidos, brindarte soporte, enviar comunicaciones relacionadas con los servicios, y mejorar tu experiencia en el sitio.</p>
+
+  <h2>3. Compartir información</h2>
+  <p>No vendemos, alquilamos ni compartimos tu información personal con terceros, salvo cuando sea necesario para prestar servicios (como procesadores de pago) o cumplir con obligaciones legales.</p>
+
+  <h2>4. Seguridad</h2>
+  <p>Implementamos medidas técnicas y organizativas para proteger tu información frente a accesos no autorizados, pérdidas o modificaciones.</p>
+
+  <h2>5. Cookies</h2>
+  <p>Usamos cookies para mejorar la navegación y personalizar la experiencia. Puedes configurar tu navegador para bloquearlas o eliminarlas.</p>
+
+  <h2>6. Tus derechos</h2>
+  <p>Puedes acceder, corregir o solicitar la eliminación de tus datos personales escribiéndonos a: <a href="mailto:info@liberatumovil.net
+">info@liberatumovil.net
+</a>.</p>
+
+  <h2>7. Cambios a esta política</h2>
+  <p>Nos reservamos el derecho de modificar esta política en cualquier momento. Recomendamos consultarla regularmente.</p>
+
+  <p><strong>Última actualización:</strong> Enero 2026</p>
+</section>
+
+</body>
+</html>
