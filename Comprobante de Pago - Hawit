@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hawit, La Popular y Bambino</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+:root {
+  --bg:       #F9F3EA;
+  --surface:  #FFFFFF;
+  --border:   #E2D0B8;
+  --text:     #3A2412;
+  --muted:    #8C7055;
+  --accent:   #C47B2B;
+  --accent-l: #FBF0DC;
+
+  --pan-bg:   #FFFBF0; --pan-bd: #F0D877; --pan-hd: #8A7200;
+  --tos-bg:   #FFF5F0; --tos-bd: #FFAA80; --tos-hd: #7A3510;
+  --mol-bg:   #F2FAF2; --mol-bd: #88CC88; --mol-hd: #1A5C1A;
+  --rep-bg:   #FAF0FA; --rep-bd: #CC88CC; --rep-hd: #5C1A5C;
+  --otr-bg:   #F0F6FF; --otr-bd: #88AAEE; --otr-hd: #1A2E7A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  padding: 12px;
+}
+
+/* ─── MAIN CARD ─── */
+.card {
+  max-width: 540px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(60,30,0,0.10);
+  overflow: clip;
+}
+
+/* ─── INFO SECTION ─── */
+.info-section { padding: 16px 16px 0; }
+.info-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.info-icon {
+  font-size: 20px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.info-row input[type=text],
+.info-row select,
+.info-row textarea {
+  flex: 1;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: 'Nunito', sans-serif;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: #FDFAF6;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+  min-height: 40px;
+}
+.info-row input[type=text]:focus,
+.info-row select:focus,
+.info-row textarea:focus {
+  border-color: var(--accent);
+  background: #fff;
+}
+.info-row textarea { resize: none; overflow: hidden; }
+
+.date-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.date-wrap input[type=text] { flex: 1; padding-right: 38px; }
+.date-wrap input[type=date] {
+  position: absolute;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+/* ─── BRAND DIVIDER ─── */
+.brand-divider {
+  margin: 14px 16px 0;
+  padding: 12px 16px;
+  background: var(--accent-l);
+  border: 1.5px solid #ECC880;
+  border-radius: 12px;
+  text-align: center;
+}
+.brand-divider .brand-name {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.brand-divider .brand-sub {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* ─── GLOBAL COLUMN HEADER ─── */
+.global-grid-header {
+  display: grid;
+  grid-template-columns: 1fr 52px 54px 64px;
+  gap: 3px;
+  padding: 6px 12px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-top: 1.5px solid var(--border);
+  margin-top: 10px;
+}
+.global-grid-header div:first-child { text-align: left; padding-left: 4px; }
+.global-grid-header div { text-align: center; }
+
+/* ─── SECTION BLOCK ─── */
+.section-block { margin: 0; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 16px;
+  cursor: pointer;
+  user-select: none;
+  border-top: 1px dashed var(--border);
+  transition: background .15s;
+}
+.section-header:active { background: rgba(0,0,0,0.03); }
+.section-emoji { font-size: 13px; }
+.section-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  flex: 1;
+}
+.section-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 20px;
+  opacity: 0.8;
+}
+.section-toggle {
+  font-size: 13px;
+  color: var(--muted);
+  transition: transform .25s;
+  line-height: 1;
+}
+.section-toggle.open { transform: rotate(180deg); }
+
+.section-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+}
+.section-body.open { grid-template-rows: 1fr; }
+.section-body-inner {
+  overflow: hidden;
+  padding: 0 12px;
+  transition: padding 0.28s ease;
+}
+.section-body.open .section-body-inner { padding: 4px 12px 10px; }
+
+/* ─── PRODUCT ROWS ─── */
+.product-row {
+  display: grid;
+  grid-template-columns: 1fr 52px 54px 64px;
+  gap: 3px;
+  margin-bottom: 4px;
+  align-items: center;
+}
+.product-row .prod-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  padding: 0 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.product-row input {
+  height: 34px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  background: #FDFAF6;
+  color: var(--text);
+  outline: none;
+  width: 100%;
+  padding: 0 2px;
+  transition: border-color .15s, background .15s;
+}
+.product-row input:focus { border-color: var(--accent); background: #fff; }
+.input-active  { background: #E8F5E9 !important; border-color: #66BB6A !important; color: #1B5E20 !important; font-weight: 800 !important; }
+.total-active  { background: #FFF3E0 !important; border-color: #FFA726 !important; color: #E65100 !important; font-weight: 800 !important; }
+
+.extra-row {
+  display: grid;
+  grid-template-columns: 1fr 52px 54px 64px;
+  gap: 3px;
+  margin-bottom: 4px;
+  align-items: center;
+}
+.extra-row input {
+  height: 34px;
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  background: #FAFAFA;
+  color: var(--text);
+  outline: none;
+  width: 100%;
+  padding: 0 4px;
+  transition: border-color .15s;
+}
+.extra-row input:first-child { text-align: left; padding: 0 8px; }
+.extra-row input:focus { border-color: var(--accent); border-style: solid; background: #fff; }
+
+/* ─── ADD BUTTON ─── */
+.btn-add {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: 0.3px;
+}
+.btn-add:hover { background: var(--accent-l); color: var(--accent); border-color: var(--accent); }
+
+/* ─── SUMMARY ─── */
+.summary-block {
+  margin: 0 12px;
+  padding: 14px 16px;
+  border-top: 2px dashed var(--border);
+  border-bottom: 2px dashed var(--border);
+}
+.summary-count { font-size: 12px; font-weight: 700; color: var(--muted); text-align: right; margin-bottom: 6px; }
+.summary-total { font-size: 22px; font-weight: 800; color: var(--text); text-align: center; }
+.summary-total span { color: var(--accent); }
+.summary-letras { font-size: 11px; font-style: italic; color: var(--muted); text-align: center; margin-top: 4px; }
+
+/* ─── NOTES ─── */
+.notes-block { padding: 12px 16px 0; }
+.notes-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.notes-block textarea {
+  width: 100%;
+  min-height: 38px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: #FDFAF6;
+  color: var(--text);
+  outline: none;
+  resize: none;
+  line-height: 1.5;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.notes-block textarea:focus { border-color: var(--accent); background: #fff; }
+
+/* ─── ACTION BUTTONS ─── */
+.actions {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.btn {
+  flex: 1;
+  padding: 13px 6px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  line-height: 1.2;
+  transition: transform .1s, opacity .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-icon { font-size: 22px; line-height: 1; }
+.btn:active { transform: scale(0.96); opacity: 0.85; }
+.btn-ws  { background: #25D366; color: #fff; }
+.btn-jpg { background: #3D3D3D; color: #fff; }
+.btn-new { background: var(--accent); color: #fff; }
+
+/* ─── FLOATING PILL ─────────────────────────────────────────────
+   position:fixed no funciona dentro de iframes (como el preview
+   de Claude.ai) porque el "viewport" del iframe crece con el
+   contenido. Solución: sticky wrapper de altura 0.
+   – .pill-wrap tiene position:sticky; bottom:0; height:0
+     → se mantiene pegado al borde inferior del área visible
+       del scroll container, sin ocupar espacio en el flujo.
+   – .pill-total tiene position:absolute; bottom:20px; right:16px
+     → se pinta 20px encima del borde del wrapper.
+   Esto funciona igual en iframe, en navegador directo y en móvil.
+──────────────────────────────────────────────────────────────── */
+.pill-wrap {
+  position: sticky;
+  bottom: 0;
+  height: 0;
+  overflow: visible;
+  max-width: 540px;
+  margin: 0 auto;
+  pointer-events: none;
+  z-index: 999;
+}
+.pill-total {
+  position: absolute;
+  bottom: 20px;
+  right: 16px;
+  pointer-events: auto;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 9px 16px;
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .25s;
+  -webkit-tap-highlight-color: transparent;
+}
+.pill-total.visible { opacity: 1; }
+.pill-total:active  { opacity: 0.82; transform: scale(0.97); }
+.pill-icon { font-size: 16px; line-height: 1; }
+
+/* ─── SCREENSHOT ONLY ─── */
+.clon-nota {
+  width: 100%;
+  min-height: 38px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background: #FDFAF6;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+@media (max-width: 380px) {
+  .product-row, .extra-row, .global-grid-header {
+    grid-template-columns: 1fr 44px 46px 56px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="factura">
+
+  <!-- INFO FIELDS -->
+  <div class="info-section">
+    <div style="height:16px"></div>
+    <div class="info-row">
+      <div class="info-icon">🗓️</div>
+      <div class="date-wrap">
+        <input type="text" id="fechaTexto" readonly placeholder="Fecha">
+        <input type="date" id="fechaPicker" onchange="cambiarFecha(this)">
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-icon">📍</div>
+      <select id="lugar" onchange="gestionarLugar()">
+        <option value="">Seleccionar lugar...</option>
+        <option>Río Chiquito</option><option>Arizona</option><option>Las Mercedes</option>
+        <option>Lombardía</option><option>Km 17</option><option>Zizama</option>
+        <option>Km 16</option><option>Hicaque</option><option>Jazmín Arriba</option>
+        <option>Jazmín Abajo</option><option>París de Leán</option><option>Flores de Leán</option>
+        <option>Las Delicias</option><option>Nueva Esperanza</option><option>Ceibita Way</option>
+        <option>Colorado Barra</option><option>La Florida</option><option>Sombra Verde</option>
+        <option>Campo Nuevo</option><option>Guachipilín</option><option>Tarraloza</option>
+        <option>Cerritos</option><option>El Verdún</option><option>San José</option>
+        <option>La Colmena</option><option>Esparta</option><option>El Embarcadero</option>
+        <option>Guadalupe</option><option>Playa Rosita</option><option>Agua Caliente</option>
+        <option value="manual">Otro lugar...</option>
+      </select>
+    </div>
+    <div class="info-row">
+      <div class="info-icon">🛒</div>
+      <select id="negocio" onchange="gestionarNegocio()">
+        <option value="">Seleccionar negocio...</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- BRAND DIVIDER -->
+  <div class="brand-divider">
+    <div class="brand-name">Hawit, La Popular y Bambino</div>
+    <div class="brand-sub">Pedido de productos</div>
+  </div>
+
+  <!-- GLOBAL COLUMN HEADER -->
+  <div class="global-grid-header">
+    <div>Producto</div><div>Cant</div><div>Precio</div><div>Total</div>
+  </div>
+
+  <!-- PRODUCT SECTIONS -->
+  <div id="secciones"></div>
+
+  <!-- SUMMARY -->
+  <div class="summary-block" style="margin-top:14px;">
+    <div class="summary-count">🥖 Productos: <strong id="totalVariedades">0</strong></div>
+    <div class="summary-total">💰 TOTAL — <span id="total">L0.00</span></div>
+    <div class="summary-letras" id="totalLetras">(Cero Lempiras con 00/100 exactos)</div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="notes-block" style="margin-top:14px;">
+    <div class="notes-label">🔄 Cambios</div>
+    <textarea id="cambios" oninput="autoExpand(this)" placeholder="Escribe aquí cualquier cambio..."></textarea>
+  </div>
+  <div class="notes-block" style="margin-top:10px; padding-bottom:4px;">
+    <div class="notes-label">‼️ Pendientes</div>
+    <textarea id="pendientes" oninput="autoExpand(this)" placeholder="Escribe aquí lo que quedó pendiente..."></textarea>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions" data-html2canvas-ignore="true">
+    <button class="btn btn-ws" onclick="enviarWhatsApp()">
+      <span class="btn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
+      WhatsApp
+    </button>
+    <button class="btn btn-jpg" onclick="descargarJPG()">
+      <span class="btn-icon">📷</span>
+      Imagen JPG
+    </button>
+    <button class="btn btn-new" onclick="limpiarCampos()">
+      <span class="btn-icon">🔄</span>
+      Limpiar
+    </button>
+  </div>
+
+</div><!-- end .card -->
+
+<!-- PILL flotante: sticky wrapper de altura 0 -->
+<div class="pill-wrap" data-html2canvas-ignore="true">
+  <div class="pill-total" id="pillTotal"
+       onclick="document.querySelector('.summary-block').scrollIntoView({behavior:'smooth',block:'center'})">
+    <span class="pill-icon">💰</span>
+    <span id="pillAmount">L0.00</span>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════
+//  DATOS BASE
+// ══════════════════════════════════
+const baseDatos = {
+  "Río Chiquito":["X Fe","Onix"],
+  "Arizona":["La Unión (Gasolinera)","San Alejo","Torres","Paola","Wi-Fi Café","Ying Yeng","Los Almendros","FV El Chamaco","Dinora","La Bendición (2)","Reyes (Salida)"],
+  "Las Mercedes":["Emanuel (Entrada)","Las Gemelas (Janeth)","David (Estip Iberton)","Suyapa (Vanessa)","Gómez (QQ Chocolate)","Wilmer (Fondo)","Los Hermanos","Oneida (Acetona)","Evelio (Cuadrícula)","Antonia Cartagena","Ángela (Callejón)","Emanuel (Policía)","Keyli (Policía)","V&M Beltrán (Salida)"],
+  "Lombardía":["Kenzi"],
+  "Km 17":["Saby","Saúl (Ebanistería)","La Caseta","Marisol","De León","José (Magda)","Heydi Matute","Wendy (Carpintero)","Peña (Cangrejero)","Velásquez (Carmen)","Marcos Damián (Génesis)","Geovanny Vásquez","Marilyn (Comedor)","Kimberly","Zúniga","MS García","Ortiz","El Almendro (TJ)","Avícola Orellana"],
+  "Zizama":["Víctor","Osorio (Madera)","Fabiana (Meñique)"],
+  "Km 16":["Wilton (Matriculado)"],
+  "Hicaque":["Karol (Refresco)","Shekinah (Lester)","Los Coquitos","Rivera","Flor","López","Blessing","Adalid","(Tino)"],
+  "Jazmín Arriba":["El Almendro (Raúl)"],
+  "Jazmín Abajo":["Yonary (Reina)","La Bendición, Estela","Hernández (Maylin)","El Jazmín (Don Pancho)","Jorgito","Jordy (Isidro, Erika)"],
+  "París de Leán":["Ana","Ramos (Viejitos)","Perdomo","La Bendición (91)","Matías","El Tamarindo","Los Tres Hermanos (Tomasito)","Susana","Jeffrey (Callejón)","(125)"],
+  "Flores de Leán":["Los Tres Hermanos","Maynor","Carolina (Chamo y Alma)","Neylan (Claudia)","Nolvia Izaguirre","Belén"],
+  "Las Delicias":["Any (TJ)","Adrián Bonilla"],
+  "Nueva Esperanza":["Yerly (Toño Pineda)"],
+  "Ceibita Way":["Murillo (Motocarga)","Maura Ramírez","Golosinas Lidia","Lucas Mendoza","Mi Pollo (Sara)","Lety (Campo)","M&M","Sara","Valery","Comercial Cindy","Castro","Nicol","Barrera","El Almendro","Bessy Murillo (Madera)","Mayra (Mamá de Bessy)","Felicita","Chávez","Enamorado (Campo)"],
+  "Colorado Barra":["Génesis (Senia)","Delmi (Mexicana)","Sandra (Pastora)","Xiomara"],
+  "La Florida":["Ana Díaz (Hacienda)"],
+  "Sombra Verde":["María","Josselyn","Jovel"],
+  "Campo Nuevo":["Mareylis"],
+  "Guachipilín":["Golosinas Familiar Felipa","Bonilla (Tres pisos)","Kevin (Vanessa y Carmen)"],
+  "Tarraloza":["El Paraíso","Dubón (Olvin)","Lesly","Meléndez","Zoila","Yadira (Maira)"],
+  "Cerritos":["Alejandro","La Fortaleza"],
+  "El Verdún":["Ortiz","Dos Hermanos","Las Dos Hermanas (Escuela)","(Miskita)","Márquez","Katy (Madera Verde)","Nicole (Última)"],
+  "San José":["Jackeline (Doris)","Evelin (Virginia)","La Guata","Las Gemelas (Escuela)","Perla","Yeylin","Dolores","La Bendición (Iglesia)","Camila (Nayeli)","Anita (Comedor)","Zamira (Madera)"],
+  "La Colmena":["Las Dos Hermanas (F. iglesia)","Maryuri","La Colmenita","Eben-Ezer"],
+  "Esparta":["Comedor Nancy","Arroz Chino","Pollolandia","Samantha","Gladys","El Vaquero","Bessy (F. iglesia)","La Bendición (F. Salón)","J&M (D. Salón)","MS La Hacienda","El Jordán","Lilian (Antes de Guadalupe)","La Económica","Paty","Mi Esperanza (F. La Granja)","Farmacia Mejía","D&G"],
+  "El Embarcadero":["Ana"],
+  "Guadalupe":["El Amigo (Campo)","Yanira"],
+  "Playa Rosita":["Hacienda Chacón","(Tía de Daysi)","La Bendición (Zulma)","Glenda","Evelin"],
+  "Agua Caliente":["Johan","Rixi (Delsa)","Braulin","Lohani"]
+};
+
+// ── SECTIONS ──
+const SECCIONES = [
+  { id:"pan",        nombre:"Pan",        emoji:"🍞", bgVar:"--pan-bg", bdVar:"--pan-bd", hdVar:"--pan-hd",
+    productos:[{n:"Casera",p:16},{n:"Larga",p:15},{n:"Arroz",p:25},{n:"Arroz",p:15},{n:"Arroz",p:10},
+               {n:"Gigante",p:25},{n:"Q Especial",p:20},{n:"Quequito",p:8},
+               {n:"Marquesote",p:40},{n:"Panqueque",p:30},{n:"Mini queque",p:15}] },
+  { id:"tostado",    nombre:"Tostado",    emoji:"🍪", bgVar:"--tos-bg", bdVar:"--tos-bd", hdVar:"--tos-hd",
+    productos:[{n:"Lengua",p:15},{n:"Alpora",p:20},{n:"M Bandeja",p:25},{n:"M Suelta",p:16},
+               {n:"Margarita",p:10},{n:"Elena",p:10},{n:"Polvorón",p:10},
+               {n:"Maíz",p:10},{n:"Maicena",p:10},{n:"Rosquita",p:10},{n:"Encocado",p:10}] },
+  { id:"moldes",     nombre:"Masa Suave", emoji:"🥖", bgVar:"--mol-bg", bdVar:"--mol-bd", hdVar:"--mol-hd",
+    productos:[{n:"Simple P",p:15},{n:"Simple G",p:30},{n:"M Económico",p:33},
+               {n:"M Leche",p:44},{n:"M Mantequilla",p:44},{n:"M Integral",p:44},
+               {n:"Hamburguesa",p:89},{n:"Hamburguesa",p:65},{n:"Bollito",p:25},{n:"P Ajo",p:25}] },
+  { id:"reposteria", nombre:"Repostería", emoji:"🎂", bgVar:"--rep-bg", bdVar:"--rep-bd", hdVar:"--rep-hd",
+    productos:[{n:"Biscocho",p:30},{n:"Q Lustre",p:30},{n:"Relámpago",p:65},{n:"Punto Piña",p:15},
+               {n:"Torta Piña",p:100},{n:"Pastel Piña",p:80},{n:"Cono",p:90},{n:"Flauta",p:100},
+               {n:"Herradura",p:100},{n:"Quesadilla",p:100},{n:"Quesadilla",p:15},
+               {n:"Magdalena",p:100},{n:"M Magdalena",p:25},{n:"Brazo Gitano",p:55},
+               {n:"Encanelado",p:84},{n:"Roles",p:15},{n:"Pastel P",p:120},{n:"Pastel G",p:190}] },
+  { id:"otros",      nombre:"Otros",      emoji:"☕", bgVar:"--otr-bg", bdVar:"--otr-bd", hdVar:"--otr-hd",
+    productos:[{n:"Pizza",p:25},{n:"Café",p:100}] }
+];
+
+const extraCounters = {};
+
+// ── BUILD SECTIONS DOM ──
+function buildSections() {
+  const container = document.getElementById("secciones");
+  SECCIONES.forEach(sec => {
+    extraCounters[sec.id] = 0;
+    const block = document.createElement("div");
+    block.className = "section-block";
+    block.id = `block_${sec.id}`;
+
+    const header = document.createElement("div");
+    header.className = "section-header";
+    header.style.background = `var(${sec.bgVar})`;
+    header.style.borderTopColor = `var(${sec.bdVar})`;
+    header.innerHTML = `
+      <span class="section-emoji">${sec.emoji}</span>
+      <span class="section-title" style="color:var(${sec.hdVar})">${sec.nombre}</span>
+      <span class="section-badge" style="background:var(${sec.bdVar});color:var(${sec.hdVar})" id="badge_${sec.id}">0</span>
+      <span class="section-toggle" id="toggle_${sec.id}">▾</span>`;
+    header.onclick = () => toggleSection(sec.id);
+
+    const body = document.createElement("div");
+    body.className = "section-body open";
+    body.id = `body_${sec.id}`;
+
+    const inner = document.createElement("div");
+    inner.className = "section-body-inner";
+    inner.style.background = `var(${sec.bgVar})`;
+
+    const prodCont = document.createElement("div");
+    prodCont.id = `prods_${sec.id}`;
+    sec.productos.forEach((prod, idx) => {
+      const row = document.createElement("div");
+      row.className = "product-row";
+      row.id = `row_${sec.id}_${idx}`;
+      row.innerHTML = `
+        <span class="prod-name" title="${prod.n}">${prod.n}</span>
+        <input type="number" id="c_${sec.id}_${idx}" placeholder="0" min="0" oninput="calcProd('${sec.id}',${idx})" inputmode="numeric">
+        <input type="number" id="p_${sec.id}_${idx}" value="${prod.p}" min="0" oninput="calcProd('${sec.id}',${idx})" inputmode="numeric">
+        <input type="text"   id="r_${sec.id}_${idx}" readonly tabindex="-1" placeholder="—">`;
+      prodCont.appendChild(row);
+    });
+    inner.appendChild(prodCont);
+
+    const extraCont = document.createElement("div");
+    extraCont.id = `extras_${sec.id}`;
+    inner.appendChild(extraCont);
+
+    const btnAdd = document.createElement("button");
+    btnAdd.className = "btn-add btn-add-sec";
+    btnAdd.setAttribute("type","button");
+    btnAdd.innerHTML = "＋ Agregar otro producto";
+    btnAdd.onclick = () => agregarExtra(sec.id);
+    inner.appendChild(btnAdd);
+
+    body.appendChild(inner);
+    block.appendChild(header);
+    block.appendChild(body);
+    container.appendChild(block);
+  });
+}
+
+function toggleSection(secId) {
+  const body = document.getElementById(`body_${secId}`);
+  const tog  = document.getElementById(`toggle_${secId}`);
+  body.classList.toggle("open");
+  tog.classList.toggle("open", body.classList.contains("open"));
+}
+
+// ── EXTRA ROWS ──
+function agregarExtra(secId) {
+  extraCounters[secId]++;
+  const num = extraCounters[secId];
+  const row = document.createElement("div");
+  row.className = "extra-row";
+  row.id = `erow_${secId}_${num}`;
+  row.innerHTML = `
+    <input type="text"   id="en_${secId}_${num}" placeholder="Nombre del producto">
+    <input type="number" id="ec_${secId}_${num}" placeholder="0" min="0" oninput="calcExtra('${secId}',${num})" inputmode="numeric">
+    <input type="number" id="ep_${secId}_${num}" placeholder="0" min="0" oninput="calcExtra('${secId}',${num})" inputmode="numeric">
+    <input type="text"   id="er_${secId}_${num}" readonly tabindex="-1" placeholder="—">`;
+  document.getElementById(`extras_${secId}`).appendChild(row);
+}
+
+// ── CALCULATIONS ──
+function calcProd(secId, idx) {
+  const c = parseFloat(document.getElementById(`c_${secId}_${idx}`).value) || 0;
+  const p = parseFloat(document.getElementById(`p_${secId}_${idx}`).value) || 0;
+  const rEl = document.getElementById(`r_${secId}_${idx}`);
+  const cEl = document.getElementById(`c_${secId}_${idx}`);
+  if (c > 0) { rEl.value=(c*p).toFixed(0); rEl.classList.add("total-active"); cEl.classList.add("input-active"); }
+  else       { rEl.value="";               rEl.classList.remove("total-active"); cEl.classList.remove("input-active"); }
+  sumar();
+}
+
+function calcExtra(secId, num) {
+  const c = parseFloat(document.getElementById(`ec_${secId}_${num}`).value) || 0;
+  const p = parseFloat(document.getElementById(`ep_${secId}_${num}`).value) || 0;
+  const er = document.getElementById(`er_${secId}_${num}`);
+  if (c > 0) { er.value=(c*p).toFixed(0); er.classList.add("total-active"); }
+  else       { er.value="";               er.classList.remove("total-active"); }
+  sumar();
+}
+
+function sumar() {
+  let total = 0, conteo = 0;
+  SECCIONES.forEach(sec => {
+    let sc = 0;
+    sec.productos.forEach((_, idx) => {
+      const c = parseFloat(document.getElementById(`c_${sec.id}_${idx}`)?.value) || 0;
+      const p = parseFloat(document.getElementById(`p_${sec.id}_${idx}`)?.value) || 0;
+      if (c > 0) { conteo++; sc++; total += c*p; }
+    });
+    for (let i = 1; i <= extraCounters[sec.id]; i++) {
+      const ec = parseFloat(document.getElementById(`ec_${sec.id}_${i}`)?.value) || 0;
+      const ep = parseFloat(document.getElementById(`ep_${sec.id}_${i}`)?.value) || 0;
+      if (ec > 0) { conteo++; sc++; total += ec*ep; }
+    }
+    const badge = document.getElementById(`badge_${sec.id}`);
+    if (badge) badge.textContent = sc;
+  });
+  const totalStr = "L" + total.toLocaleString('es-HN',{minimumFractionDigits:2});
+  document.getElementById("totalVariedades").textContent = conteo;
+  document.getElementById("total").textContent = totalStr;
+  document.getElementById("totalLetras").textContent = "(" + numeroALetras(total) + ")";
+  document.getElementById("pillAmount").textContent = totalStr;
+  document.getElementById("pillTotal").classList.toggle("visible", total > 0);
+}
+
+// ── DATE ──
+function formatearFecha(d) {
+  const dias = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+  return `${dias[d.getDay()]}, ${d.getDate()}.${d.getMonth()+1}.${String(d.getFullYear()).slice(2)}`;
+}
+document.getElementById("fechaTexto").value = formatearFecha(new Date());
+function cambiarFecha(inp) {
+  if (!inp.value) return;
+  const [y,m,d] = inp.value.split('-');
+  document.getElementById("fechaTexto").value = formatearFecha(new Date(y, m-1, d, 12));
+}
+
+// ── LUGAR / NEGOCIO ──
+function gestionarLugar() {
+  const sel = document.getElementById("lugar");
+  if (sel.value === "manual") {
+    convertirAInput("lugar","Escribe el lugar",false);
+    convertirAInput("negocio","Escribe el negocio",true);
+  } else { cargarNegocios(sel.value); }
+}
+function cargarNegocios(lugar) {
+  const sel = document.getElementById("negocio");
+  if (!sel || sel.tagName !== "SELECT") return;
+  sel.innerHTML = '<option value="">Seleccionar negocio...</option>';
+  (baseDatos[lugar]||[]).forEach(n => {
+    const o = document.createElement("option"); o.value=n; o.textContent=n; sel.appendChild(o);
+  });
+  sel.innerHTML += '<option value="manual">Otro negocio...</option>';
+}
+function gestionarNegocio() {
+  if (document.getElementById("negocio").value === "manual")
+    convertirAInput("negocio","Escribe el negocio",true);
+}
+function convertirAInput(id, ph, esTA) {
+  const viejo = document.getElementById(id);
+  const nuevo = document.createElement(esTA ? "textarea" : "input");
+  nuevo.id = id; nuevo.placeholder = ph;
+  if (!esTA) nuevo.type = "text";
+  if (esTA)  nuevo.oninput = function(){ autoExpand(this); };
+  viejo.replaceWith(nuevo);
+}
+
+// ── HELPERS ──
+function autoExpand(t) { t.style.height="auto"; t.style.height=t.scrollHeight+"px"; }
+function limpiarCampos() { if (confirm("¿Limpiar todos los campos y comenzar una nueva factura?")) location.reload(); }
+
+// ── NUMERO A LETRAS ──
+function numeroALetras(num) {
+  if (num === 0) return 'Cero Lempiras con 00/100 exactos';
+  const U=['','un','dos','tres','cuatro','cinco','seis','siete','ocho','nueve'];
+  const D=['','diez','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
+  const E=['diez','once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve'];
+  const C=['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
+  function conv(n) {
+    let o='';
+    if(n===100) return 'cien ';
+    if(n>=100){o+=C[Math.floor(n/100)]+' ';n%=100;}
+    if(n>=10&&n<=19) o+=E[n-10]+' ';
+    else{if(n>=20&&n<=29)o+=(n===20?'veinte ':'veinti'+U[n%10]+' ');else{if(Math.floor(n/10)>0)o+=D[Math.floor(n/10)]+(n%10>0?' y ':' ');o+=U[n%10]+(n%10>0?' ':'');}}
+    return o;
+  }
+  let ent=Math.floor(num),dec=Math.round((num-ent)*100),l='';
+  if(ent>=1000){l+=(Math.floor(ent/1000)===1?'mil ':conv(Math.floor(ent/1000))+'mil ');ent%=1000;}
+  l+=conv(ent);
+  let r=l.trim()+' Lempiras con '+(dec<10?'0':'')+dec+'/100 exactos';
+  return r.charAt(0).toUpperCase()+r.slice(1);
+}
+
+// ── WHATSAPP ──
+const TW = 27;
+function fmtRow(nombre, cant, px, tot) {
+  return nombre.substring(0,13).padEnd(13)+String(cant).padStart(3)+String(px).padStart(5)+String(tot).padStart(6);
+}
+function centrar(txt, ancho) {
+  return " ".repeat(Math.max(0,Math.floor((ancho-txt.length)/2)))+txt;
+}
+function enviarWhatsApp() {
+  const fecha   = document.getElementById("fechaTexto").value;
+  const lugar   = document.getElementById("lugar").value   || "N/A";
+  const negocio = document.getElementById("negocio").value || "N/A";
+  const total   = document.getElementById("total").innerText;
+  const tv      = document.getElementById("totalVariedades").innerText;
+  const tl      = document.getElementById("totalLetras").innerText;
+
+  let msg = `🗓️ *${fecha}*\n📍 ${lugar}\n🛒 ${negocio}\n`;
+  let tabla = centrar("Hawit, La Popular y Bambino",TW)+"\n";
+  tabla += "-".repeat(TW)+"\n";
+  tabla += fmtRow("PRODUCTO","CNT","L.Px","TOTAL")+"\n";
+  tabla += "-".repeat(TW)+"\n";
+
+  let hayProductos = false;
+  SECCIONES.forEach(sec => {
+    let lineas = "";
+    sec.productos.forEach((prod,idx)=>{
+      const c=parseFloat(document.getElementById(`c_${sec.id}_${idx}`)?.value)||0;
+      if(c>0){const p=parseFloat(document.getElementById(`p_${sec.id}_${idx}`)?.value)||0;lineas+=fmtRow(prod.n,c,p,Math.round(c*p))+"\n";}
+    });
+    for(let i=1;i<=extraCounters[sec.id];i++){
+      const ec=parseFloat(document.getElementById(`ec_${sec.id}_${i}`)?.value)||0;
+      if(ec>0){const ep=parseFloat(document.getElementById(`ep_${sec.id}_${i}`)?.value)||0;const en=document.getElementById(`en_${sec.id}_${i}`)?.value||"Extra";lineas+=fmtRow(en,ec,ep,Math.round(ec*ep))+"\n";}
+    }
+    if(lineas){hayProductos=true;tabla+=(sec.emoji+" "+sec.nombre).substring(0,TW)+"\n"+lineas;}
+  });
+
+  if (!hayProductos) { alert("No hay productos con cantidad para enviar."); return; }
+  tabla += "-".repeat(TW)+"\n";
+  msg += "```\n"+tabla+"```";
+  msg += `\n🥖 *Productos:* ${tv}`;
+  msg += `\n💰 *TOTAL: ${total}*`;
+  msg += `\n_${tl}_`;
+  const camb=document.getElementById("cambios").value.trim();
+  const pend=document.getElementById("pendientes").value.trim();
+  if(camb) msg+=`\n\n🔄 *Cambios:*\n${camb}`;
+  if(pend) msg+=`\n\n‼️ *Pendientes:*\n${pend}`;
+  window.open("https://wa.me/50496895753?text="+encodeURIComponent(msg),'_blank');
+}
+
+// ── DOWNLOAD JPG ──
+function descargarJPG() {
+  window.scrollTo(0,0);
+  const notaIds=['cambios','pendientes'], clones=[];
+  notaIds.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.value.trim()){
+      const c=document.createElement('div');c.className='clon-nota';c.innerText=el.value;
+      el.style.display='none';el.parentNode.insertBefore(c,el.nextSibling);clones.push({o:el,t:c});
+    }
+  });
+  const hidden=[];
+  SECCIONES.forEach(sec=>{
+    sec.productos.forEach((_,idx)=>{
+      const c=parseFloat(document.getElementById(`c_${sec.id}_${idx}`)?.value)||0;
+      if(c<=0){const r=document.getElementById(`row_${sec.id}_${idx}`);if(r){r.style.display='none';hidden.push(r);}}
+    });
+    for(let i=1;i<=extraCounters[sec.id];i++){
+      const ec=parseFloat(document.getElementById(`ec_${sec.id}_${i}`)?.value)||0;
+      if(ec<=0){const r=document.getElementById(`erow_${sec.id}_${i}`);if(r){r.style.display='none';hidden.push(r);}}
+    }
+    const count=parseInt(document.getElementById(`badge_${sec.id}`)?.textContent||"0");
+    if(count===0){const b=document.getElementById(`block_${sec.id}`);if(b){b.style.display='none';hidden.push(b);}}
+    else{const body=document.getElementById(`body_${sec.id}`);if(body&&!body.classList.contains('open'))body.classList.add('open');}
+  });
+  document.querySelectorAll('.btn-add-sec').forEach(b=>{b.style.display='none';hidden.push(b);});
+
+  html2canvas(document.getElementById("factura"),{scale:2,backgroundColor:"#FFFFFF",useCORS:true}).then(canvas=>{
+    hidden.forEach(el=>el.style.display='');
+    clones.forEach(c=>{c.o.style.display='';c.t.remove();});
+    const neg=document.getElementById("negocio").value||"Pedido";
+    const link=document.createElement("a");
+    link.download=`Pedido_${neg.replace(/[^a-z0-9áéíóúñü]/gi,'_')}.jpg`;
+    link.href=canvas.toDataURL("image/jpeg",0.92);
+    link.click();
+  });
+}
+
+// ── INIT ──
+buildSections();
+</script>
+</body>
+</html>
