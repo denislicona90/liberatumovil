@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clases Virtuales en Directo | Zoom — Libera Tu Móvil</title>
+  <meta name="description" content="Accede a las clases virtuales en directo de Libera Tu Móvil vía Zoom. Exclusivo para alumnos y miembros activos. Ingresa tu contraseña para ver los datos de la sesión.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Clases Virtuales en Directo | Libera Tu Móvil">
+  <meta property="og:description" content="Sesiones en vivo vía Zoom para alumnos y miembros de Libera Tu Móvil. Ingresa la contraseña para acceder a los datos de la reunión.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://liberatumovil.net/clases-virtuales-en-directo">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --principal: #6b029b;
+      --secundario-1: #f7680a;
+      --secundario-2: #fde5fd;
+      --secundario-3: #9c6eb1;
+      --gris-claro: #f4f6f8;
+      --error: #e53935;
+      --zoom-color: #007aff;
+      --warning-bg: #fff8e1;
+      --warning-border: #ffd54f;
+      --warning-text: #5d4037;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--gris-claro);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 16px 0;
+      text-align: center;
+      color: #1a1a1a;
+    }
+
+    /* NOTICE BAR */
+    .notice-bar {
+      width: calc(100% + 32px);
+      background: var(--principal);
+      color: rgba(255,255,255,.9);
+      text-align: center;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      margin-left: -16px;
+      margin-right: -16px;
+    }
+    .notice-bar a { color: #f3d4ff; text-decoration: underline; margin-left: 4px; }
+
+    /* ENCABEZADO */
+    .encabezado { margin-bottom: 6px; }
+    .encabezado h1 {
+      font-family: 'Comfortaa', sans-serif;
+      color: var(--principal);
+      font-size: clamp(1.6em, 5vw, 2.6em);
+      margin: 0 0 6px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+    .encabezado .subtag {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--principal), var(--secundario-1));
+      color: white;
+      font-size: 0.78em;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    /* EXCLUSIVIDAD */
+    .exclusivity-box {
+      background: #f3e8ff;
+      border: 1.5px solid rgba(107,2,155,.3);
+      border-radius: 12px;
+      padding: 12px 20px;
+      max-width: 460px;
+      width: 100%;
+      margin: 12px 0 0;
+      font-size: 13px;
+      color: var(--principal);
+      font-weight: 500;
+    }
+    .exclusivity-box a { color: var(--secundario-1); font-weight: 600; text-decoration: underline; }
+
+    /* RECORDATORIOS */
+    .recordatorios {
+      background: var(--warning-bg);
+      border: 1.5px solid var(--warning-border);
+      border-radius: 14px;
+      padding: 20px 22px;
+      max-width: 460px;
+      width: 100%;
+      margin: 16px 0 0;
+      text-align: left;
+    }
+    .recordatorios-titulo {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1em;
+      font-weight: 700;
+      color: var(--principal);
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rec-grupo { margin-bottom: 14px; }
+    .rec-grupo:last-child { margin-bottom: 0; }
+    .rec-grupo-titulo {
+      font-size: 0.72em;
+      font-weight: 600;
+      color: var(--secundario-3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .rec-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.85em;
+      color: var(--warning-text);
+      line-height: 1.5;
+      margin-bottom: 5px;
+    }
+    .rec-item .icono { flex-shrink: 0; font-size: 1em; margin-top: 1px; }
+
+    /* SECCIÓN ACCESO */
+    .seccion {
+      background: white;
+      padding: 28px 24px;
+      max-width: 460px;
+      width: 100%;
+      margin-top: 16px;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(107,2,155,0.10);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .seccion::before {
+      content: '';
+      display: block;
+      height: 4px;
+      background: linear-gradient(90deg, var(--principal), var(--secundario-1));
+      position: absolute;
+      top: 0; left: 0; right: 0;
+    }
+    .bloqueado { opacity: 0.42; pointer-events: none; filter: grayscale(70%); }
+    .seccion h3 {
+      font-family: 'Comfortaa', sans-serif;
+      color: var(--principal);
+      margin: 0 0 16px;
+      font-size: 1.05em;
+    }
+
+    /* ════════════════════════════
+       CONTADOR — OPCIÓN A
+    ════════════════════════════ */
+    #textoContador {
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 20px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Contenedor de bloques */
+    #contadorWrap {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: stretch;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .bloque-cnt {
+      background: linear-gradient(135deg, #f7680a, #9c6eb1);
+      border-radius: 12px;
+      padding: 12px 6px 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      box-shadow: 0 4px 14px rgba(107,2,155,0.20);
+      transition: transform 0.15s;
+    }
+
+    /* El bloque de días tiene gradiente más oscuro y es un poco más ancho */
+    .bloque-cnt.dias {
+      background: linear-gradient(135deg, #9c6eb1, #6b029b);
+      flex: 1.25;
+      box-shadow: 0 4px 18px rgba(107,2,155,0.30);
+    }
+
+    .bloque-cnt .num {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: clamp(1.7em, 5vw, 2.2em);
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      min-width: 2ch;
+      text-align: center;
+    }
+    .bloque-cnt .lab {
+      font-size: clamp(0.55em, 1.8vw, 0.65em);
+      color: rgba(255,255,255,0.75);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    /* Mensaje "¡Empezamos!" cuando diferencia <= 0 */
+    #contadorMensaje {
+      display: none;
+      margin-top: 10px;
+      font-size: clamp(1.5em, 5vw, 2em);
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f7680a, #9c6eb1);
+      padding: 14px 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+      font-family: 'Comfortaa', sans-serif;
+      width: 100%;
+      max-width: 460px;
+      letter-spacing: 1px;
+    }
+
+    /* "¡Pronto!" cuando no hay fecha */
+    #contadorPromo {
+      display: none;
+      margin-top: 10px;
+      font-size: clamp(1.6em, 5vw, 2.2em);
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f7680a, #9c6eb1);
+      padding: 14px 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+      font-family: 'Comfortaa', sans-serif;
+      width: 100%;
+      max-width: 460px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════
+       CALENDARIO MINI
+    ════════════════════════════ */
+    #calendarioWrap {
+      max-width: 460px;
+      width: 100%;
+      margin-top: 16px;
+    }
+    .calendario-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(107,2,155,0.10);
+      overflow: hidden;
+    }
+    .cal-header {
+      background: linear-gradient(135deg, var(--principal), var(--secundario-3));
+      color: white;
+      padding: 14px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .cal-header-left { text-align: left; }
+    .cal-mes-anio {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1.05em;
+      font-weight: 700;
+      text-transform: capitalize;
+      letter-spacing: 0.5px;
+    }
+    .cal-tz { font-size: 0.67em; opacity: 0.72; margin-top: 2px; }
+    .cal-badge {
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      border-radius: 20px;
+      padding: 4px 11px;
+      font-size: 0.72em;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cal-badge.sin-clase { opacity: 0.5; }
+    .cal-dias-semana {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: #f8f0ff;
+      border-bottom: 1px solid #ede0f7;
+    }
+    .cal-dias-semana span {
+      font-size: 0.67em;
+      font-weight: 600;
+      color: var(--secundario-3);
+      padding: 7px 0 6px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      padding: 8px 10px 12px;
+      background: white;
+    }
+    .cal-dia {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82em;
+      font-weight: 500;
+      color: #555;
+      border-radius: 50%;
+      margin: 2px auto;
+      position: relative;
+      cursor: default;
+    }
+    .cal-dia.vacio { visibility: hidden; }
+    .cal-dia.hoy {
+      background: var(--gris-claro);
+      color: var(--principal);
+      font-weight: 700;
+      border: 1.5px solid var(--secundario-3);
+    }
+    .cal-dia.clase {
+      background: linear-gradient(135deg, var(--principal), var(--secundario-1));
+      color: white !important;
+      font-weight: 700;
+      box-shadow: 0 3px 10px rgba(107,2,155,0.35);
+      border: none;
+    }
+    .cal-dia.clase::after {
+      content: '';
+      display: block;
+      width: 4px; height: 4px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .cal-info-clase {
+      background: #f8f0ff;
+      border-top: 1.5px solid #ede0f7;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82em;
+      color: var(--principal);
+      font-weight: 600;
+      text-align: left;
+    }
+    .cal-info-icono { font-size: 1.3em; flex-shrink: 0; }
+    .cal-info-texto { line-height: 1.4; }
+    .cal-info-sub { font-size: 0.85em; color: var(--secundario-3); font-weight: 400; }
+    .cal-info-clase.oculto { display: none; }
+
+    /* FORM PASSWORD */
+    .form-pass { margin-top: 4px; display: none; }
+    .form-pass label { display: block; font-size: 0.82em; color: #888; margin-bottom: 6px; }
+    .input-wrap { display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap; }
+    input[type="password"] {
+      padding: 10px 14px;
+      flex: 1;
+      min-width: 140px;
+      max-width: 220px;
+      border-radius: 8px;
+      border: 1.5px solid #ddd;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="password"]:focus { border-color: var(--principal); }
+    .error-msg { color: var(--error); font-size: 0.83em; margin-top: 8px; min-height: 18px; }
+    button {
+      background: var(--principal);
+      color: white;
+      padding: 11px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.1s;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95em;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    button:hover { background: var(--secundario-1); }
+    button:active { transform: scale(0.97); }
+
+    /* CONTENIDO PROTEGIDO */
+    #contenidoProtegido { display: none; margin-top: 16px; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .zoom-info {
+      background: #f0f7ff;
+      border: 1.5px solid #b3d7ff;
+      padding: 18px 20px;
+      border-radius: 12px;
+      text-align: left;
+    }
+    .zoom-info h5 { margin: 0 0 12px; font-family: 'Comfortaa', sans-serif; font-size: 1.1em; }
+    .zoom-text { color: var(--zoom-color); font-weight: 700; font-size: 1.3em; }
+    .zoom-dato { display: flex; align-items: center; gap: 8px; font-size: 0.9em; color: #333; margin-bottom: 8px; }
+    .zoom-dato strong { min-width: 130px; }
+    .zoom-dato .valor {
+      background: #e3f0ff;
+      padding: 3px 10px;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 1.05em;
+      letter-spacing: 1px;
+    }
+    .btn-entrar {
+      display: block;
+      width: 100%;
+      margin-top: 16px;
+      background: linear-gradient(135deg, var(--zoom-color), #0056cc);
+      font-size: 1.05em;
+      padding: 13px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      transition: opacity 0.2s, transform 0.1s;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-entrar:hover { opacity: 0.88; }
+    .btn-entrar:active { transform: scale(0.98); }
+    .nota-acceso { font-size: 0.75em; color: #888; margin-top: 10px; text-align: center; }
+
+    .shake { animation: shake 0.5s ease; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-6px); }
+      75%      { transform: translateX(6px); }
+    }
+
+    .spacer { flex: 1; min-height: 32px; }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a1a;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 13px;
+      width: calc(100% + 32px);
+      margin-left: -16px;
+      margin-right: -16px;
+      margin-top: 32px;
+      align-self: stretch;
+    }
+    footer a { color: rgba(255,255,255,.4); text-decoration: underline; margin: 0 8px; transition: color .2s; }
+    footer a:hover { color: white; }
+    .footer-links { margin-bottom: 10px; }
+    .footer-social { display: flex; justify-content: center; gap: 18px; margin-bottom: 14px; }
+    .footer-social a { display: inline-block; }
+    .footer-social img {
+      width: 22px; height: 22px;
+      filter: brightness(0) invert(1);
+      opacity: .5;
+      transition: opacity .2s, transform .2s;
+    }
+    .footer-social a:hover img { opacity: 1; transform: scale(1.2); }
+
+    @media (max-width: 400px) {
+      .zoom-dato { flex-direction: column; align-items: flex-start; gap: 3px; }
+      .zoom-dato strong { min-width: unset; }
+      .cal-dia { width: 28px; height: 28px; font-size: 0.76em; }
+      #contadorWrap { gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NOTICE BAR -->
+<div class="notice-bar">
+  📡 Acceso exclusivo para alumnos y miembros activos ·
+  <a href="https://liberatumovil.net/formaciones-virtuales-aprender-a-desbloquear-dispositivos-moviles" target="_blank" rel="noopener">Ver formaciones →</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ⚙️  ZONA DE CONFIGURACIÓN — edita solo aquí cada clase
+     ══════════════════════════════════════════════════════════
+
+  📅 FECHA Y HORA — formato:  AAAA-MM-DD HH:MM  (hora Centroamérica, UTC-6)
+
+     Ejemplos:
+       2026-04-15 17:00   → 15 de abril a las 5:00 PM
+       2026-05-03 09:30   → 3 de mayo a las 9:30 AM
+
+     Sin clase programada → deja el campo vacío:
+       <span id="fecha-clase"></span>
+
+     El calendario mostrará el mes correspondiente y marcará el día.
+     Si no hay fecha, el contador dice "¡Pronto!" y el calendario
+     aparece sin ningún día marcado.
+     ══════════════════════════════════════════════════════════ -->
+<div id="CONFIG" style="display:none;">
+  <span id="fecha-clase"></span>
+  <span id="password-correcto">431285</span>
+  <span id="zoom-id">856 3164 3215</span>
+  <span id="zoom-codigo">473528</span>
+  <span id="zoom-link">https://us06web.zoom.us/j/85631643215?pwd=hidudN8UgQNU019A4NSjK9vZXabpgd.1</span>
+</div>
+<!-- ══════════════════════════════════════════════════════════ -->
+
+
+<!-- ENCABEZADO -->
+<header class="encabezado">
+  <div class="subtag">📡 En vivo · Zoom Meeting</div>
+  <h1>Clases Virtuales<br>en Directo</h1>
+</header>
+
+<!-- AVISO EXCLUSIVIDAD -->
+<div class="exclusivity-box">
+  Esta página es exclusiva para <strong>alumnos y miembros activos</strong> de Libera Tu Móvil.
+  Si aún no eres alumno, <a href="https://liberatumovil.net/formaciones-virtuales-aprender-a-desbloquear-dispositivos-moviles" target="_blank" rel="noopener">conoce nuestras formaciones aquí</a>.
+</div>
+
+<!-- RECORDATORIOS -->
+<section class="recordatorios" aria-label="Recordatorios">
+  <div class="recordatorios-titulo">⚠️ Antes de entrar, lee esto</div>
+  <div class="rec-grupo">
+    <div class="rec-grupo-titulo">Cómo acceder</div>
+    <div class="rec-item"><span class="icono">🔸</span><span>Las clases se transmiten por <strong>Zoom Meeting</strong>.</span></div>
+    <div class="rec-item"><span class="icono">🔸</span><span>Ingresa la <strong>contraseña</strong> para ver los datos de acceso.</span></div>
+    <div class="rec-item"><span class="icono">🔸</span><span>Pulsa <strong>"Entrar a clase"</strong> — quedarás en sala de espera hasta que el docente te admita.</span></div>
+    <div class="rec-item"><span class="icono">🔸</span><span>Si el botón no funciona, abre Zoom manualmente y usa el <strong>ID y código de acceso</strong>.</span></div>
+  </div>
+  <div class="rec-grupo">
+    <div class="rec-grupo-titulo">Durante la clase</div>
+    <div class="rec-item"><span class="icono">🔸</span><span>Escribe tu <strong>nombre y apellido completos</strong> al ingresar.</span></div>
+    <div class="rec-item"><span class="icono">🔸</span><span>Silencia tu micrófono si hay <strong>ruido de fondo</strong>.</span></div>
+    <div class="rec-item"><span class="icono">🔸</span><span>Cuida tu <strong>presentación ante la cámara</strong>, por respeto a tus compañeros.</span></div>
+  </div>
+  <div class="rec-grupo">
+    <div class="rec-grupo-titulo">Notas importantes</div>
+    <div class="rec-item"><span class="icono">🔸</span><span>La contraseña y el código <strong>se actualizan con frecuencia</strong>; revísalos aquí cada clase.</span></div>
+    <div class="rec-item"><span class="icono">🔸</span><span>Se recomienda <strong>conectarse desde una PC</strong> para mejor experiencia.</span></div>
+  </div>
+</section>
+
+<!-- SECCIÓN DE ACCESO -->
+<section id="seccionEspecial" class="seccion bloqueado" aria-label="Acceso a la clase">
+  <h3 id="subtitulo">🎯 Disponible 30 minutos antes de iniciar la clase</h3>
+  <div class="form-pass" id="formPass">
+    <label>Ingresa la contraseña para ver los datos de Zoom</label>
+    <div class="input-wrap">
+      <input type="password" id="password" placeholder="Contraseña"
+             onkeydown="if(event.key==='Enter') validarPassword()" />
+      <button onclick="validarPassword()">Acceder</button>
+    </div>
+    <div class="error-msg" id="errorPass"></div>
+  </div>
+  <div id="contenidoProtegido">
+    <div class="zoom-info">
+      <h5>📹 <span class="zoom-text">Zoom</span> — Datos de hoy</h5>
+      <div class="zoom-dato">
+        <strong>ID de reunión:</strong>
+        <span class="valor" id="disp-zoom-id"></span>
+      </div>
+      <div class="zoom-dato">
+        <strong>Código de acceso:</strong>
+        <span class="valor" id="disp-zoom-codigo"></span>
+      </div>
+      <a id="btn-zoom" href="#" target="_blank" rel="noopener noreferrer" class="btn-entrar">
+        🚀 Entrar a clase
+      </a>
+      <p class="nota-acceso">Si el botón no abre Zoom, usa el ID y código arriba.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTADOR — OPCIÓN A -->
+<div id="textoContador">Comenzamos en:</div>
+
+<!-- Bloques (visibles cuando hay fecha y no ha llegado) -->
+<div id="contadorWrap">
+  <div class="bloque-cnt dias">
+    <div class="num" id="cnt-dias">0</div>
+    <div class="lab">días</div>
+  </div>
+  <div class="bloque-cnt">
+    <div class="num" id="cnt-horas">00</div>
+    <div class="lab">horas</div>
+  </div>
+  <div class="bloque-cnt">
+    <div class="num" id="cnt-min">00</div>
+    <div class="lab">min</div>
+  </div>
+  <div class="bloque-cnt">
+    <div class="num" id="cnt-seg">00</div>
+    <div class="lab">seg</div>
+  </div>
+</div>
+
+<!-- Mensaje cuando ya empezó -->
+<div id="contadorMensaje">¡Empezamos! 🎉</div>
+
+<!-- Mensaje cuando no hay fecha -->
+<div id="contadorPromo">¡Pronto!</div>
+
+<!-- CALENDARIO MINI -->
+<div id="calendarioWrap">
+  <div class="calendario-card">
+    <div class="cal-header">
+      <div class="cal-header-left">
+        <div class="cal-mes-anio" id="calMesAnio">—</div>
+        <div class="cal-tz" id="calTz">Tu zona horaria local</div>
+      </div>
+      <div class="cal-badge sin-clase" id="calBadge">Sin clase programada</div>
+    </div>
+    <div class="cal-dias-semana">
+      <span>Do</span><span>Lu</span><span>Ma</span>
+      <span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-info-clase oculto" id="calInfoClase">
+      <span class="cal-info-icono">📅</span>
+      <div class="cal-info-texto">
+        <div id="calInfoFecha">—</div>
+        <div class="cal-info-sub" id="calInfoHora">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-social">
+    <a href="https://www.youtube.com/@liberatumovilofficial" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube">
+    </a>
+    <a href="https://www.facebook.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Facebook">
+    </a>
+    <a href="https://t.me/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+    </a>
+    <a href="https://whatsapp.com/channel/0029Vam1XtvCXC3B0RPNE72l" target="_blank" rel="noopener" aria-label="Canal WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal WhatsApp">
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="https://liberatumovil.net/politicas-de-privacidad" target="_blank" rel="noopener">Política de Privacidad</a> |
+    <a href="https://liberatumovil.net/terminos-y-condiciones" target="_blank" rel="noopener">Términos y Condiciones</a> |
+    <a href="https://liberatumovil.net/politicas-de-cookies" target="_blank" rel="noopener">Política de Cookies</a>
+  </div>
+  <p>© 2026 Libera Tu Móvil — Todos los derechos reservados</p>
+</footer>
+
+<script>
+/* ── LEER CONFIG ── */
+const fechaClaseStr = document.getElementById('fecha-clase').innerText.trim();
+const passCorrecto  = document.getElementById('password-correcto').innerText.trim();
+const zoomId        = document.getElementById('zoom-id').innerText.trim();
+const zoomCodigo    = document.getElementById('zoom-codigo').innerText.trim();
+const zoomLink      = document.getElementById('zoom-link').innerText.trim();
+
+document.getElementById('disp-zoom-id').textContent     = zoomId;
+document.getElementById('disp-zoom-codigo').textContent = zoomCodigo;
+document.getElementById('btn-zoom').href                = zoomLink;
+
+/* ── PARSEAR FECHA (UTC-6 → UTC) ── */
+let fechaClaseUTC = null;
+let hayFecha = false;
+
+if (fechaClaseStr) {
+  const [datePart, timePart] = fechaClaseStr.split(' ');
+  const [Y, M, D]  = datePart.split('-').map(Number);
+  const [hh, mm]   = timePart.split(':').map(Number);
+  fechaClaseUTC = new Date(Date.UTC(Y, M - 1, D, hh + 6, mm, 0));
+  hayFecha = !isNaN(fechaClaseUTC.getTime());
+}
+
+const fechaMediaHoraAntes = hayFecha
+  ? new Date(fechaClaseUTC.getTime() - 30 * 60000)
+  : null;
+
+/* ── REFERENCIAS DOM ── */
+const elSeccion       = document.getElementById('seccionEspecial');
+const elFormPass      = document.getElementById('formPass');
+const elSubtitulo     = document.getElementById('subtitulo');
+const elTextoContador = document.getElementById('textoContador');
+const elWrap          = document.getElementById('contadorWrap');
+const elMensaje       = document.getElementById('contadorMensaje');
+const elPromo         = document.getElementById('contadorPromo');
+const elDias          = document.getElementById('cnt-dias');
+const elHoras         = document.getElementById('cnt-horas');
+const elMin           = document.getElementById('cnt-min');
+const elSeg           = document.getElementById('cnt-seg');
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+/* ── CONTADOR ── */
+function actualizarContador() {
+  const ahora = new Date();
+
+  /* Sin fecha → "¡Pronto!" y sección bloqueada sin subtítulo */
+  if (!hayFecha) {
+    elTextoContador.style.display = 'none';
+    elWrap.style.display          = 'none';
+    elMensaje.style.display       = 'none';
+    elPromo.style.display         = 'block';
+    elSubtitulo.style.display     = 'none';
+    return;
+  }
+
+  const diferencia = fechaClaseUTC - ahora;
+
+  /* Desbloquear sección 30 min antes */
+  if (ahora >= fechaMediaHoraAntes) {
+    elFormPass.style.display = 'block';
+    elSubtitulo.textContent  = '🔑 Ingresa la contraseña para ver los datos de Zoom';
+    elSeccion.classList.remove('bloqueado');
+  }
+
+  /* La clase ya comenzó */
+  if (diferencia <= 0) {
+    elTextoContador.style.display = 'none';
+    elWrap.style.display          = 'none';
+    elMensaje.style.display       = 'block';
+    elPromo.style.display         = 'none';
+    return;
+  }
+
+  /* Cuenta regresiva con días */
+  const totalSeg = Math.floor(diferencia / 1000);
+  const dias  = Math.floor(totalSeg / 86400);
+  const horas = Math.floor((totalSeg % 86400) / 3600);
+  const mins  = Math.floor((totalSeg % 3600) / 60);
+  const segs  = totalSeg % 60;
+
+  elDias.textContent  = dias;
+  elHoras.textContent = pad(horas);
+  elMin.textContent   = pad(mins);
+  elSeg.textContent   = pad(segs);
+
+  elTextoContador.style.display = 'block';
+  elWrap.style.display          = 'flex';
+  elMensaje.style.display       = 'none';
+  elPromo.style.display         = 'none';
+}
+
+/* ── CALENDARIO MINI ── */
+function construirCalendario() {
+  const ahora = new Date();
+  const ref   = hayFecha ? fechaClaseUTC : ahora;
+  const anio  = ref.getFullYear();
+  const mes   = ref.getMonth();
+
+  const nombreMes = ref.toLocaleDateString('es', { month: 'long', year: 'numeric' });
+  document.getElementById('calMesAnio').textContent =
+    nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
+
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  document.getElementById('calTz').textContent = '🌍 ' + tz.replace(/_/g, ' ');
+
+  const badge = document.getElementById('calBadge');
+  if (hayFecha) {
+    const diaStr = fechaClaseUTC.toLocaleDateString('es', {
+      weekday: 'short', day: 'numeric', month: 'short'
+    });
+    badge.textContent = '📅 ' + diaStr.charAt(0).toUpperCase() + diaStr.slice(1);
+    badge.classList.remove('sin-clase');
+  } else {
+    badge.textContent = 'Sin clase programada';
+    badge.classList.add('sin-clase');
+  }
+
+  const primerDia = new Date(anio, mes, 1).getDay();
+  const diasMes   = new Date(anio, mes + 1, 0).getDate();
+
+  const hoyD = ahora.getDate();
+  const hoyM = ahora.getMonth();
+  const hoyA = ahora.getFullYear();
+
+  const claseD = hayFecha ? fechaClaseUTC.getDate()     : null;
+  const claseM = hayFecha ? fechaClaseUTC.getMonth()    : null;
+  const claseA = hayFecha ? fechaClaseUTC.getFullYear() : null;
+
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+
+  for (let i = 0; i < primerDia; i++) {
+    const c = document.createElement('div');
+    c.className = 'cal-dia vacio';
+    grid.appendChild(c);
+  }
+
+  for (let d = 1; d <= diasMes; d++) {
+    const c = document.createElement('div');
+    c.className = 'cal-dia';
+    c.textContent = d;
+    if (d === hoyD && mes === hoyM && anio === hoyA) c.classList.add('hoy');
+    if (hayFecha && d === claseD && mes === claseM && anio === claseA) c.classList.add('clase');
+    grid.appendChild(c);
+  }
+
+  const infoClase = document.getElementById('calInfoClase');
+  if (hayFecha) {
+    infoClase.classList.remove('oculto');
+    const fechaLarga = fechaClaseUTC.toLocaleDateString('es', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
+    document.getElementById('calInfoFecha').textContent =
+      fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
+    const horaLocal = fechaClaseUTC.toLocaleTimeString('es', {
+      hour: '2-digit', minute: '2-digit', hour12: true
+    });
+    document.getElementById('calInfoHora').textContent =
+      '🕐 ' + horaLocal + ' — hora de tu zona horaria';
+  } else {
+    infoClase.classList.add('oculto');
+  }
+}
+
+/* ── VALIDAR CONTRASEÑA ── */
+function validarPassword() {
+  const val      = document.getElementById('password').value.trim();
+  const errorMsg = document.getElementById('errorPass');
+  const input    = document.getElementById('password');
+
+  if (val === passCorrecto) {
+    errorMsg.textContent = '';
+    document.getElementById('formPass').style.display           = 'none';
+    document.getElementById('contenidoProtegido').style.display = 'block';
+  } else {
+    errorMsg.textContent = 'Contraseña incorrecta. Inténtalo de nuevo.';
+    input.classList.remove('shake');
+    void input.offsetWidth;
+    input.classList.add('shake');
+    setTimeout(() => input.classList.remove('shake'), 500);
+    input.select();
+  }
+}
+
+/* ── ARRANQUE ── */
+construirCalendario();
+setInterval(actualizarContador, 1000);
+actualizarContador();
+</script>
+
+</body>
+</html>
