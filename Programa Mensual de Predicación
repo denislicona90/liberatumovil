@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Programa de Predicación</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root {
+  --principal:    #e0845e;
+  --principal-bg: #fdf0ea;
+  --secundario1:  #3a6463;
+  --secundario2:  #eef3ee;
+  --texto:        #1c1c1c;
+  --texto-suave:  #5a6a6a;
+  --blanco:       #ffffff;
+  --weekend-bg:   #f7f2ee;
+  --hoy-accent:   #e0845e;
+  --datos-accent: #3a6463;
+  --sombra:       0 1px 3px rgba(0,0,0,0.07);
+  --sombra-hover: 0 6px 18px rgba(0,0,0,0.11);
+  --radius:       9px;
+  --radius-sm:    5px;
+  --arrow-svg:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23aaa' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --arrow-svg-brand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23e0845e' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  padding: 22px 20px 16px;
+  font-family: 'Nunito', sans-serif;
+  background: var(--secundario2);
+  color: var(--texto);
+}
+
+/* ─── HEADER ─────────────────────────────────────────── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid rgba(58,100,99,0.12);
+}
+
+.header-titles h1 {
+  font-size: 1.55em;
+  font-weight: 900;
+  color: var(--secundario1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.header-titles h3 {
+  font-size: 0.88em;
+  font-weight: 700;
+  color: var(--principal);
+  margin-top: 3px;
+  letter-spacing: 0.01em;
+}
+
+.header-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ─── SELECTS & BUTTONS ──────────────────────────────── */
+.ctrl-select {
+  padding: 8px 34px 8px 11px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.87em;
+  font-weight: 700;
+  border: 1.5px solid #c8d8d8;
+  border-radius: var(--radius);
+  background: var(--blanco) var(--arrow-svg-brand) no-repeat right 11px center;
+  appearance: none;
+  cursor: pointer;
+  color: var(--texto);
+  transition: border-color 0.15s;
+}
+.ctrl-select:focus {
+  outline: none;
+  border-color: var(--principal);
+}
+
+.btn {
+  padding: 8px 15px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.87em;
+  font-weight: 800;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn:hover  { filter: brightness(1.06); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); filter: brightness(0.96); }
+.btn-primary   { background: var(--principal);   color: var(--blanco); }
+.btn-secondary { background: var(--secundario1); color: var(--blanco); }
+.btn-ghost {
+  background: transparent;
+  color: #b05050;
+  border: 1.5px solid #ddb0a0;
+  font-weight: 700;
+}
+.btn-ghost:hover { background: #fff0ec; }
+
+/* Dropdown Descargar */
+.dropdown { position: relative; display: inline-block; }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  background: var(--blanco);
+  border: 1.5px solid #c8d8d8;
+  border-radius: var(--radius);
+  min-width: 110px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+  z-index: 500;
+  overflow: hidden;
+}
+.dropdown-content.open { display: block; }
+.dropdown-content button {
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 9px 14px;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.87em;
+  font-weight: 700;
+  color: var(--texto);
+  transition: background 0.12s;
+}
+.dropdown-content button:hover { background: var(--secundario2); }
+
+/* ─── MES/AÑO LABEL ──────────────────────────────────── */
+.mes-ano-label {
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.1em;
+  color: var(--secundario1);
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ─── CALENDARIO ──────────────────────────────────────── */
+.calendario {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.dia-header {
+  text-align: center;
+  font-weight: 800;
+  padding: 7px 2px;
+  background: var(--secundario1);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.82em;
+  letter-spacing: 0.03em;
+}
+.dia-header.weekend {
+  background: var(--principal);
+}
+
+.vacio { border-radius: var(--radius); }
+
+/* Celda de día */
+.dia {
+  background: var(--blanco);
+  border-radius: var(--radius);
+  padding: 6px 6px 5px;
+  min-height: 94px;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  transition: transform 0.13s, box-shadow 0.13s;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+.dia:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-hover);
+}
+
+.dia.weekend     { background: var(--weekend-bg); }
+.dia.tiene-datos { border-left-color: var(--datos-accent); }
+.dia.hoy         { border-left-color: var(--hoy-accent); }
+
+.dia-num {
+  font-weight: 900;
+  font-size: 0.97em;
+  color: var(--texto-suave);
+  text-align: right;
+  line-height: 1;
+}
+.dia.hoy .dia-num {
+  color: var(--hoy-accent);
+}
+.dia.hoy::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 6px;
+  height: 6px;
+  background: var(--hoy-accent);
+  border-radius: 50%;
+}
+
+.dia-resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.chip {
+  font-size: 0.67em;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 2px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+}
+.chip-hora      { background: #e2f0ef; color: #2d6160; }
+.chip-reunion   { background: #fde8dc; color: #b85a30; }
+.chip-territorio{ background: #eff3ef; color: #3d6040; }
+.chip-dirige    { background: #f0eef8; color: #5a4a80; }
+
+/* ─── MODAL ───────────────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20,35,35,0.38);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 26px 24px 22px;
+  width: 360px;
+  max-width: 96vw;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.22);
+  position: relative;
+  animation: modalIn 0.2s cubic-bezier(.28,.72,.45,1);
+}
+@keyframes modalIn {
+  from { transform: translateY(12px) scale(0.96); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: var(--secundario2);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 900;
+  color: var(--texto-suave);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.14s, color 0.14s;
+  font-family: 'Nunito', sans-serif;
+}
+.modal-close:hover { background: #dde5e5; color: var(--texto); }
+
+.modal-titulo {
+  font-size: 1.05em;
+  font-weight: 900;
+  color: var(--secundario1);
+  margin-bottom: 18px;
+  padding-right: 30px;
+  letter-spacing: -0.01em;
+}
+
+.campo-grupo { margin-bottom: 13px; }
+.campo-grupo label {
+  display: block;
+  font-size: 0.72em;
+  font-weight: 800;
+  color: var(--texto-suave);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.campo-grupo select {
+  width: 100%;
+  padding: 9px 34px 9px 11px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9em;
+  font-weight: 700;
+  border: 1.5px solid #d0dada;
+  border-radius: var(--radius);
+  background: var(--blanco) var(--arrow-svg) no-repeat right 11px center;
+  appearance: none;
+  cursor: pointer;
+  color: var(--texto);
+  transition: border-color 0.14s, box-shadow 0.14s;
+}
+.campo-grupo select:focus {
+  outline: none;
+  border-color: var(--principal);
+  box-shadow: 0 0 0 3px rgba(224,132,94,0.12);
+}
+
+.campos-fila {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 10px;
+}
+
+.modal-divider {
+  height: 1px;
+  background: var(--secundario2);
+  margin: 14px 0 16px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  .calendario { gap: 3px; }
+  .dia        { min-height: 70px; padding: 5px; }
+  .chip       { display: none; }
+}
+@media (max-width: 640px) {
+  body        { padding: 12px 8px 30px; }
+  .header     { flex-direction: column; align-items: flex-start; }
+  .dia-header { font-size: 0.7em; padding: 6px 1px; }
+  .dia        { min-height: 52px; }
+  .dia-num    { font-size: 0.85em; }
+}
+
+@page { size: A4 landscape; margin: 10mm; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-titles">
+    <h1>Programa de Predicación</h1>
+    <h3>Centro-San Francisco, Atl.</h3>
+  </div>
+  <div class="header-controls">
+    <select id="mes" class="ctrl-select"></select>
+    <select id="anio" class="ctrl-select"></select>
+    <button class="btn btn-primary" onclick="generarCalendario()">Generar</button>
+    <button class="btn btn-ghost" onclick="limpiarMes()">Limpiar</button>
+    <div class="dropdown" id="dropdownDescargar">
+      <button class="btn btn-secondary" onclick="toggleDropdown()">Descargar ▾</button>
+      <div class="dropdown-content" id="dropdownMenu">
+        <button onclick="descargarComoImagen('jpg')">JPG</button>
+        <button onclick="descargarComoImagen('png')">PNG</button>
+        <button onclick="descargarComoPDF()">PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mes-ano-label" id="mesAnoHeader"></div>
+<div class="calendario" id="calendario"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModalOverlay(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="cerrarModal()">✕</button>
+    <div class="modal-titulo" id="modalTitulo">Día</div>
+
+    <div class="campos-fila">
+      <div class="campo-grupo">
+        <label>Hora</label>
+        <select id="mHora"></select>
+      </div>
+      <div class="campo-grupo">
+        <label>Reunión</label>
+        <select id="mReunion"></select>
+      </div>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Territorio</label>
+      <select id="mTerritorio"></select>
+    </div>
+    <div class="campo-grupo">
+      <label>Dirige</label>
+      <select id="mDirige"></select>
+    </div>
+
+    <div class="modal-divider"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarModal()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const diasSemana    = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+const mesesNombres  = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const horarios      = ["7:00 a","8:00 a","8:30 a","9:00 a","3:30 p"];
+const reuniones     = ["Zoom","S. del Reino","V. Ortega","A. Martínez","F. Zúniga","K. Alemán"];
+const territorios   = ["Cartas, etc.","1. El Pantanal","2. El Clarito","3. El Triángulo","4. El Centro","5. Martín, El Bajo","6. Hide, Martín","7. La Frutera","8. Desvío Viejo","9. Las Camelias","10. Saladito","11. Miceli","12. Boca del Toro","13. Buena Vista","14. Pagoales"];
+const dirigeOps     = ["Inty Ayala","Andy Hernández","Olman Gutiérrez","Gustavo Limas","Sender Molina","Denis Licona"];
+
+// Selects de cabecera
+const mesSelect  = document.getElementById("mes");
+const anioSelect = document.getElementById("anio");
+
+mesesNombres.forEach((m,i) => mesSelect.innerHTML += `<option value="${i}">${m}</option>`);
+const anioActual = new Date().getFullYear();
+for(let y = anioActual-2; y <= anioActual+2; y++)
+  anioSelect.innerHTML += `<option value="${y}">${y}</option>`;
+mesSelect.value  = new Date().getMonth();
+anioSelect.value = anioActual;
+
+// Poblar selects del modal
+function poblarSelect(id, opciones) {
+  const sel = document.getElementById(id);
+  sel.innerHTML = `<option value="">—</option>` +
+    opciones.map(o => `<option value="${o}">${o}</option>`).join("");
+}
+poblarSelect("mHora",       horarios);
+poblarSelect("mReunion",    reuniones);
+poblarSelect("mTerritorio", territorios);
+poblarSelect("mDirige",     dirigeOps);
+
+// ─── LocalStorage (JSON por mes) ─────────────────────────
+function storageKey(anio, mes) { return `programa-${anio}-${mes}`; }
+function getDatos(anio, mes) {
+  try { return JSON.parse(localStorage.getItem(storageKey(anio, mes))) || {}; }
+  catch { return {}; }
+}
+function setDatos(anio, mes, datos) {
+  localStorage.setItem(storageKey(anio, mes), JSON.stringify(datos));
+}
+
+// ─── Generar calendario ───────────────────────────────────
+function generarCalendario() {
+  const mes  = parseInt(mesSelect.value);
+  const anio = parseInt(anioSelect.value);
+
+  document.getElementById("mesAnoHeader").textContent =
+    `${mesesNombres[mes].toUpperCase()}  ${anio}`;
+
+  const cal      = document.getElementById("calendario");
+  cal.innerHTML  = "";
+  const datos    = getDatos(anio, mes);
+  const hoy      = new Date();
+  const primerDia = new Date(anio, mes, 1).getDay();
+  const diasMes   = new Date(anio, mes+1, 0).getDate();
+
+  // Cabeceras de día
+  diasSemana.forEach((d, i) => {
+    const esWeekend = i === 0 || i === 6;
+    cal.innerHTML += `<div class="dia-header${esWeekend ? ' weekend' : ''}">${d}</div>`;
+  });
+
+  // Celdas vacías iniciales
+  for(let i = 0; i < primerDia; i++)
+    cal.innerHTML += `<div class="vacio"></div>`;
+
+  // Días del mes
+  for(let d = 1; d <= diasMes; d++) {
+    const diaSemana  = new Date(anio, mes, d).getDay();
+    const esHoy      = hoy.getDate()===d && hoy.getMonth()===mes && hoy.getFullYear()===anio;
+    const esWeekend  = diaSemana === 0 || diaSemana === 6;
+    const datosDia   = datos[d] || {};
+    const tieneDatos = !!(datosDia.hora || datosDia.territorio || datosDia.reunion || datosDia.dirige);
+
+    let clases = "dia";
+    if(esHoy)      clases += " hoy";
+    if(esWeekend)  clases += " weekend";
+    if(tieneDatos) clases += " tiene-datos";
+
+    let chips = "";
+    if(datosDia.hora)       chips += `<span class="chip chip-hora">⏰ ${datosDia.hora}</span>`;
+    if(datosDia.reunion)    chips += `<span class="chip chip-reunion">🏠 ${datosDia.reunion}</span>`;
+    if(datosDia.territorio) chips += `<span class="chip chip-territorio">📍 ${datosDia.territorio}</span>`;
+    if(datosDia.dirige)     chips += `<span class="chip chip-dirige">👤 ${datosDia.dirige}</span>`;
+
+    cal.innerHTML += `
+      <div class="${clases}" onclick="abrirModal(${d})">
+        <div class="dia-num">${d}</div>
+        <div class="dia-resumen">${chips}</div>
+      </div>`;
+  }
+}
+
+// ─── Modal ────────────────────────────────────────────────
+let diaActivo = null;
+
+function abrirModal(d) {
+  const mes  = parseInt(mesSelect.value);
+  const anio = parseInt(anioSelect.value);
+  const datosDia = (getDatos(anio, mes)[d]) || {};
+
+  diaActivo = d;
+  document.getElementById("modalTitulo").textContent =
+    `${d} de ${mesesNombres[mes]}, ${anio}`;
+  document.getElementById("mHora").value       = datosDia.hora      || "";
+  document.getElementById("mReunion").value    = datosDia.reunion   || "";
+  document.getElementById("mTerritorio").value = datosDia.territorio || "";
+  document.getElementById("mDirige").value     = datosDia.dirige    || "";
+
+  document.getElementById("modalOverlay").classList.add("open");
+}
+
+function cerrarModal() {
+  document.getElementById("modalOverlay").classList.remove("open");
+  diaActivo = null;
+}
+
+function cerrarModalOverlay(e) {
+  if(e.target === document.getElementById("modalOverlay")) cerrarModal();
+}
+
+function guardarModal() {
+  if(diaActivo === null) return;
+  const mes  = parseInt(mesSelect.value);
+  const anio = parseInt(anioSelect.value);
+  const datos = getDatos(anio, mes);
+
+  datos[diaActivo] = {
+    hora:       document.getElementById("mHora").value,
+    reunion:    document.getElementById("mReunion").value,
+    territorio: document.getElementById("mTerritorio").value,
+    dirige:     document.getElementById("mDirige").value,
+  };
+
+  setDatos(anio, mes, datos);
+  cerrarModal();
+  generarCalendario();
+}
+
+// ─── Limpiar mes ─────────────────────────────────────────
+function limpiarMes() {
+  const mes  = parseInt(mesSelect.value);
+  const anio = parseInt(anioSelect.value);
+  if(!confirm(`¿Limpiar todos los datos de ${mesesNombres[mes]} ${anio}?`)) return;
+  localStorage.removeItem(storageKey(anio, mes));
+  generarCalendario();
+}
+
+// ─── Dropdown toggle ─────────────────────────────────────
+function toggleDropdown() {
+  document.getElementById("dropdownMenu").classList.toggle("open");
+}
+document.addEventListener("click", e => {
+  if(!document.getElementById("dropdownDescargar").contains(e.target))
+    document.getElementById("dropdownMenu").classList.remove("open");
+});
+
+// ─── Exportar ────────────────────────────────────────────
+function construirContenedorExport() {
+  const contenedor = document.createElement("div");
+  contenedor.style.cssText = `
+    background:${getComputedStyle(document.body).backgroundColor};
+    padding:24px;
+    font-family:'Nunito',sans-serif;
+  `;
+
+  const h1 = document.querySelector("h1").cloneNode(true);
+  const h3 = document.querySelector("h3").cloneNode(true);
+  const label = document.getElementById("mesAnoHeader").cloneNode(true);
+  label.style.cssText = "text-align:center;font-weight:900;font-size:1.05em;margin-bottom:10px;color:#3a6463;letter-spacing:.02em;";
+
+  const calClone = document.getElementById("calendario").cloneNode(true);
+  // Chips ya están como texto, no hay selects que sincronizar
+  calClone.querySelectorAll(".dia").forEach(d => { d.style.cursor = "default"; });
+
+  contenedor.append(h1, h3, label, calClone);
+  return contenedor;
+}
+
+async function descargarComoImagen(tipo) {
+  const contenedor = construirContenedorExport();
+  document.body.appendChild(contenedor);
+  html2canvas(contenedor, {scale:2, useCORS:true, scrollY:-window.scrollY, scrollX:-window.scrollX})
+    .then(canvas => {
+      const link = document.createElement('a');
+      link.download = `programa-predicacion.${tipo}`;
+      link.href = canvas.toDataURL(`image/${tipo}`);
+      link.click();
+      document.body.removeChild(contenedor);
+    });
+}
+
+async function descargarComoPDF() {
+  const contenedor = construirContenedorExport();
+  document.body.appendChild(contenedor);
+  html2canvas(contenedor, {scale:2, useCORS:true, scrollY:-window.scrollY, scrollX:-window.scrollX})
+    .then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('landscape','mm','a4');
+      const w   = pdf.internal.pageSize.getWidth();
+      const h   = pdf.internal.pageSize.getHeight();
+      const s   = Math.min(w/canvas.width, h/canvas.height);
+      pdf.addImage(imgData,'PNG',0,0,canvas.width*s,canvas.height*s);
+      pdf.save('programa-predicacion.pdf');
+      document.body.removeChild(contenedor);
+    });
+}
+
+// Arranque
+generarCalendario();
+</script>
+</body>
+</html>
