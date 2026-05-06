@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Términos y Condiciones de Uso | Libera Tu Móvil</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    section {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #6b029b;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #6b029b;
+      margin-top: 25px;
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<section>
+  <h1>Términos y Condiciones de Uso</h1>
+
+  <p>Al acceder y utilizar el sitio web <strong>Libera Tu Móvil</strong>, aceptas cumplir y estar sujeto a los siguientes términos y condiciones. Si no estás de acuerdo con alguno de ellos, te pedimos que no utilices el sitio ni los servicios ofrecidos.</p>
+
+  <h2>1. Uso del sitio</h2>
+  <p>Libera Tu Móvil proporciona servicios de desbloqueo de móviles, recursos educativos, herramientas y contenidos informativos. El sitio está destinado exclusivamente para uso personal y no comercial. El uso indebido del sitio o de los servicios, incluyendo cualquier intento de vulnerar su seguridad o integridad, está estrictamente prohibido.</p>
+
+  <h2>2. Registro y acceso</h2>
+  <p>Algunas áreas del sitio pueden requerir registro o creación de cuenta. Es tu responsabilidad proporcionar información verídica y mantener la confidencialidad de tus credenciales de acceso. No compartas tu cuenta con terceros ni permitas accesos no autorizados.</p>
+
+  <h2>3. Propiedad intelectual</h2>
+  <p>Todo el contenido presente en el sitio, incluidos textos, imágenes, logotipos, videos, diseños y marcas comerciales, es propiedad de Libera Tu Móvil o se utiliza bajo licencia. Queda prohibida cualquier reproducción, distribución o uso no autorizado del contenido, total o parcial.</p>
+
+  <h2>4. Enlaces a terceros</h2>
+  <p>El sitio puede contener enlaces a páginas web externas. Libera Tu Móvil no controla ni es responsable por el contenido, políticas o prácticas de privacidad de sitios de terceros. El acceso a estos sitios es bajo tu propio riesgo.</p>
+
+  <h2>5. Limitación de responsabilidad</h2>
+  <p>Aunque nos esforzamos por mantener la precisión y disponibilidad de la información, Libera Tu Móvil no garantiza que el sitio esté libre de errores, interrupciones o que los servicios cumplan con todas tus expectativas. No nos hacemos responsables por pérdidas directas o indirectas derivadas del uso o imposibilidad de uso del sitio.</p>
+
+  <h2>6. Cambios y modificaciones</h2>
+  <p>Nos reservamos el derecho de actualizar, modificar o eliminar cualquier sección de estos términos en cualquier momento y sin previo aviso. Te recomendamos revisar esta página periódicamente para estar al tanto de los cambios.</p>
+
+  <h2>7. Legislación aplicable</h2>
+  <p>Estos términos se regirán e interpretarán de acuerdo con las leyes vigentes en el país donde opera Libera Tu Móvil. Cualquier disputa que surja será resuelta por los tribunales competentes.</p>
+
+  <h2>8. Contacto</h2>
+  <p>Si tienes dudas, comentarios o solicitudes relacionadas con estos términos, puedes contactarnos a través del correo: <a href="mailto:info@liberatumovil.net">info@liberatumovil.net</a>.</p>
+
+  <p><strong>Última actualización:</strong> Enero 2026</p>
+</section>
+
+</body>
+</html>
