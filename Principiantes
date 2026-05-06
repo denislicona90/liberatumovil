@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso Intensivo para Principiantes | Libera Tu Móvil</title>
+  <meta name="description" content="Aprende desde cero a liberar celulares. 19 clases, 24 horas de contenido pregrabado. Samsung, Motorola, Xiaomi, Huawei y más. Garantía de 7 días. Solo $19.99 USD pago único.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Questrial&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple: #6b029b;
+      --purple-light: #9c6eb1;
+      --orange: #f7680a;
+      --yellow: #ffde59;
+      --green-wa: #128c7e;
+      --green-wa-hover: #25d366;
+      --bg: #f7f9fc;
+      --white: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Comfortaa', cursive;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 52px 0; }
+    .section-alt { background: var(--white); }
+    .text-center { text-align: center; }
+
+    h1 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(26px, 5vw, 46px);
+      color: var(--purple);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(20px, 4vw, 32px);
+      color: var(--purple);
+      margin-bottom: 14px;
+    }
+    h3 {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(16px, 3vw, 22px);
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      display: inline-block;
+      padding: 15px 34px;
+      background: var(--purple);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      animation: shake 0.6s ease-in-out infinite;
+      animation-delay: 4s;
+    }
+    .btn-primary:hover { background: var(--orange); transform: scale(1.04); }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: var(--green-wa);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      animation: shake 0.6s ease-in-out infinite;
+      animation-delay: 4s;
+    }
+    .btn-wa:hover { background: var(--green-wa-hover); transform: scale(1.04); }
+    .btn-wa svg { width: 22px; height: 22px; fill: white; flex-shrink: 0; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%,60% { transform: translateX(-5px); }
+      40%,80% { transform: translateX(5px); }
+    }
+
+    /* NOTICE BAR */
+    .notice-bar {
+      background: var(--orange);
+      color: white;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1a0030 0%, #6b029b 55%, #9c6eb1 100%);
+      color: white;
+      padding: 64px 20px 56px;
+      text-align: center;
+    }
+    .hero h1 { color: white; }
+    .hero .subtitle {
+      font-size: clamp(15px, 2.5vw, 19px);
+      color: rgba(255,255,255,0.88);
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+    .hero .price-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--text);
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(26px, 5vw, 42px);
+      font-weight: 700;
+      padding: 10px 32px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .stat-pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 7px 18px;
+      font-size: 14px;
+      color: white;
+    }
+
+    /* VIDEO */
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .video-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:none; }
+
+    /* COMPARATIVA */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 28px;
+    }
+    @media(max-width:560px){ .compare-grid { grid-template-columns: 1fr; } }
+    .compare-card {
+      border-radius: 14px;
+      padding: 24px 20px;
+      font-size: 15px;
+    }
+    .compare-card.basic {
+      background: #f0e8ff;
+      border: 2px solid var(--purple-light);
+    }
+    .compare-card.pro {
+      background: #fff3e8;
+      border: 2px solid var(--orange);
+    }
+    .compare-card .card-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .compare-card.basic .card-tag { background: var(--purple-light); color: white; }
+    .compare-card.pro .card-tag { background: var(--orange); color: white; }
+    .compare-card strong {
+      display: block;
+      font-family: 'Questrial', sans-serif;
+      font-size: 18px;
+      color: var(--purple);
+      margin-bottom: 4px;
+    }
+    .compare-card.pro strong { color: var(--orange); }
+    .compare-card .price-line {
+      font-family: 'Questrial', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 8px 0 12px;
+    }
+    .compare-card ul { padding-left: 18px; }
+    .compare-card li { margin-bottom: 6px; color: var(--text); }
+    .compare-card .cta-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--orange);
+      text-decoration: underline;
+    }
+
+    /* BENEFITS */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .benefit-card {
+      background: var(--white);
+      border: 2px solid var(--orange);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .benefit-icon { font-size: 34px; margin-bottom: 10px; }
+    .benefit-card h3 { font-size: 16px; margin-bottom: 6px; }
+    .benefit-card p { font-size: 14px; color: var(--muted); margin: 0; }
+
+    /* TESTIMONIOS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .testimonial-img {
+      border-radius: 12px;
+      width: 100%;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    /* TEMARIO ACORDEÓN */
+    .accordion { max-width: 700px; margin: 24px auto 0; }
+    .accordion-item {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .accordion-item summary {
+      padding: 15px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      list-style: none;
+      background: var(--purple-light);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-item summary::-webkit-details-marker { display: none; }
+    .accordion-item[open] summary { background: var(--purple); }
+    .accordion-item summary::after { content: '＋'; font-size: 18px; }
+    .accordion-item[open] summary::after { content: '－'; }
+    .accordion-content {
+      padding: 15px 20px;
+      font-size: 15px;
+      background: #f0f4f8;
+      color: #333;
+      border-top: 1px solid #ddd;
+    }
+    .accordion-content ul { padding-left: 18px; }
+    .accordion-content li { margin-bottom: 6px; }
+
+    /* FAQ */
+    .faq-item summary { background: #1a1a1a; }
+    .faq-item[open] summary { background: var(--orange); }
+
+    /* GARANTÍA */
+    .guarantee-box {
+      background: var(--white);
+      border: 3px solid var(--purple);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .badge-7 {
+      display: inline-block;
+      background: var(--purple);
+      color: white;
+      font-family: 'Questrial', sans-serif;
+      font-size: 50px;
+      font-weight: 700;
+      border-radius: 50%;
+      width: 96px;
+      height: 96px;
+      line-height: 96px;
+      margin-bottom: 16px;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--purple);
+      color: white;
+      padding: 28px 20px;
+    }
+    .stats-inner {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .stat-item .num {
+      font-family: 'Questrial', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--yellow);
+    }
+    .stat-item .label { font-size: 13px; color: rgba(255,255,255,0.8); }
+
+    /* INSTRUCTORES */
+    .instructor-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 24px;
+    }
+    .instructor-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      width: 220px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .instructor-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--purple-light);
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-family: 'Questrial', sans-serif;
+      overflow: hidden;
+      border: 3px solid var(--purple);
+    }
+    .instructor-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+    .instructor-card h3 { font-size: 17px; color: var(--purple); margin-bottom: 4px; }
+    .instructor-card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+    /* YELLOW CONTACT */
+    .yellow-box {
+      background: var(--yellow);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .yellow-box p { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a1a;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 13px;
+    }
+    footer a { color: rgba(255,255,255,.4); text-decoration: underline; margin: 0 8px; transition: color .2s; }
+    footer a:hover { color: white; }
+    .footer-links { margin-bottom: 10px; }
+    .footer-social { display:none; }
+
+    /* STICKY CTA MÓVIL */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--purple);
+      padding: 12px 20px;
+      text-align: center;
+      z-index: 999;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+    }
+    .sticky-cta a { color: white; font-family: 'Comfortaa', cursive; font-size: 16px; font-weight: 700; text-decoration: none; }
+    @media(max-width:640px){ .sticky-cta { display: block; } body { padding-bottom: 58px; } }
+
+    hr.divider { border: none; border-top: 2px dashed rgba(107,2,155,0.12); margin: 0; }
+      .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .footer-social a { display: inline-block; }
+    .footer-social img {
+      width: 22px; height: 22px;
+      filter: brightness(0) invert(1);
+      opacity: .5;
+      transition: opacity .2s, transform .2s;
+    }
+    .footer-social a:hover img { opacity: 1; transform: scale(1.2); }
+</style>
+</head>
+<body>
+
+<!-- AVISO -->
+<div class="notice-bar">
+  🛡️ Garantía de devolución de 7 días — Sin preguntas, sin problemas
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <h1>📱 Curso Intensivo para Principiantes</h1>
+    <p class="subtitle">Aprende desde cero a liberar y desbloquear celulares con clases grabadas que puedes ver cuando quieras, a tu ritmo</p>
+    <div class="price-badge">$19.99 USD — Pago único</div>
+    <br>
+    <a href="https://go.hotmart.com/S96720017H?ap=8a22" target="_blank" rel="noopener" class="btn-primary">¡Quiero empezar ahora!</a>
+    <div class="hero-stats">
+      <span class="stat-pill">🎓 19 clases grabadas</span>
+      <span class="stat-pill">⏱️ 24 horas de contenido</span>
+      <span class="stat-pill">🔄 Acceso permanente</span>
+      <span class="stat-pill">📵 Sin experiencia previa</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== VIDEO ===== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>🎥 Mira la presentación del curso</h2>
+    <p style="color:var(--muted); max-width:580px; margin: 0 auto 24px;">Conoce exactamente qué aprenderás antes de comprar:</p>
+    <div class="video-wrap" style="max-width:700px; margin:0 auto;">
+      <iframe src="https://www.youtube.com/embed/oAv8ddzRUoQ" allowfullscreen loading="lazy" title="Presentación Curso Intensivo para Principiantes"></iframe>
+    </div>
+    <div style="margin-top:28px;">
+      <a href="https://go.hotmart.com/S96720017H?ap=8a22" target="_blank" rel="noopener" class="btn-primary">¡Lo quiero por $19.99!</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== STATS BAR ===== -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="num">19</div>
+      <div class="label">Clases grabadas</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">24h</div>
+      <div class="label">De contenido</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">$300–800</div>
+      <div class="label">USD/mes que generan alumnos</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">7</div>
+      <div class="label">Días de garantía</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== COMPARATIVA ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">¿Este curso es para ti?</h2>
+    <p class="text-center" style="color:var(--muted);">Tenemos dos cursos. Elige el que mejor encaja con tu nivel actual:</p>
+    <div class="compare-grid">
+      <div class="compare-card basic">
+        <span class="card-tag">✅ Estás aquí</span>
+        <strong>Curso Intensivo para Principiantes</strong>
+        <div class="price-line" style="color:var(--purple);">$19.99 USD</div>
+        <ul>
+          <li>Empiezas desde <strong>cero absoluto</strong></li>
+          <li>19 clases · 24 horas de contenido</li>
+          <li>Modos de conexión y conceptos básicos</li>
+          <li>Flasheo en Samsung, Motorola, Xiaomi, Huawei</li>
+          <li>FRP en las marcas más comunes</li>
+          <li>MDM y KG (bloqueo por mora)</li>
+          <li>Acceso permanente con pago único</li>
+          <li>Garantía de 7 días</li>
+        </ul>
+      </div>
+      <div class="compare-card pro">
+        <span class="card-tag">⬆️ Próximo paso</span>
+        <strong>Curso de Software — Libera Tu Móvil</strong>
+        <div class="price-line" style="color:var(--orange);">$49.99 USD</div>
+        <ul>
+          <li>Para quienes ya tienen <strong>conocimientos base</strong></li>
+          <li>217 clases · 145 horas de contenido</li>
+          <li>FRP, MDM, KG, IMEI — todos los métodos</li>
+          <li>Licencias, box's y cajas de liberación</li>
+          <li>Android e iOS (iPhone)</li>
+          <li>Bonos: box's, licencias y soporte 30 días</li>
+          <li>Acceso permanente + actualizaciones</li>
+          <li>Garantía de 7 días</li>
+        </ul>
+        <a href="https://liberatumovil.net/curso-de-software-libera-tu-movil" target="_blank" rel="noopener" class="cta-link">Ver Curso de Software →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== BENEFICIOS ===== -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="text-center">¿Qué aprenderás?</h2>
+    <p class="text-center" style="color:var(--muted);">Todo lo esencial para comenzar a ofrecer servicios de desbloqueo</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🔌</div>
+        <h3>Modos de conexión</h3>
+        <p>Entiende cómo se conectan los dispositivos al PC y qué modo usar en cada situación</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <h3>Flasheo</h3>
+        <p>Aprende a flashear Samsung, Motorola, Xiaomi y Huawei para reparar software dañado</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🔓</div>
+        <h3>FRP</h3>
+        <p>Elimina el bloqueo de cuenta Google en las marcas más comunes del mercado</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🏢</div>
+        <h3>MDM y KG</h3>
+        <p>Quita bloqueos de gestión empresarial y de mora en dispositivos Samsung y otros</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🌐</div>
+        <h3>Servidores</h3>
+        <p>Conoce los servidores y herramientas que se usan en el trabajo real del técnico</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💰</div>
+        <h3>Gana desde casa</h3>
+        <p>Alumnos que aplican lo aprendido generan entre $300 y $800 USD al mes</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== TEMARIO ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">📚 Temario del Curso</h2>
+    <div style="text-align:center; margin-bottom:8px;">
+      <span style="display:inline-block; background:var(--purple-light); color:white; font-size:14px; font-weight:700; padding:6px 20px; border-radius:50px;">19 clases · 24 horas de contenido</span>
+    </div>
+    <p class="text-center" style="color:var(--muted);">Haz clic en cada módulo para ver el contenido</p>
+    <div class="accordion">
+
+      <details class="accordion-item">
+        <summary>Conceptos Básicos</summary>
+        <div class="accordion-content"><ul>
+          <li>Modos de conexión — Parte 1</li>
+          <li>Explicación de Conceptos</li>
+          <li>Servidores</li>
+          <li>Modos de Conexión — Parte 2</li>
+          <li>Particiones de Seguridad</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>Flasheo</summary>
+        <div class="accordion-content"><ul>
+          <li>Flasheo — Samsung</li>
+          <li>Flasheo — Motorola</li>
+          <li>Flasheo — Xiaomi</li>
+          <li>Flasheo — Huawei</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>FRP (Bloqueo de cuenta Google)</summary>
+        <div class="accordion-content"><ul>
+          <li>FRP — Samsung</li>
+          <li>FRP — Motorola, Xiaomi, ZTE</li>
+          <li>FRP — Huawei</li>
+          <li>FRP — Infinix, Tecno, Itel / Oppo, Realme, Oneplus</li>
+        </ul></div>
+      </details>
+
+      <details class="accordion-item">
+        <summary>MDM y KG (Bloqueo empresarial y por mora)</summary>
+        <div class="accordion-content"><ul>
+          <li>Samsung KG: Remover en procesadores Qualcomm — Últimas seguridades</li>
+          <li>MDM — Samsung</li>
+          <li>MDM — Infinix, Tecno</li>
+          <li>MDM — Honor, Huawei</li>
+          <li>MDM — Xiaomi</li>
+          <li>MDM — Motorola</li>
+        </ul></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== TESTIMONIOS ===== -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="text-center">💬 Lo que dicen nuestros alumnos</h2>
+    <p class="text-center" style="color:var(--muted);">Resultados reales de personas que empezaron desde cero</p>
+    <div class="testimonials-grid">
+      <img src="https://i.imgur.com/60HxQMT.png" alt="Testimonio alumno 1" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/ZKlkUUu.png" alt="Testimonio alumno 2" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/DajhImz.png" alt="Testimonio alumno 3" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/xGFbKoM.png" alt="Testimonio alumno 4" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/jzAqYYg.png" alt="Testimonio alumno 5" class="testimonial-img" loading="lazy">
+      <img src="https://i.imgur.com/JPqabxb.png" alt="Testimonio alumno 6" class="testimonial-img" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== INSTRUCTORES ===== -->
+<section class="section">
+  <div class="container text-center">
+    <h2>👥 ¿Quiénes te enseñan?</h2>
+    <p style="color:var(--muted);">Profesionales con experiencia real en el campo</p>
+    <div class="instructor-grid">
+      <div class="instructor-card">
+        <div class="instructor-avatar">
+          <img src="https://i.imgur.com/6EwyDR3.jpg" alt="Gustavo Limas" onerror="this.style.display='none';this.parentElement.innerHTML+='GL'">
+        </div>
+        <h3>Gustavo Limas</h3>
+        <p>Productor / Instructor — Experto en liberación de dispositivos móviles</p>
+      </div>
+      <div class="instructor-card">
+        <div class="instructor-avatar">
+          <img src="https://i.imgur.com/2hh5Le0.jpg" alt="Denis Licona" onerror="this.style.display='none';this.parentElement.innerHTML+='DL'">
+        </div>
+        <h3>Denis Licona</h3>
+        <p>Editor / Soporte — Gestión de la comunidad y atención a los alumnos</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== GARANTÍA ===== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>🛡️ Garantía de satisfacción</h2>
+    <div class="guarantee-box" style="margin-top:20px;">
+      <div class="badge-7">7</div>
+      <h3 style="color:var(--purple); font-size:20px;">días de prueba sin riesgo</h3>
+      <p style="margin-top:12px; color:var(--muted);">Si en los primeros 7 días no estás satisfecho con el curso, te devolvemos el dinero sin preguntas. Sin letra pequeña.</p>
+      <div style="margin-top:20px;">
+        <a href="https://go.hotmart.com/S96720017H?ap=8a22" target="_blank" rel="noopener" class="btn-primary">Empezar ahora — Sin riesgo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== FAQ ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="text-center">❓ Preguntas Frecuentes</h2>
+    <div class="accordion">
+
+      <details class="accordion-item faq-item">
+        <summary>¿Necesito experiencia previa para este curso?</summary>
+        <div class="accordion-content"><p>No. Este curso está diseñado específicamente para personas sin ningún conocimiento previo en tecnología o liberación de dispositivos. Empezamos desde lo más básico.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Cuánto tiempo tengo acceso al curso?</summary>
+        <div class="accordion-content"><p>El acceso es <strong>permanente con un solo pago</strong>. No hay mensualidades ni cobros adicionales. El curso y sus actualizaciones son tuyas para siempre.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Cuándo y dónde puedo estudiar?</summary>
+        <div class="accordion-content"><p>Son clases pregrabadas, así que estudias a tu propio ritmo — cuando quieras y desde donde quieras. No hay horarios fijos ni fechas límite.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Qué celulares podré desbloquear al terminar?</summary>
+        <div class="accordion-content"><p>Los modelos más comunes del mercado: Samsung, Motorola, Huawei, Xiaomi, Oppo, Oneplus, Realme, ZTE, Infinix, Tecno y más. El contenido se actualiza constantemente.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Puedo ofrecer este servicio desde casa?</summary>
+        <div class="accordion-content"><p>Sí. Muchos alumnos atienden clientes por redes sociales, WhatsApp o a domicilio sin tener tienda física. También puedes hacer trabajos de forma remota.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Cuánto puedo ganar con esto?</summary>
+        <div class="accordion-content"><p>Depende de tu dedicación. Algunos alumnos generan entre $300 y $800 USD al mes desbloqueando móviles unas horas al día.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Cuál es la diferencia con el Curso de Software completo?</summary>
+        <div class="accordion-content"><p>Este curso es el punto de partida ideal si partes de cero: 19 clases enfocadas en conceptos fundamentales. El Curso de Software es el paso siguiente: 217 clases, 145 horas, métodos avanzados, iOS incluido y herramientas profesionales. Muchos alumnos hacen primero este curso básico y luego pasan al completo.</p></div>
+      </details>
+
+      <details class="accordion-item faq-item">
+        <summary>¿Puedo pedir ayuda al instructor para casos específicos?</summary>
+        <div class="accordion-content"><p>Sí. Puedes escribirle personalmente para apoyo en trabajos concretos. Te hará una cotización y tú decides si la aceptas.</p></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== CONTACTO ===== -->
+<section class="section section-alt">
+  <div class="container text-center">
+    <div class="yellow-box">
+      <p>¿Tienes dudas? ¡Hablemos por WhatsApp!</p>
+      <a href="https://wa.me/50487987314" class="btn-wa" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.52 3.48A11.855 11.855 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.12 1.6 5.91L0 24l6.19-1.6A11.85 11.85 0 0012 24c6.63 0 12-5.37 12-12 0-3.19-1.24-6.21-3.48-8.52zM12 22c-1.87 0-3.69-.51-5.26-1.47l-.38-.23-3.67.95.98-3.6-.25-.37A9.976 9.976 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.2-7.79l-1.44-.71c-.2-.1-.44-.07-.6.09l-.82.83a.46.46 0 01-.6.07c-.86-.43-2.84-1.68-3.96-3.95a.45.45 0 01.06-.6l.83-.82c.16-.16.19-.4.09-.6l-.71-1.44a.45.45 0 00-.56-.21c-.61.24-1.32.6-1.7 1-.52.52-.87 1.6.9 4.57 1.71 2.85 3.64 3.9 4.5 4.27.55.24 1.01.37 1.4.37.35 0 .64-.12.89-.35.4-.4.77-1.11 1-1.71a.45.45 0 00-.2-.56z"/></svg>
+        ¡Contáctanos ahora!
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-social">
+    <a href="https://www.youtube.com/@liberatumovilofficial" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube">
+    </a>
+    <a href="https://www.facebook.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+    <a href="https://t.me/liberatumovilofficial" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+    </a>
+    <a href="https://whatsapp.com/channel/0029Vam1XtvCXC3B0RPNE72l" target="_blank" rel="noopener" aria-label="Canal WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal WhatsApp">
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="https://liberatumovil.net/politicas-de-privacidad" target="_blank">Política de Privacidad</a> |
+    <a href="https://liberatumovil.net/terminos-y-condiciones" target="_blank">Términos y Condiciones</a> |
+    <a href="https://liberatumovil.net/politicas-de-cookies" target="_blank">Política de Cookies</a>
+  </div>
+<p>© 2026 Libera Tu Móvil — Todos los derechos reservados</p>
+  <p style="margin-top:6px; font-size:12px;">Curso vendido a través de Hotmart. Los resultados varían según la dedicación de cada alumno.</p>
+</footer>
+
+<!-- STICKY CTA MÓVIL -->
+<div class="sticky-cta">
+  <a href="https://go.hotmart.com/S96720017H?ap=8a22" target="_blank" rel="noopener">📱 Comprar curso — $19.99 USD</a>
+</div>
+
+</body>
+</html>
