@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Programa de Predicación</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root {
+  --principal:       #e0845e;
+  --secundario1:     #3a6463;
+  --secundario2:     #eef3ee;
+  --texto:           #1c1c1c;
+  --texto-suave:     #5a6a6a;
+  --blanco:          #ffffff;
+  --hoy-accent:      #e0845e;
+  --datos-accent:    #3a6463;
+  --sombra:          0 1px 3px rgba(0,0,0,0.07);
+  --sombra-hover:    0 6px 18px rgba(0,0,0,0.11);
+  --radius:          9px;
+  --radius-sm:       5px;
+  --arrow-svg:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23aaa' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --arrow-svg-brand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23e0845e' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  padding: 22px 20px 16px;
+  font-family: 'Nunito', sans-serif;
+  background: var(--secundario2);
+  color: var(--texto);
+}
+
+/* ─── HEADER ──────────────────────────────────────────── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid rgba(58,100,99,0.12);
+}
+.header-titles h1 {
+  font-size: 1.55em;
+  font-weight: 900;
+  color: var(--secundario1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.header-titles h3 {
+  font-size: 0.88em;
+  font-weight: 700;
+  color: var(--principal);
+  margin-top: 3px;
+}
+.header-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ─── BUTTONS ─────────────────────────────────────────── */
+.btn {
+  padding: 8px 15px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.87em;
+  font-weight: 800;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn:hover  { filter: brightness(1.06); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); filter: brightness(0.96); }
+.btn-primary   { background: var(--principal);   color: var(--blanco); }
+.btn-secondary { background: var(--secundario1); color: var(--blanco); }
+.btn-ghost {
+  background: transparent;
+  color: #b05050;
+  border: 1.5px solid #ddb0a0;
+  font-weight: 700;
+}
+.btn-ghost:hover { background: #fff0ec; }
+
+/* Dropdown */
+.dropdown { position: relative; display: inline-block; }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  background: var(--blanco);
+  border: 1.5px solid #c8d8d8;
+  border-radius: var(--radius);
+  min-width: 110px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+  z-index: 500;
+  overflow: hidden;
+}
+.dropdown-content.open { display: block; }
+.dropdown-content button {
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 9px 14px;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.87em;
+  font-weight: 700;
+  color: var(--texto);
+  transition: background 0.12s;
+}
+.dropdown-content button:hover { background: var(--secundario2); }
+
+/* ─── SECCIÓN LABELS ──────────────────────────────────── */
+.seccion-titulo {
+  font-size: 0.78em;
+  font-weight: 900;
+  color: var(--secundario1);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 22px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.seccion-titulo::after {
+  content: '';
+  flex: 1;
+  height: 1.5px;
+  background: rgba(58,100,99,0.15);
+  border-radius: 2px;
+}
+
+/* ─── GRIDS ───────────────────────────────────────────── */
+.grid {
+  display: grid;
+  gap: 8px;
+}
+.grid-regular { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.grid-publica { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+/* ─── CARD ────────────────────────────────────────────── */
+.card {
+  background: var(--blanco);
+  border-radius: var(--radius);
+  padding: 10px 10px 8px;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  transition: transform 0.13s, box-shadow 0.13s;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-left: 3px solid transparent;
+  min-height: 80px;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-hover);
+}
+.card.tiene-datos { border-left-color: var(--datos-accent); }
+.card.es-hoy      { border-left-color: var(--hoy-accent); }
+
+.card-fecha {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+.card-dia {
+  font-size: 0.82em;
+  font-weight: 900;
+  color: var(--secundario1);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.card-fecha-num {
+  font-size: 0.75em;
+  font-weight: 700;
+  color: var(--texto-suave);
+}
+.card.es-hoy .card-dia   { color: var(--hoy-accent); }
+.card.es-hoy .card-fecha-num { color: var(--hoy-accent); }
+
+/* Chips */
+.card-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.chip {
+  font-size: 0.7em;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+}
+.chip-hora         { background: #e2f0ef; color: #2d6160; }
+.chip-reunion      { background: #fde8dc; color: #b85a30; }
+.chip-territorio   { background: #eff3ef; color: #3d6040; }
+.chip-dirige       { background: #f0eef8; color: #5a4a80; }
+.chip-lugar        { background: #fde8dc; color: #b85a30; }
+.chip-participante { background: #f0eef8; color: #5a4a80; }
+
+/* ─── RECORDATORIOS ───────────────────────────────────── */
+.recordatorios {
+  background: var(--principal);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-top: 8px;
+  cursor: default;
+}
+.recordatorios h4 {
+  font-size: 0.85em;
+  font-weight: 900;
+  color: var(--blanco);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.recordatorios p {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+/* ─── MODAL ───────────────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20,35,35,0.38);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 26px 24px 22px;
+  width: 380px;
+  max-width: 96vw;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.22);
+  position: relative;
+  animation: modalIn 0.2s cubic-bezier(.28,.72,.45,1);
+}
+@keyframes modalIn {
+  from { transform: translateY(12px) scale(0.96); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.modal-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 30px; height: 30px;
+  border: none;
+  background: var(--secundario2);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 900;
+  color: var(--texto-suave);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.14s;
+  font-family: 'Nunito', sans-serif;
+}
+.modal-close:hover { background: #dde5e5; }
+
+.modal-titulo {
+  font-size: 1.05em;
+  font-weight: 900;
+  color: var(--secundario1);
+  margin-bottom: 18px;
+  padding-right: 30px;
+  letter-spacing: -0.01em;
+}
+.campo-grupo { margin-bottom: 13px; }
+.campo-grupo label {
+  display: block;
+  font-size: 0.72em;
+  font-weight: 800;
+  color: var(--texto-suave);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.campo-grupo select {
+  width: 100%;
+  padding: 9px 34px 9px 11px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9em;
+  font-weight: 700;
+  border: 1.5px solid #d0dada;
+  border-radius: var(--radius);
+  background: var(--blanco) var(--arrow-svg) no-repeat right 11px center;
+  appearance: none;
+  cursor: pointer;
+  color: var(--texto);
+  transition: border-color 0.14s, box-shadow 0.14s;
+}
+.campo-grupo select:focus {
+  outline: none;
+  border-color: var(--principal);
+  box-shadow: 0 0 0 3px rgba(224,132,94,0.12);
+}
+.campos-fila {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 10px;
+}
+.participantes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.participantes-grid .campo-grupo { margin-bottom: 0; }
+.seccion-label {
+  font-size: 0.72em;
+  font-weight: 800;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+  display: block;
+}
+.modal-divider {
+  height: 1px;
+  background: var(--secundario2);
+  margin: 14px 0 16px;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 600px) {
+  body { padding: 12px 8px 16px; }
+  .header { flex-direction: column; align-items: flex-start; }
+  .grid-regular,
+  .grid-publica { grid-template-columns: 1fr 1fr; }
+  .chip { display: none; }
+}
+@media (max-width: 400px) {
+  .grid-regular,
+  .grid-publica { grid-template-columns: 1fr; }
+}
+
+@page { size: A4 portrait; margin: 10mm; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-titles">
+    <h1>Programa de Predicación</h1>
+    <h3>Centro-San Francisco, Atl.</h3>
+  </div>
+  <div class="header-controls">
+    <button class="btn btn-ghost" onclick="limpiarSemana()">Limpiar</button>
+    <div class="dropdown" id="dropdownDescargar">
+      <button class="btn btn-secondary" onclick="toggleDropdown()">Descargar ▾</button>
+      <div class="dropdown-content" id="dropdownMenu">
+        <button onclick="descargarComoImagen('jpg')">JPG</button>
+        <button onclick="descargarComoImagen('png')">PNG</button>
+        <button onclick="descargarComoPDF()">PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PREDICACIÓN REGULAR -->
+<div class="seccion-titulo">📋 Predicación Regular</div>
+<div class="grid grid-regular" id="gridRegular"></div>
+
+<!-- PREDICACIÓN PÚBLICA -->
+<div class="seccion-titulo">🏠 Predicación Pública</div>
+<div class="grid grid-publica" id="gridPublica"></div>
+
+<!-- RECORDATORIOS -->
+<div class="seccion-titulo">🔔 Recordatorios</div>
+<div class="recordatorios">
+  <p>🔹 Consultar od 9.9, 11, 12, 45, 46</p>
+  <p>😁 Por favor, avisar si no le es posible cumplir con alguna de sus asignaciones</p>
+</div>
+
+<!-- MODAL (tipo dinámico: regular | publica) -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModalOverlay(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="cerrarModal()">✕</button>
+    <div class="modal-titulo" id="modalTitulo"></div>
+
+    <!-- Campos regular -->
+    <div id="camposRegular">
+      <div class="campos-fila">
+        <div class="campo-grupo"><label>Hora</label><select id="mHora"></select></div>
+        <div class="campo-grupo"><label>Reunión</label><select id="mReunion"></select></div>
+      </div>
+      <div class="campo-grupo"><label>Territorio</label><select id="mTerritorio"></select></div>
+      <div class="campo-grupo"><label>Encargado</label><select id="mEncargado"></select></div>
+    </div>
+
+    <!-- Campos pública -->
+    <div id="camposPublica" style="display:none">
+      <div class="campos-fila">
+        <div class="campo-grupo"><label>Hora</label><select id="mHoraPub"></select></div>
+        <div class="campo-grupo"><label>Lugar</label><select id="mLugar"></select></div>
+      </div>
+      <span class="seccion-label">👥 Participantes</span>
+      <div class="participantes-grid">
+        <div class="campo-grupo"><label>1</label><select id="mP1"></select></div>
+        <div class="campo-grupo"><label>2</label><select id="mP2"></select></div>
+        <div class="campo-grupo"><label>3</label><select id="mP3"></select></div>
+        <div class="campo-grupo"><label>4</label><select id="mP4"></select></div>
+      </div>
+    </div>
+
+    <div class="modal-divider"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarModal()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Datos ────────────────────────────────────────────────
+const diasRegular  = ['Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+const diasPublica  = ['Miércoles','Jueves'];
+const horarios     = ["7:00 am","8:00 am","8:30 am","9:00 am","3:30 pm"];
+const horariosPublica = ["7:00 am","8:00 am","8:30 am"];
+const reuniones    = ["Zoom","Salón del Reino","Vilma Ortega","Ana Martínez","Familia Zúniga","Karolina Alemán"];
+const territorios  = ["Cartas, Teléfono, etc.","(1) El Pantanal","(2) El Clarito","(3) El Triángulo","(4) El Centro","(5) Martín, El Bajo","(6) Hide, Martín","(7) La Frutera","(8) Desvío Viejo","(9) Las Camelias","(10) Saladito","(11) Miceli","(12) Boca del Toro","(13) Buena Vista","(14) Pagoales"];
+const encargados   = ["Inty Ayala","Andy Hernández","Olman Gutiérrez","Gustavo Limas","Sender Molina","Denis Licona"];
+const lugares      = ["Centro de Salud","Desvío"];
+const publicadores = ["Ana Martínez","Janeth Portillo","Karolina Alemán","María Hernández","Maryuri Molina","Meliza Pérez","Miriam Herrera","Sofía Alemán","Vilma Ortega","Yalile Paz","Andy Hernández","Denis Licona","Gustavo Limas","Inty Ayala","Evelin Ayala","Olman Gutiérrez","Claudia Gutiérrez"];
+
+// Día de la semana JS → nombre
+const DIAS_JS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+
+const hoy = new Date();
+hoy.setHours(0,0,0,0);
+
+// Calcular la fecha del próximo (o actual) día de semana indicado
+function fechaDia(nombreDia) {
+  const target = DIAS_JS.indexOf(nombreDia);
+  const curr   = hoy.getDay();
+  const diff   = (target - curr + 7) % 7;
+  const fecha  = new Date(hoy);
+  fecha.setDate(hoy.getDate() + diff);
+  return fecha;
+}
+
+function formatFecha(date) {
+  return date.toLocaleDateString('es-ES', { day:'2-digit', month:'2-digit', year:'numeric' });
+}
+
+function esHoy(date) {
+  return date.toDateString() === hoy.toDateString();
+}
+
+// ─── LocalStorage ─────────────────────────────────────────
+function storageKey(tipo, isoDate) { return `semanal-${tipo}-${isoDate}`; }
+function getIso(date) { return date.toISOString().slice(0,10); }
+function getDatos(tipo, date) {
+  try { return JSON.parse(localStorage.getItem(storageKey(tipo, getIso(date)))) || {}; }
+  catch { return {}; }
+}
+function setDatos(tipo, date, datos) {
+  localStorage.setItem(storageKey(tipo, getIso(date)), JSON.stringify(datos));
+}
+
+// ─── Poblar selects del modal ──────────────────────────────
+function poblarSelect(id, opciones) {
+  const sel = document.getElementById(id);
+  sel.innerHTML = `<option value="">—</option>` +
+    opciones.map(o => `<option value="${o}">${o}</option>`).join("");
+}
+poblarSelect("mHora",       horarios);
+poblarSelect("mReunion",    reuniones);
+poblarSelect("mTerritorio", territorios);
+poblarSelect("mEncargado",  encargados);
+poblarSelect("mHoraPub",    horariosPublica);
+poblarSelect("mLugar",      lugares);
+["mP1","mP2","mP3","mP4"].forEach(id => poblarSelect(id, publicadores));
+
+// ─── Construir cards ──────────────────────────────────────
+function construirCards() {
+  // Regular
+  const gridReg = document.getElementById("gridRegular");
+  gridReg.innerHTML = "";
+  diasRegular.forEach(nombre => {
+    const fecha   = fechaDia(nombre);
+    const datos   = getDatos("reg", fecha);
+    const tieneD  = !!(datos.hora || datos.reunion || datos.territorio || datos.encargado);
+    const clases  = `card${tieneD ? ' tiene-datos' : ''}${esHoy(fecha) ? ' es-hoy' : ''}`;
+    let chips = "";
+    if(datos.hora)       chips += `<span class="chip chip-hora">⏰ ${datos.hora}</span>`;
+    if(datos.reunion)    chips += `<span class="chip chip-reunion">🏠 ${datos.reunion}</span>`;
+    if(datos.territorio) chips += `<span class="chip chip-territorio">📍 ${datos.territorio}</span>`;
+    if(datos.encargado)  chips += `<span class="chip chip-dirige">👤 ${datos.encargado}</span>`;
+
+    const div = document.createElement("div");
+    div.className = clases;
+    div.innerHTML = `
+      <div class="card-fecha">
+        <span class="card-dia">${nombre}</span>
+        <span class="card-fecha-num">${formatFecha(fecha)}</span>
+      </div>
+      <div class="card-chips">${chips}</div>`;
+    div.addEventListener("click", () => abrirModal("regular", nombre, fecha));
+    gridReg.appendChild(div);
+  });
+
+  // Pública
+  const gridPub = document.getElementById("gridPublica");
+  gridPub.innerHTML = "";
+  diasPublica.forEach(nombre => {
+    const fecha  = fechaDia(nombre);
+    const datos  = getDatos("pub", fecha);
+    const tieneD = !!(datos.hora || datos.lugar || datos.p1 || datos.p2 || datos.p3 || datos.p4);
+    const clases = `card${tieneD ? ' tiene-datos' : ''}${esHoy(fecha) ? ' es-hoy' : ''}`;
+    let chips = "";
+    if(datos.hora)  chips += `<span class="chip chip-hora">⏰ ${datos.hora}</span>`;
+    if(datos.lugar) chips += `<span class="chip chip-lugar">📍 ${datos.lugar}</span>`;
+    [datos.p1, datos.p2, datos.p3, datos.p4].filter(Boolean).forEach(p => {
+      chips += `<span class="chip chip-participante">👤 ${p}</span>`;
+    });
+
+    const div = document.createElement("div");
+    div.className = clases;
+    div.innerHTML = `
+      <div class="card-fecha">
+        <span class="card-dia">${nombre}</span>
+        <span class="card-fecha-num">${formatFecha(fecha)}</span>
+      </div>
+      <div class="card-chips">${chips}</div>`;
+    div.addEventListener("click", () => abrirModal("publica", nombre, fecha));
+    gridPub.appendChild(div);
+  });
+}
+
+// ─── Modal ────────────────────────────────────────────────
+let modalActivo = { tipo: null, fecha: null };
+
+function abrirModal(tipo, nombreDia, fecha) {
+  modalActivo = { tipo, fecha };
+
+  document.getElementById("modalTitulo").textContent =
+    `${nombreDia} — ${formatFecha(fecha)}`;
+
+  const esReg = tipo === "regular";
+  document.getElementById("camposRegular").style.display = esReg ? "" : "none";
+  document.getElementById("camposPublica").style.display = esReg ? "none" : "";
+
+  if(esReg) {
+    const d = getDatos("reg", fecha);
+    document.getElementById("mHora").value       = d.hora      || "";
+    document.getElementById("mReunion").value    = d.reunion   || "";
+    document.getElementById("mTerritorio").value = d.territorio || "";
+    document.getElementById("mEncargado").value  = d.encargado || "";
+  } else {
+    const d = getDatos("pub", fecha);
+    document.getElementById("mHoraPub").value = d.hora  || "";
+    document.getElementById("mLugar").value   = d.lugar || "";
+    document.getElementById("mP1").value      = d.p1    || "";
+    document.getElementById("mP2").value      = d.p2    || "";
+    document.getElementById("mP3").value      = d.p3    || "";
+    document.getElementById("mP4").value      = d.p4    || "";
+  }
+
+  document.getElementById("modalOverlay").classList.add("open");
+}
+
+function cerrarModal() {
+  document.getElementById("modalOverlay").classList.remove("open");
+  modalActivo = { tipo: null, fecha: null };
+}
+function cerrarModalOverlay(e) {
+  if(e.target === document.getElementById("modalOverlay")) cerrarModal();
+}
+
+function guardarModal() {
+  const { tipo, fecha } = modalActivo;
+  if(!tipo) return;
+
+  let datos;
+  if(tipo === "regular") {
+    datos = {
+      hora:       document.getElementById("mHora").value,
+      reunion:    document.getElementById("mReunion").value,
+      territorio: document.getElementById("mTerritorio").value,
+      encargado:  document.getElementById("mEncargado").value,
+    };
+    setDatos("reg", fecha, datos);
+  } else {
+    datos = {
+      hora:  document.getElementById("mHoraPub").value,
+      lugar: document.getElementById("mLugar").value,
+      p1:    document.getElementById("mP1").value,
+      p2:    document.getElementById("mP2").value,
+      p3:    document.getElementById("mP3").value,
+      p4:    document.getElementById("mP4").value,
+    };
+    setDatos("pub", fecha, datos);
+  }
+
+  cerrarModal();
+  construirCards();
+}
+
+// ─── Limpiar semana ───────────────────────────────────────
+function limpiarSemana() {
+  if(!confirm("¿Limpiar todos los datos de esta semana?")) return;
+  diasRegular.forEach(d => {
+    const f = fechaDia(d);
+    localStorage.removeItem(storageKey("reg", getIso(f)));
+  });
+  diasPublica.forEach(d => {
+    const f = fechaDia(d);
+    localStorage.removeItem(storageKey("pub", getIso(f)));
+  });
+  construirCards();
+}
+
+// ─── Dropdown ─────────────────────────────────────────────
+function toggleDropdown() {
+  document.getElementById("dropdownMenu").classList.toggle("open");
+}
+document.addEventListener("click", e => {
+  if(!document.getElementById("dropdownDescargar").contains(e.target))
+    document.getElementById("dropdownMenu").classList.remove("open");
+});
+
+// ─── Exportar ─────────────────────────────────────────────
+function construirContenedorExport() {
+  const cont = document.createElement("div");
+  cont.style.cssText = `
+    background:${getComputedStyle(document.body).backgroundColor};
+    padding:24px;
+    font-family:'Nunito',sans-serif;
+  `;
+  cont.appendChild(document.querySelector("h1").cloneNode(true));
+  cont.appendChild(document.querySelector("h3").cloneNode(true));
+
+  ["gridRegular","gridPublica"].forEach(id => {
+    const titulo = id === "gridRegular"
+      ? "📋 Predicación Regular"
+      : "🏠 Predicación Pública";
+    const lbl = document.createElement("div");
+    lbl.textContent = titulo;
+    lbl.style.cssText = "font-size:.78em;font-weight:900;color:#3a6463;text-transform:uppercase;letter-spacing:.1em;margin:18px 0 8px;";
+    cont.appendChild(lbl);
+    cont.appendChild(document.getElementById(id).cloneNode(true));
+  });
+
+  const rec = document.querySelector(".recordatorios").cloneNode(true);
+  rec.style.marginTop = "14px";
+  cont.appendChild(rec);
+  return cont;
+}
+
+async function descargarComoImagen(tipo) {
+  const cont = construirContenedorExport();
+  document.body.appendChild(cont);
+  html2canvas(cont, {scale:2, useCORS:true, scrollY:-window.scrollY, scrollX:-window.scrollX})
+    .then(canvas => {
+      const link = document.createElement('a');
+      link.download = `programa-predicacion.${tipo}`;
+      link.href = canvas.toDataURL(`image/${tipo}`);
+      link.click();
+      document.body.removeChild(cont);
+    });
+}
+
+async function descargarComoPDF() {
+  const cont = construirContenedorExport();
+  document.body.appendChild(cont);
+  html2canvas(cont, {scale:2, useCORS:true, scrollY:-window.scrollY, scrollX:-window.scrollX})
+    .then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('portrait','mm','a4');
+      const w   = pdf.internal.pageSize.getWidth();
+      const h   = pdf.internal.pageSize.getHeight();
+      const s   = Math.min(w/canvas.width, h/canvas.height);
+      pdf.addImage(imgData,'PNG',0,0,canvas.width*s,canvas.height*s);
+      pdf.save('programa-predicacion.pdf');
+      document.body.removeChild(cont);
+    });
+}
+
+// ─── Arranque ─────────────────────────────────────────────
+construirCards();
+</script>
+</body>
+</html>
