@@ -410,17 +410,21 @@ body {
 .aviso-pasado.visible { display: block; }
 
 /* ─── RESPONSIVE ──────────────────────────────────────── */
-@media (max-width: 600px) {
-  body { padding: 12px 8px 16px; }
+@media (max-width: 640px) {
+  body { padding: 12px 10px 16px; }
   .header { flex-direction: column; align-items: flex-start; }
-  .grid-regular,
-  .grid-publica { grid-template-columns: 1fr 1fr; }
-  .chip { display: none; }
-  .semana-rango { font-size: 0.82em; }
-}
-@media (max-width: 400px) {
+  .semana-rango { font-size: 0.85em; }
+
+  /* Una columna: tarjetas ocupan todo el ancho */
   .grid-regular,
   .grid-publica { grid-template-columns: 1fr; }
+
+  /* Chips en fila horizontal para ahorrar espacio vertical */
+  .card-chips { flex-direction: row; flex-wrap: wrap; gap: 3px; }
+  .chip { font-size: 0.68em; }
+
+  /* Cards compactas */
+  .card { min-height: auto; padding: 9px 10px 8px; }
 }
 
 @page { size: A4 portrait; margin: 10mm; }
@@ -760,11 +764,15 @@ document.addEventListener("click", e => {
 // ─── Exportar ─────────────────────────────────────────────
 function construirContenedorExport() {
   const cont = document.createElement("div");
+  // Ancho fijo tipo escritorio: html2canvas lo captura así
+  // sin importar si el dispositivo es móvil
   cont.style.cssText = `
-    background:${getComputedStyle(document.body).backgroundColor};
-    padding:24px;font-family:'Nunito',sans-serif;
+    background:#eef3ee;
+    padding:24px;
+    font-family:'Nunito',sans-serif;
+    width:820px;
   `;
-  // Título
+
   const martes  = martesDeLaSemana(weekOffset);
   const domingo = new Date(martes); domingo.setDate(martes.getDate() + 5);
   cont.innerHTML = `
@@ -779,11 +787,32 @@ function construirContenedorExport() {
   ["gridRegular","gridPublica"].forEach(id => {
     const lbl = document.createElement("div");
     lbl.textContent = id === "gridRegular" ? "📋 Predicación Regular" : "🏠 Predicación Pública";
-    lbl.style.cssText = "font-size:.78em;font-weight:900;color:#3a6463;text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px;display:flex;align-items:center;gap:8px;";
+    lbl.style.cssText = "font-size:.78em;font-weight:900;color:#3a6463;text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px;";
     cont.appendChild(lbl);
+
     const clon = document.getElementById(id).cloneNode(true);
-    // Quitar hover/cursor en export
-    clon.querySelectorAll(".card").forEach(c => { c.style.cursor="default"; c.style.transform="none"; });
+
+    // Forzar layout de escritorio en el clon: grid multi-columna explícito
+    const cols = id === "gridRegular"
+      ? "repeat(3, 1fr)"
+      : "repeat(2, 1fr)";
+    clon.style.cssText = `display:grid;gap:8px;grid-template-columns:${cols};`;
+
+    // Chips siempre en columna en el export (más legible)
+    clon.querySelectorAll(".card-chips").forEach(c => {
+      c.style.flexDirection = "column";
+      c.style.flexWrap = "nowrap";
+    });
+    clon.querySelectorAll(".chip").forEach(c => {
+      c.style.display = "block";
+      c.style.fontSize = "0.7em";
+    });
+    clon.querySelectorAll(".card").forEach(c => {
+      c.style.cursor = "default";
+      c.style.transform = "none";
+      c.style.minHeight = "80px";
+    });
+
     cont.appendChild(clon);
   });
 
