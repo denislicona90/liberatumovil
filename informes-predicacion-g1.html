@@ -658,7 +658,7 @@ function leerSeccion(sec) {
 }
 
 // ─── LocalStorage ─────────────────────────────────────────
-function storageKey() { return `informe-g2-${anioSelect.value}-${mesSelect.value}`; }
+function storageKey() { return `informe-g1-${anioSelect.value}-${mesSelect.value}`; }
 
 function guardarDatos() {
   const datos = {};
@@ -752,7 +752,7 @@ async function descargarComoImagen(tipo) {
   document.body.appendChild(cont);
   html2canvas(cont, {scale:2, useCORS:true, logging:false}).then(canvas => {
     const link = document.createElement("a");
-    link.download = `informe-predicacion-g2.${tipo}`;
+    link.download = `informe-predicacion-g1.${tipo}`;
     link.href = canvas.toDataURL(`image/${tipo}`);
     link.click();
     document.body.removeChild(cont);
