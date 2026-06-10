@@ -17,28 +17,22 @@
   --radius:       10px;
   --radius-sm:    6px;
   --principal:    #e0845e;
-
   --c-pub:        #3a6463;
   --c-aux:        #5c7a9e;
   --c-reg:        #7b5ea7;
   --c-esp:        #b07030;
-
   --c-pub-light:  #e4efef;
   --c-aux-light:  #e4ecf5;
   --c-reg-light:  #ece8f5;
   --c-esp-light:  #f5ead8;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   padding: 22px 20px 24px;
   font-family: 'Nunito', sans-serif;
   background: var(--secundario2);
   color: var(--texto);
 }
-
-/* ─── HEADER ──────────────────────────────────────────── */
 .header {
   display: flex;
   justify-content: space-between;
@@ -80,8 +74,6 @@ body {
   flex-wrap: wrap;
   align-items: center;
 }
-
-/* ─── BOTONES ─────────────────────────────────────────── */
 .btn {
   padding: 8px 15px;
   font-family: 'Nunito', sans-serif;
@@ -105,7 +97,6 @@ body {
 }
 .btn-ghost:hover { background: #fff0ec; }
 .btn-sm { padding: 5px 10px; font-size: 0.8em; }
-
 .ctrl-select {
   padding: 8px 11px;
   font-family: 'Nunito', sans-serif;
@@ -118,7 +109,6 @@ body {
   color: var(--texto);
 }
 .ctrl-select:focus { outline: none; border-color: var(--principal); }
-
 .dropdown { position: relative; display: inline-block; }
 .dropdown-content {
   display: none;
@@ -148,10 +138,7 @@ body {
   transition: background 0.12s;
 }
 .dropdown-content button:hover { background: var(--secundario2); }
-
-/* ─── SECCIÓN ─────────────────────────────────────────── */
 .seccion { margin-bottom: 18px; }
-
 .seccion-titulo {
   font-size: 0.78em;
   font-weight: 900;
@@ -174,15 +161,12 @@ body {
 .sec-aux .seccion-titulo { color: var(--c-aux); }
 .sec-reg .seccion-titulo { color: var(--c-reg); }
 .sec-esp .seccion-titulo { color: var(--c-esp); }
-
-/* ─── TABLA ───────────────────────────────────────────── */
 .tabla-wrap {
   background: var(--blanco);
   border-radius: var(--radius);
   box-shadow: var(--sombra);
   overflow: hidden;
 }
-
 .tabla-header {
   display: grid;
   padding: 8px 10px;
@@ -198,18 +182,14 @@ body {
 .sec-aux .tabla-header { background: var(--c-aux); }
 .sec-reg .tabla-header { background: var(--c-reg); }
 .sec-esp .tabla-header { background: var(--c-esp); }
-
 .tabla-header.pub { grid-template-columns: 1fr 80px; }
 .tabla-header.aux { grid-template-columns: 1fr 60px 60px 1fr; }
-
 .tabla-filas {
   padding: 6px 8px 4px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
-
-/* ─── FILA ────────────────────────────────────────────── */
 .fila {
   display: grid;
   gap: 6px;
@@ -217,8 +197,6 @@ body {
 }
 .fila.pub { grid-template-columns: 1fr 80px 26px; }
 .fila.aux { grid-template-columns: 1fr 60px 60px 1fr 26px; }
-
-/* Estilos base de inputs en fila */
 .fila-input {
   font-family: 'Nunito', sans-serif;
   font-size: 0.85em;
@@ -236,11 +214,7 @@ body {
   border-color: var(--principal);
   background: var(--blanco);
 }
-.fila-input.num {
-  text-align: center;
-  padding: 6px 4px;
-}
-
+.fila-input.num { text-align: center; padding: 6px 4px; }
 .btn-del {
   width: 26px;
   height: 26px;
@@ -260,8 +234,6 @@ body {
   line-height: 1;
 }
 .btn-del:hover { background: #fbc8c8; }
-
-/* ─── FILA TOTALES ────────────────────────────────────── */
 .fila-totales {
   display: grid;
   gap: 6px;
@@ -271,12 +243,10 @@ body {
 }
 .fila-totales.pub { grid-template-columns: 1fr 80px 26px; }
 .fila-totales.aux { grid-template-columns: 1fr 60px 60px 1fr 26px; }
-
 .sec-pub .fila-totales { background: var(--c-pub-light); }
 .sec-aux .fila-totales { background: var(--c-aux-light); }
 .sec-reg .fila-totales { background: var(--c-reg-light); }
 .sec-esp .fila-totales { background: var(--c-esp-light); }
-
 .tot-label {
   font-size: 0.74em;
   font-weight: 900;
@@ -284,17 +254,11 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
-.tot-num {
-  font-size: 0.9em;
-  font-weight: 900;
-  text-align: center;
-}
+.tot-num { font-size: 0.9em; font-weight: 900; text-align: center; }
 .sec-pub .tot-num { color: var(--c-pub); }
 .sec-aux .tot-num { color: var(--c-aux); }
 .sec-reg .tot-num { color: var(--c-reg); }
 .sec-esp .tot-num { color: var(--c-esp); }
-
-/* ─── AGREGAR FILA ────────────────────────────────────── */
 .agregar-fila {
   display: flex;
   gap: 7px;
@@ -317,8 +281,6 @@ body {
   color: var(--texto-suave);
 }
 .agregar-fila select:focus { outline: none; border-color: var(--principal); }
-
-/* ─── RESUMEN GLOBAL ──────────────────────────────────── */
 .resumen-global {
   background: var(--c-pub);
   border-radius: var(--radius);
@@ -354,16 +316,12 @@ body {
   display: block;
   margin-top: 3px;
 }
-
-/* ─── RESPONSIVE ──────────────────────────────────────── */
 @media (max-width: 580px) {
   body { padding: 12px 10px 16px; }
   .header { flex-direction: column; }
   .fila.aux,
   .fila-totales.aux,
-  .tabla-header.aux {
-    grid-template-columns: 1fr 50px 50px 26px;
-  }
+  .tabla-header.aux { grid-template-columns: 1fr 50px 50px 26px; }
   .fila.aux .campo-com,
   .fila-totales.aux .tot-com,
   .tabla-header.aux .col-com { display: none; }
@@ -373,11 +331,11 @@ body {
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-titles">
     <h1>Informe de Predicación</h1>
-    <div class="subtitulo">Grupo 1 — Centro-San Francisco, Atl.</div>
+    <!-- ↓ Cambia este texto y el export lo usará automáticamente -->
+    <div class="subtitulo" id="subtituloDoc">Grupo 1 — Centro-San Francisco, Atl.</div>
     <div class="mes-badge" id="mesBadge"></div>
   </div>
   <div class="header-controls">
@@ -395,12 +353,9 @@ body {
   </div>
 </div>
 
-<!-- datalist para autocompletar nombres -->
 <datalist id="dl-nombres"></datalist>
 
 <div id="contenido">
-
-  <!-- PUBLICADORES -->
   <div class="seccion sec-pub">
     <div class="seccion-titulo">👤 Publicadores</div>
     <div class="tabla-wrap">
@@ -416,7 +371,6 @@ body {
     </div>
   </div>
 
-  <!-- AUXILIARES -->
   <div class="seccion sec-aux">
     <div class="seccion-titulo">📋 Precursores Auxiliares</div>
     <div class="tabla-wrap">
@@ -434,7 +388,6 @@ body {
     </div>
   </div>
 
-  <!-- REGULARES -->
   <div class="seccion sec-reg">
     <div class="seccion-titulo">📋 Precursores Regulares</div>
     <div class="tabla-wrap">
@@ -452,7 +405,6 @@ body {
     </div>
   </div>
 
-  <!-- ESPECIALES -->
   <div class="seccion sec-esp">
     <div class="seccion-titulo">⭐ Precursores Especiales</div>
     <div class="tabla-wrap">
@@ -470,7 +422,6 @@ body {
     </div>
   </div>
 
-  <!-- RESUMEN GLOBAL -->
   <div class="seccion">
     <div class="seccion-titulo" style="color:var(--c-pub)">📊 Resumen del Mes</div>
     <div class="resumen-global">
@@ -480,7 +431,6 @@ body {
       <div class="rg-item"><span class="rg-val" id="rg-cursos">0</span><span class="rg-lbl">Cursos Bíblicos</span></div>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -489,8 +439,7 @@ const mesesNombres = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
 const nombres = [
   "Gustavo Limas","Olman Gutiérrez","Claudia Gutiérrez","Pedro Mayen","Cristina Mayen",
   "Kenia Mayen","Andy Hernández","Deysi Banegas","Fernando Banegas",
-  "Pablo Zúniga","Ana Zúniga","Janeth Portillo","Vilma Ortega",
-  "Yalile Paz",
+  "Pablo Zúniga","Ana Zúniga","Janeth Portillo","Vilma Ortega","Yalile Paz",
 ];
 const secciones = ['pub','aux','reg','esp'];
 
@@ -527,25 +476,16 @@ function poblarDropdowns() {
 }
 function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-// ─── Crear input con estilo ───────────────────────────────
+// ─── Crear input ──────────────────────────────────────────
 function mkInput(tipo, val, placeholder, extraClass) {
   const el = document.createElement("input");
   el.type = "text";
   el.className = "fila-input" + (extraClass ? " " + extraClass : "");
   el.value = val || "";
   el.placeholder = placeholder || "";
-  if(tipo === "nombre") {
-    el.setAttribute("list", "dl-nombres");
-    el.autocomplete = "off";
-  }
-  if(tipo === "num") {
-    el.maxLength = 3;
-    el.inputMode = "numeric";
-    el.pattern = "[0-9]*";
-  }
-  if(tipo === "com") {
-    el.maxLength = 90;
-  }
+  if(tipo === "nombre") { el.setAttribute("list", "dl-nombres"); el.autocomplete = "off"; }
+  if(tipo === "num")    { el.maxLength = 3; el.inputMode = "numeric"; el.pattern = "[0-9]*"; }
+  if(tipo === "com")    { el.maxLength = 90; }
   el.addEventListener("input", guardarDatos);
   return el;
 }
@@ -555,9 +495,7 @@ function crearFila(sec, nombre, datos) {
   datos = datos || {};
   const fila = document.createElement("div");
   fila.className = `fila ${sec === 'pub' ? 'pub' : 'aux'}`;
-
   fila.appendChild(mkInput("nombre", nombre, "Nombre…"));
-
   if(sec === 'pub') {
     fila.appendChild(mkInput("num", datos.cursos, "0", "num"));
   } else {
@@ -565,44 +503,31 @@ function crearFila(sec, nombre, datos) {
     fila.appendChild(mkInput("num", datos.cursos, "0", "num"));
     fila.appendChild(mkInput("com", datos.comentario, "Comentario…", "campo-com"));
   }
-
   const del = document.createElement("button");
-  del.className = "btn-del";
-  del.textContent = "×";
-  del.title = "Eliminar";
+  del.className = "btn-del"; del.textContent = "×"; del.title = "Eliminar";
   del.onclick = () => { fila.remove(); guardarDatos(); };
   fila.appendChild(del);
   return fila;
 }
 
-// ─── Totales por sección ──────────────────────────────────
+// ─── Totales ──────────────────────────────────────────────
 function actualizarTotales(sec) {
   const cont  = document.getElementById("filas" + cap(sec));
   const isPub = sec === 'pub';
   let personas = 0, totalH = 0, totalC = 0;
-
   Array.from(cont.querySelectorAll(".fila")).forEach(fila => {
     const inp = fila.querySelectorAll("input");
     if(inp[0]?.value?.trim()) personas++;
-    if(isPub) {
-      totalC += parseInt(inp[1]?.value) || 0;
-    } else {
-      totalH += parseInt(inp[1]?.value) || 0;
-      totalC += parseInt(inp[2]?.value) || 0;
-    }
+    if(isPub) { totalC += parseInt(inp[1]?.value)||0; }
+    else { totalH += parseInt(inp[1]?.value)||0; totalC += parseInt(inp[2]?.value)||0; }
   });
-
-  // Insertar o actualizar fila totales
   const wrap = cont.closest(".tabla-wrap");
   let ft = wrap.querySelector(".fila-totales");
   if(!ft) {
     ft = document.createElement("div");
     ft.className = `fila-totales ${isPub ? 'pub' : 'aux'}`;
-    // insertar antes de agregar-fila
-    const af = wrap.querySelector(".agregar-fila");
-    wrap.insertBefore(ft, af);
+    wrap.insertBefore(ft, wrap.querySelector(".agregar-fila"));
   }
-
   if(isPub) {
     ft.innerHTML = `
       <span class="tot-label">📊 ${personas} persona${personas!==1?'s':''}</span>
@@ -616,7 +541,6 @@ function actualizarTotales(sec) {
       <span class="tot-com"></span>
       <span></span>`;
   }
-
   actualizarResumenGlobal();
 }
 
@@ -639,9 +563,7 @@ function actualizarResumenGlobal() {
 // ─── Agregar ──────────────────────────────────────────────
 function agregarFila(sec, nombre) {
   const cont = document.getElementById("filas" + cap(sec));
-  if(cont.querySelectorAll(".fila").length >= 15) {
-    alert("Máximo 15 filas por sección."); return;
-  }
+  if(cont.querySelectorAll(".fila").length >= 15) { alert("Máximo 15 filas por sección."); return; }
   cont.appendChild(crearFila(sec, nombre));
   guardarDatos();
 }
@@ -677,11 +599,11 @@ function cargarDatos() {
     const raw = localStorage.getItem(storageKey());
     if(raw) {
       const datos = JSON.parse(raw);
-      secciones.forEach(sec => {
+      secciones.forEach(sec =>
         (datos[sec]||[]).forEach(row =>
           document.getElementById("filas"+cap(sec)).appendChild(crearFila(sec, row.nombre, row))
-        );
-      });
+        )
+      );
     }
   } catch(e) {}
   secciones.forEach(s => actualizarTotales(s));
@@ -690,44 +612,35 @@ function cargarDatos() {
 function limpiarTodo() {
   if(!confirm(`¿Limpiar informe de ${mesesNombres[mesSelect.value]} ${anioSelect.value}?`)) return;
   localStorage.removeItem(storageKey());
-  secciones.forEach(sec => {
-    document.getElementById("filas"+cap(sec)).innerHTML = "";
-    actualizarTotales(sec);
-  });
+  secciones.forEach(sec => { document.getElementById("filas"+cap(sec)).innerHTML = ""; actualizarTotales(sec); });
 }
 
 // ─── Dropdown ─────────────────────────────────────────────
-function toggleDropdown() {
-  document.getElementById("dropdownMenu").classList.toggle("open");
-}
+function toggleDropdown() { document.getElementById("dropdownMenu").classList.toggle("open"); }
 document.addEventListener("click", e => {
   if(!document.getElementById("dropdownDesc").contains(e.target))
     document.getElementById("dropdownMenu").classList.remove("open");
 });
 
 // ─── Exportar ─────────────────────────────────────────────
-// Para el export, convierte inputs a spans estáticos → sin artefactos de flechas
+// Lee el subtítulo desde el DOM → nunca puede desincronizarse con lo que se ve en pantalla
 function construirExport() {
   const cont = document.createElement("div");
-  cont.style.cssText = `
-    background:${getComputedStyle(document.body).backgroundColor};
-    padding:24px;font-family:'Nunito',sans-serif;max-width:860px;
-  `;
+  cont.style.cssText = "background:#eef3ee;padding:24px;font-family:'Nunito',sans-serif;max-width:860px;";
 
-  // Header estático
+  // ↓ Lee el subtítulo directamente del elemento en pantalla
+  const subtitulo = document.getElementById("subtituloDoc").textContent;
+  const mes       = `${mesesNombres[mesSelect.value]}  ${anioSelect.value}`;
+
   const hdr = document.createElement("div");
   hdr.style.cssText = "margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid rgba(58,100,99,.12);";
   hdr.innerHTML = `
     <div style="font-size:1.45em;font-weight:900;color:#3a6463;letter-spacing:-.02em;">Informe de Predicación</div>
-    <div style="font-size:.83em;font-weight:700;color:#5a6a6a;margin-top:3px;">Grupo 1 — Centro-San Francisco, Atl.</div>
-    <div style="display:inline-block;margin-top:7px;background:#e0845e;color:#fff;font-size:.82em;font-weight:900;padding:3px 13px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;">
-      ${mesesNombres[mesSelect.value]}  ${anioSelect.value}
-    </div>`;
+    <div style="font-size:.83em;font-weight:700;color:#5a6a6a;margin-top:3px;">${subtitulo}</div>
+    <div style="display:inline-block;margin-top:7px;background:#e0845e;color:#fff;font-size:.82em;font-weight:900;padding:3px 13px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;">${mes}</div>`;
   cont.appendChild(hdr);
 
   const clon = document.getElementById("contenido").cloneNode(true);
-
-  // Reemplazar inputs por spans estáticos
   clon.querySelectorAll(".fila input").forEach(inp => {
     const span = document.createElement("span");
     const isNum = inp.classList.contains("num");
@@ -737,18 +650,15 @@ function construirExport() {
       : "font-family:'Nunito',sans-serif;font-size:.85em;font-weight:700;display:block;padding:6px 8px;background:#eef3ee;border-radius:6px;border:1.5px solid #d4e2e2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
     inp.replaceWith(span);
   });
-
   clon.querySelectorAll(".btn-del").forEach(el => el.remove());
   clon.querySelectorAll(".agregar-fila").forEach(el => el.remove());
-
   cont.appendChild(clon);
   return cont;
 }
 
 async function descargarComoImagen(tipo) {
   const cont = construirExport();
-  cont.style.position = "absolute";
-  cont.style.top = "-9999px";
+  cont.style.position = "absolute"; cont.style.top = "-9999px";
   document.body.appendChild(cont);
   html2canvas(cont, {scale:2, useCORS:true, logging:false}).then(canvas => {
     const link = document.createElement("a");
@@ -761,8 +671,7 @@ async function descargarComoImagen(tipo) {
 
 async function descargarComoPDF() {
   const cont = construirExport();
-  cont.style.position = "absolute";
-  cont.style.top = "-9999px";
+  cont.style.position = "absolute"; cont.style.top = "-9999px";
   document.body.appendChild(cont);
   html2canvas(cont, {scale:2, useCORS:true, logging:false}).then(canvas => {
     const imgData = canvas.toDataURL("image/png");
