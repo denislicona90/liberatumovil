@@ -461,9 +461,9 @@ body {
   <button class="btn-nav" onclick="cambiarSemana(1)" title="Semana siguiente">→</button>
 </div>
 
-<!-- PREDICACIÓN REGULAR -->
-<div class="seccion-titulo">📋 Predicación Regular</div>
-<div class="grid grid-regular" id="gridRegular"></div>
+<!-- PREDICACIÓN -->
+<div class="seccion-titulo">📋 Predicación</div>
+<div class="grid grid-predicación" id="gridPredicación"></div>
 
 <!-- PREDICACIÓN PÚBLICA -->
 <div class="seccion-titulo">🏠 Predicación Pública</div>
@@ -483,8 +483,8 @@ body {
     <div class="modal-titulo" id="modalTitulo"></div>
     <div class="aviso-pasado" id="avisoPasado">⚠️ Este día ya pasó — aún puedes editar</div>
 
-    <!-- Campos regular -->
-    <div id="camposRegular">
+    <!-- Campos predicación -->
+    <div id="camposPredicación">
       <div class="campos-fila">
         <div class="campo-grupo"><label>Hora</label><select id="mHora"></select></div>
         <div class="campo-grupo"><label>Reunión</label><select id="mReunion"></select></div>
@@ -518,16 +518,16 @@ body {
 
 <script>
 // ─── Constantes ───────────────────────────────────────────
-const diasRegular     = ['Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+const diasPredicación = ['Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 const diasPublica     = ['Miércoles','Jueves'];
 const DIAS_OFFSET     = { 'Martes':0,'Miércoles':1,'Jueves':2,'Viernes':3,'Sábado':4,'Domingo':5 };
 const horarios        = ["7:00 am","8:00 am","8:30 am","9:00 am","3:30 pm"];
 const horariosPublica = ["7:00 am","8:00 am","8:30 am"];
 const reuniones       = ["Zoom","Salón del Reino","Vilma Ortega","Ana Martínez","Familia Zúniga","Karolina Alemán"];
 const territorios     = ["Cartas, Teléfono, etc.","(1) El Pantanal","(2) El Clarito","(3) El Triángulo","(4) El Centro","(5) Martín, El Bajo","(6) Hide, Martín","(7) La Frutera","(8) Desvío Viejo","(9) Las Camelias","(10) Saladito","(11) Miceli","(12) Boca del Toro","(13) Buena Vista","(14) Pagoales"];
-const encargados      = ["Inty Ayala","Andy Hernández","Olman Gutiérrez","Gustavo Limas","Denis Licona"];
+const encargados      = ["Olman Gutiérrez","Gustavo Limas","Denis Licona"];
 const lugares         = ["Centro de Salud","Desvío"];
-const publicadores    = ["Ana Martínez","Karolina Alemán","María Hernández","Meliza Pérez","Miriam Herrera","Sofía Alemán","Vilma Ortega","Yalile Paz","Andy Hernández","Denis Licona","Gustavo Limas","Inty Ayala","Evelin Ayala","Olman Gutiérrez","Claudia Gutiérrez"];
+const publicadores    = ["Ana Martínez","Karolina Alemán","María Hernández","Meliza Pérez","Miriam Herrera","Sofía Alemán","Vilma Ortega","Yalile Paz","Denis Licona","Gustavo Limas","Olman Gutiérrez","Claudia Gutiérrez"];
 
 // ─── Semana ───────────────────────────────────────────────
 // La semana se ancla al MARTES. weekOffset=0 es la semana actual.
@@ -609,9 +609,9 @@ poblarSelect("mLugar",      lugares);
 // ─── Cards ────────────────────────────────────────────────
 function construirCards() {
   // Regular
-  const gridReg = document.getElementById("gridRegular");
+  const gridReg = document.getElementById("gridPredicación");
   gridReg.innerHTML = "";
-  diasRegular.forEach(nombre => {
+  diasPredicación.forEach(nombre => {
     const fecha  = fechaDia(nombre);
     const datos  = getDatos("reg", fecha);
     const tieneD = !!(datos.hora || datos.reunion || datos.territorio || datos.encargado);
@@ -637,7 +637,7 @@ function construirCards() {
         <span class="card-fecha-num">${formatFecha(fecha)}</span>
       </div>
       <div class="card-chips">${chips}</div>`;
-    div.addEventListener("click", () => abrirModal("regular", nombre, fecha));
+    div.addEventListener("click", () => abrirModal("predicación", nombre, fecha));
     gridReg.appendChild(div);
   });
 
@@ -688,11 +688,11 @@ function abrirModal(tipo, nombreDia, fecha) {
     `${nombreDia} — ${formatFecha(fecha)}`;
   document.getElementById("avisoPasado").classList.toggle("visible", pasado);
 
-  const esReg = tipo === "regular";
-  document.getElementById("camposRegular").style.display = esReg ? "" : "none";
-  document.getElementById("camposPublica").style.display = esReg ? "none" : "";
+  const esPre = tipo === "predicación";
+  document.getElementById("camposPredicación").style.display = esPre ? "" : "none";
+  document.getElementById("camposPublica").style.display = esPre ? "none" : "";
 
-  if(esReg) {
+  if(esPre) {
     const d = getDatos("reg", fecha);
     document.getElementById("mHora").value       = d.hora       || "";
     document.getElementById("mReunion").value    = d.reunion    || "";
@@ -720,8 +720,8 @@ function cerrarModalOverlay(e) {
 function guardarModal() {
   const { tipo, fecha } = modalActivo;
   if(!tipo) return;
-  if(tipo === "regular") {
-    setDatos("reg", fecha, {
+  if(tipo === "predicación") {
+    setDatos("pre", fecha, {
       hora:       document.getElementById("mHora").value,
       reunion:    document.getElementById("mReunion").value,
       territorio: document.getElementById("mTerritorio").value,
@@ -784,16 +784,16 @@ function construirContenedorExport() {
       </div>
     </div>`;
 
-  ["gridRegular","gridPublica"].forEach(id => {
+  ["gridPredicación","gridPublica"].forEach(id => {
     const lbl = document.createElement("div");
-    lbl.textContent = id === "gridRegular" ? "📋 Predicación Regular" : "🏠 Predicación Pública";
+    lbl.textContent = id === "gridRegular" ? "📋 Predicación" : "🏠 Predicación Pública";
     lbl.style.cssText = "font-size:.78em;font-weight:900;color:#3a6463;text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px;";
     cont.appendChild(lbl);
 
     const clon = document.getElementById(id).cloneNode(true);
 
     // Forzar layout de escritorio en el clon: grid multi-columna explícito
-    const cols = id === "gridRegular"
+    const cols = id === "gridPredicación"
       ? "repeat(3, 1fr)"
       : "repeat(2, 1fr)";
     clon.style.cssText = `display:grid;gap:8px;grid-template-columns:${cols};`;
