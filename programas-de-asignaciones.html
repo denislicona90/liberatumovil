@@ -18,7 +18,9 @@
     --header-bg:#F1EFE7;
     --shadow: 0 1px 2px rgba(28,28,26,.04), 0 8px 24px rgba(28,28,26,.05);
     --radius: 10px;
+    --page-w: 816px;  /* Carta @96dpi = 8.5in */
   }
+  html.a4{ --page-w: 794px; } /* A4 @96dpi = 8.27in */
   html.ink-saver{
     --paper:#FFFFFF;
     --panel:#FFFFFF;
@@ -40,9 +42,15 @@
     -webkit-font-smoothing:antialiased;
   }
   .page{
-    max-width: 1180px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 28px 24px 60px;
+  }
+  .sheet-scroll{
+    width:100%;
+    overflow-x:auto;
+    display:flex;
+    justify-content:center;
   }
 
   /* ---------- Barra de control (no se imprime) ---------- */
@@ -83,6 +91,17 @@
   }
   .toolbar-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 
+  .size-toggle{
+    display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden;
+  }
+  .size-opt{
+    font-family:'Inter',sans-serif;
+    font-size:12px; font-weight:600;
+    border:none; background:var(--panel); color:var(--muted);
+    padding:7px 14px; cursor:pointer;
+  }
+  .size-opt.active{ background:var(--accent); color:#fff; }
+
   .switch-wrap{
     display:flex; align-items:center; gap:8px;
     font-size:13px; color:var(--muted); font-weight:500;
@@ -118,6 +137,9 @@
 
   /* ---------- Contenido exportable / imprimible ---------- */
   #sheet{
+    width: var(--page-w);
+    max-width: none;
+    flex: none;
     background: var(--panel);
     border:1px solid var(--line);
     border-radius: var(--radius);
@@ -214,6 +236,51 @@
   }
   select:focus, input:focus{ outline:none; border-bottom: 1px solid var(--accent); }
 
+  /* Tarjetas de discursos públicos */
+  .talk-cards{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom: 6px;
+  }
+  .talk-card{
+    border:1px solid var(--line);
+    border-radius:8px;
+    background: var(--header-bg);
+    padding: 12px 14px 10px;
+  }
+  html.ink-saver .talk-card{ background:#fff; }
+  .talk-date{
+    font-family:'Lora', Georgia, serif;
+    font-size: 13px;
+    font-weight:600;
+    color: var(--accent);
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--line);
+  }
+  html.ink-saver .talk-date{ color:#000; }
+  .talk-fields{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 18px;
+  }
+  .talk-field{ min-width:0; }
+  .talk-field.full{ grid-column: 1 / -1; }
+  .talk-field .f-label{
+    display:block;
+    font-size: 9.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    color: var(--muted);
+    margin-bottom:1px;
+  }
+  .talk-field select, .talk-field input{
+    font-size: 11.5px;
+    padding: 1px 2px;
+  }
+
   .reminders{
     margin-top: 26px;
     border-top: 1px solid var(--line);
@@ -255,16 +322,16 @@
   @media (max-width: 720px){
     .reminders ul{ columns:1; }
     .page{ padding:16px; }
-    #sheet{ padding:20px 16px; }
   }
 
   /* ---------- Impresión: fuerza escala de grises y ahorra tinta ---------- */
   @media print{
     .toolbar{ display:none; }
     body{ background:#fff; filter:grayscale(1); }
-    .page{ padding:0; max-width:100%; }
-    #sheet{ border:none; box-shadow:none; padding:6mm; border-radius:0; }
-    @page{ size: letter landscape; margin:9mm; }
+    .page{ padding:0; }
+    .sheet-scroll{ overflow:visible; }
+    #sheet{ border:none; box-shadow:none; padding:6mm; border-radius:0; width:100%; }
+    @page{ size: letter; margin:9mm; }
   }
 </style>
 </head>
@@ -279,6 +346,10 @@
     </div>
 
     <div class="toolbar-actions">
+      <div class="size-toggle" id="sizeToggle">
+        <button class="size-opt active" data-size="carta">Carta</button>
+        <button class="size-opt" data-size="a4">A4</button>
+      </div>
       <div class="switch-wrap" id="inkToggleWrap">
         <div class="switch" id="inkSwitch"></div>
         <span>Modo ahorro de tinta</span>
@@ -289,6 +360,7 @@
     </div>
   </div>
 
+  <div class="sheet-scroll">
   <div id="sheet">
     <h1>Programa de Asignaciones</h1>
     <h2 class="subtitle">Centro&nbsp;–&nbsp;San Francisco, Atl.</h2>
@@ -299,32 +371,20 @@
     <table id="tableAsignaciones">
       <thead>
         <tr>
-          <th style="width:13%;">Semana</th>
-          <th style="width:14%;">Acomodador</th>
-          <th style="width:14%;">Audio y Video</th>
-          <th style="width:14%;">Micrófono 1</th>
-          <th style="width:14%;">Micrófono 2</th>
-          <th style="width:16%;">Plataforma</th>
-          <th style="width:15%;">Aseo</th>
+          <th style="width:13%;">📆 Semana</th>
+          <th style="width:14%;">🫂 Acomodador</th>
+          <th style="width:14%;">🔊 Audio y Video</th>
+          <th style="width:14%;">🎤 Micrófono 1</th>
+          <th style="width:14%;">🎤 Micrófono 2</th>
+          <th style="width:16%;">🎙️ Plataforma</th>
+          <th style="width:15%;">🧹 Aseo</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
 
     <h3 class="section-title">Discursos Públicos</h3>
-    <table id="tableDiscursos">
-      <thead>
-        <tr>
-          <th style="width:10%;">Fecha</th>
-          <th style="width:11%;">Presidente y Lector</th>
-          <th style="width:14%;">Discursante</th>
-          <th style="width:17%;">Congregación</th>
-          <th style="width:34%;">Título</th>
-          <th style="width:14%;">Canción</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="talk-cards" id="talkCards"></div>
 
     <div class="reminders">
       <h4>Recordatorios</h4>
@@ -337,6 +397,7 @@
       </ul>
     </div>
     <div class="footer-note" id="genNote"></div>
+  </div>
   </div>
 </div>
 
@@ -558,17 +619,34 @@ function renderAll(){
       <td>${buildSelect(ROLE_OPTIONS.aseo)}</td>
     </tr>`).join('');
 
-  // Tabla de discursos públicos (fecha = sábado de cada semana)
-  const tbodyD = document.querySelector('#tableDiscursos tbody');
-  tbodyD.innerHTML = weeks.map(w => `
-    <tr>
-      <td class="week-cell">${fmtLong(w.saturday)}</td>
-      <td>${buildSelect(ROLE_OPTIONS.presidente)}</td>
-      <td><input type="text" placeholder="Nombre"></td>
-      <td><input type="text" placeholder="Congregación"></td>
-      <td><input type="text" list="titulos" placeholder="Escriba o seleccione…"></td>
-      <td><input type="text" list="canciones" placeholder="Núm. o título"></td>
-    </tr>`).join('');
+  // Tarjetas de discursos públicos (fecha = sábado de cada semana)
+  const cards = document.getElementById('talkCards');
+  cards.innerHTML = weeks.map(w => `
+    <div class="talk-card">
+      <div class="talk-date">🗓️ Sábado, ${fmtLong(w.saturday)}</div>
+      <div class="talk-fields">
+        <div class="talk-field">
+          <span class="f-label">👨‍💼 Presidente y Lector</span>
+          ${buildSelect(ROLE_OPTIONS.presidente)}
+        </div>
+        <div class="talk-field">
+          <span class="f-label">🎶 Canción</span>
+          <input type="text" list="canciones" placeholder="Núm. o título">
+        </div>
+        <div class="talk-field">
+          <span class="f-label">🏡 Congregación</span>
+          <input type="text" placeholder="Congregación">
+        </div>
+        <div class="talk-field">
+          <span class="f-label">🗣️ Discursante</span>
+          <input type="text" placeholder="Nombre">
+        </div>
+        <div class="talk-field full">
+          <span class="f-label">📑 Título</span>
+          <input type="text" list="titulos" placeholder="Escriba o seleccione…">
+        </div>
+      </div>
+    </div>`).join('');
 
   document.getElementById('genNote').textContent =
     `Generado automáticamente para ${MESES[month]} de ${year} · ${weeks.length} semanas`;
@@ -590,6 +668,18 @@ document.getElementById('prevMonth').addEventListener('click', () => {
 document.getElementById('nextMonth').addEventListener('click', () => {
   current.setMonth(current.getMonth() + 1);
   renderAll();
+});
+
+/* ---------------- Tamaño de página (Carta / A4) ---------------- */
+let pageFormat = 'letter';
+document.querySelectorAll('.size-opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.size-opt').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const size = btn.dataset.size;
+    pageFormat = size === 'a4' ? 'a4' : 'letter';
+    document.documentElement.classList.toggle('a4', size === 'a4');
+  });
 });
 
 /* ---------------- Interruptor modo ahorro de tinta ---------------- */
@@ -627,16 +717,23 @@ document.getElementById('btnJPG').addEventListener('click', async () => {
 document.getElementById('btnPDF').addEventListener('click', async () => {
   const canvas = await captureSheet();
   const { jsPDF } = window.jspdf;
-  const orientation = canvas.width > canvas.height ? 'landscape' : 'portrait';
-  const pdf = new jsPDF({ orientation, unit: 'pt', format: 'letter' });
+  const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: pageFormat });
   const pageW = pdf.internal.pageSize.getWidth();
   const pageH = pdf.internal.pageSize.getHeight();
-  const ratio = Math.min(pageW / canvas.width, pageH / canvas.height);
-  const w = canvas.width * ratio;
-  const h = canvas.height * ratio;
-  const x = (pageW - w) / 2;
-  const y = (pageH - h) / 2;
-  pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', x, y, w, h);
+  const imgW = pageW;
+  const imgH = (canvas.height * imgW) / canvas.width;
+  const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+  let heightLeft = imgH;
+  let position = 0;
+  pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
+  heightLeft -= pageH;
+  while (heightLeft > 0){
+    position = heightLeft - imgH;
+    pdf.addPage();
+    pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
+    heightLeft -= pageH;
+  }
   pdf.save(`programa_${fileTag()}.pdf`);
 });
 
