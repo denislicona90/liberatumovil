@@ -44,7 +44,7 @@
   .page{
     max-width: 100%;
     margin: 0 auto;
-    padding: 28px 24px 60px;
+    padding: 20px 16px 50px;
   }
   .sheet-scroll{
     width:100%;
@@ -58,90 +58,92 @@
     display:flex;
     flex-wrap:wrap;
     align-items:center;
-    justify-content:space-between;
-    gap:14px;
+    gap:10px;
     background: var(--panel);
     border:1px solid var(--line);
     border-radius: var(--radius);
-    padding: 14px 18px;
-    margin-bottom: 22px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
     box-shadow: var(--shadow);
   }
-  .month-nav{ display:flex; align-items:center; gap:10px; }
+  .month-nav{ display:flex; align-items:center; gap:8px; flex:none; }
   .month-nav button.arrow{
-    width:34px; height:34px;
+    width:32px; height:32px;
     border-radius:50%;
     border:1px solid var(--line);
     background: var(--panel);
     color: var(--ink);
-    font-size:16px;
+    font-size:15px;
     cursor:pointer;
     display:flex; align-items:center; justify-content:center;
     transition: background .15s ease, transform .1s ease;
+    flex:none;
   }
   .month-nav button.arrow:hover{ background: var(--accent-soft); }
   .month-nav button.arrow:active{ transform: scale(.94); }
   .month-label{
     font-family:'Lora', Georgia, serif;
-    font-size: 17px;
+    font-size: 15.5px;
     font-weight:600;
-    min-width: 168px;
+    min-width: 130px;
     text-align:center;
     letter-spacing:.2px;
-  }
-  .toolbar-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-  .toolbar-row + .toolbar-row{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--line); }
-  .toolbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; width:100%; }
-
-  .pill-toggle{
-    display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden;
-  }
-  .pill-opt{
-    font-family:'Inter',sans-serif;
-    font-size:12px; font-weight:600;
-    border:none; background:var(--panel); color:var(--muted);
-    padding:7px 14px; cursor:pointer;
     white-space:nowrap;
   }
-  .pill-opt.active{ background:var(--accent); color:#fff; }
+
+  .toolbar-fill{ flex:1 1 auto; }
+
+  select.tb-select{
+    font-family:'Inter',sans-serif;
+    font-size:12.5px; font-weight:600;
+    border:1px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+    padding:7px 10px;
+    border-radius:8px;
+    cursor:pointer;
+  }
 
   .switch-wrap{
-    display:flex; align-items:center; gap:8px;
-    font-size:13px; color:var(--muted); font-weight:500;
-    padding:6px 10px; border:1px dashed var(--line); border-radius:999px;
+    display:flex; align-items:center; gap:7px;
+    font-size:12px; color:var(--muted); font-weight:500;
+    padding:6px 9px; border:1px dashed var(--line); border-radius:999px;
+    white-space:nowrap;
   }
   .switch{
-    position:relative; width:38px; height:22px; border-radius:999px;
+    position:relative; width:34px; height:20px; border-radius:999px;
     background:#D8D5C9; cursor:pointer; flex:none; transition:background .15s;
   }
   html.ink-saver .switch{ background:#000; }
   .switch::after{
-    content:''; position:absolute; top:2px; left:2px; width:18px; height:18px;
+    content:''; position:absolute; top:2px; left:2px; width:16px; height:16px;
     border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.3);
     transition: left .15s;
   }
-  html.ink-saver .switch::after{ left:18px; }
+  html.ink-saver .switch::after{ left:16px; }
 
   .btn{
     font-family:'Inter',sans-serif;
-    font-size:13px; font-weight:600;
+    font-size:12.5px; font-weight:600;
     border:1px solid var(--line);
     background: var(--panel);
     color: var(--ink);
-    padding:8px 14px;
+    padding:7px 12px;
     border-radius:8px;
     cursor:pointer;
     display:inline-flex; align-items:center; gap:6px;
     transition: background .15s ease, border-color .15s ease;
+    white-space:nowrap;
   }
   .btn:hover{ border-color: var(--accent); background: var(--accent-soft); }
   .btn.primary{ background: var(--accent); border-color: var(--accent); color:#fff; }
   .btn.primary:hover{ opacity:.92; background:var(--accent); }
+  .btn.loading{ opacity:.6; pointer-events:none; }
 
   /* ---------- Contenido exportable / imprimible ---------- */
-  #sheetAsignaciones, #sheetDiscursos{
+  .sheet{
     width: var(--page-w);
-    max-width: none;
+    max-width: 100%;
     flex: none;
     background: var(--panel);
     border:1px solid var(--line);
@@ -149,12 +151,12 @@
     padding: 30px 36px 24px;
     box-shadow: var(--shadow);
   }
-  #sheetAsignaciones.is-hidden, #sheetDiscursos.is-hidden{ display:none; }
+  .sheet.is-hidden{ display:none; }
 
   h1{
     font-family:'Lora', Georgia, serif;
     text-align:center;
-    font-size: 22px;
+    font-size: 25px;
     font-weight:600;
     letter-spacing:.3px;
     margin: 0 0 4px;
@@ -162,51 +164,41 @@
   }
   h2.subtitle{
     text-align:center;
-    font-size: 12px;
+    font-size: 13px;
     font-weight:500;
     text-transform:uppercase;
     letter-spacing: 1.6px;
     color: var(--muted);
-    margin: 0 0 18px;
-    padding-bottom: 14px;
+    margin: 0 0 20px;
+    padding-bottom: 16px;
     border-bottom: 1px solid var(--line);
-  }
-
-  h3.section-title{
-    font-family:'Lora', Georgia, serif;
-    font-size: 14px;
-    font-weight:600;
-    margin: 4px 0 12px;
-    color: var(--ink);
-    display:flex; align-items:center; gap:10px;
-  }
-  h3.section-title::after{
-    content:''; flex:1; height:1px; background: var(--line);
   }
 
   /* Tarjetas compartidas (semanas y discursos) */
   .card-grid{
     display:grid;
     grid-template-columns: 1fr 1fr;
-    gap:10px;
-    margin-bottom: 6px;
+    gap:12px;
+    margin-bottom: 8px;
   }
+  .card-grid.single-col{ grid-template-columns: 1fr; }
+
   .info-card{
     border:1px solid var(--line);
-    border-radius:8px;
+    border-radius:9px;
     background: var(--header-bg);
-    padding: 10px 13px 9px;
+    padding: 12px 16px 12px;
     break-inside: avoid;
     page-break-inside: avoid;
   }
   html.ink-saver .info-card{ background:#fff; }
   .card-header{
     font-family:'Lora', Georgia, serif;
-    font-size: 12.5px;
+    font-size: 14.5px;
     font-weight:600;
     color: var(--accent);
-    margin-bottom: 7px;
-    padding-bottom: 6px;
+    margin-bottom: 8px;
+    padding-bottom: 7px;
     border-bottom: 1px solid var(--line);
   }
   html.ink-saver .card-header{ color:#000; }
@@ -216,20 +208,21 @@
     position:relative;
     display:flex;
     align-items:baseline;
-    gap:5px;
+    gap:6px;
     min-width:0;
+    padding: 3px 0;
   }
   .field-row.full{ grid-column: 1 / -1; }
   .field-label{
     flex:none;
-    font-size: 10px;
+    font-size: 12px;
     font-weight:700;
     color: var(--muted);
     white-space:nowrap;
   }
   .field-value-wrap{ flex:1; min-width:0; }
 
-  select.field-control, textarea.field-control, input.field-control{
+  select.field-control, textarea.field-control, .static-value{
     display:block;
     width:100%;
     border:none;
@@ -237,33 +230,35 @@
     background: transparent;
     font-family:inherit;
     color: var(--ink);
-    font-size: 11px;
-    line-height:1.35;
+    font-size: 13.5px;
+    line-height:1.4;
     padding: 0 0 1px;
     margin:0;
     resize:none;
     overflow:hidden;
-    white-space:normal;
+    white-space:pre-wrap;
     word-break: break-word;
   }
   select.field-control{ white-space:nowrap; overflow:visible; }
-  textarea.field-control{ min-height: 1.35em; }
-  select.field-control:focus, textarea.field-control:focus, input.field-control:focus{
+  textarea.field-control{ min-height: 1.4em; }
+  select.field-control:focus, textarea.field-control:focus{
     outline:none; border-bottom-color: var(--accent);
   }
 
-  /* Cuadrícula de campos para Asignaciones: dos columnas */
-  .fields-grid{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px 14px;
+  /* Fila de Micrófonos: dos selects en una sola línea */
+  .mic-pair{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    width:100%;
   }
+  .mic-pair select, .mic-pair .static-value{ flex:1; min-width:0; }
+  .mic-pair .mic-sep{ flex:none; color: var(--muted); font-size:13px; }
 
-  /* Pila de campos para Discursos: una columna, permite envolver */
+  /* Pila de campos: siempre una columna, permite envolver */
   .fields-stack{
     display:flex;
     flex-direction:column;
-    gap: 6px;
   }
 
   /* Lista de sugerencias (autocompletar Canción / Título) */
@@ -275,15 +270,15 @@
     border:1px solid var(--line);
     border-radius:6px;
     box-shadow: var(--shadow);
-    max-height:150px;
+    max-height:160px;
     overflow-y:auto;
     z-index:30;
     display:none;
   }
   .suggest-box.open{ display:block; }
   .suggest-item{
-    padding:6px 9px;
-    font-size:10.5px;
+    padding:7px 10px;
+    font-size:12px;
     color: var(--ink);
     cursor:pointer;
   }
@@ -297,20 +292,20 @@
   .reminders h4{
     font-family:'Lora', Georgia, serif;
     margin:0 0 8px;
-    font-size: 11px;
+    font-size: 12px;
     text-transform:uppercase;
     letter-spacing:1px;
     color: var(--muted);
   }
   .reminder-full{
-    font-size: 10px;
+    font-size: 11px;
     color: var(--muted);
     margin: 0 0 7px;
   }
   .reminder-full strong{ color: var(--ink); }
   .reminders ul{ list-style:none; padding:0; margin:0; columns:2; column-gap:26px; }
   .reminders li{
-    font-size: 10px;
+    font-size: 11px;
     color: var(--muted);
     margin-bottom:5px;
     break-inside: avoid;
@@ -319,9 +314,11 @@
 
   @media (max-width: 720px){
     .card-grid{ grid-template-columns: 1fr; }
-    .fields-grid{ grid-template-columns: 1fr; }
+    .toolbar{ gap:8px; }
+    .month-label{ min-width:auto; }
+    .sheet{ padding: 20px 16px 18px; }
     .reminders ul{ columns:1; }
-    .page{ padding:16px; }
+    .page{ padding:12px; }
   }
 
   /* ---------- Impresión: fuerza escala de grises y ahorra tinta ---------- */
@@ -330,8 +327,8 @@
     body{ background:#fff; filter:grayscale(1); }
     .page{ padding:0; }
     .sheet-scroll{ overflow:visible; }
-    #sheetAsignaciones, #sheetDiscursos{ border:none; box-shadow:none; padding:6mm; border-radius:0; width:100%; }
-    #sheetAsignaciones.is-hidden, #sheetDiscursos.is-hidden{ display:none; }
+    .sheet{ border:none; box-shadow:none; padding:6mm; border-radius:0; width:100%; }
+    .sheet.is-hidden{ display:none; }
     @page{ size: letter; margin:9mm; }
   }
 </style>
@@ -340,44 +337,41 @@
 <div class="page">
 
   <div class="toolbar">
-    <div class="toolbar-row">
-      <div class="month-nav">
-        <button class="arrow" id="prevMonth" title="Mes anterior">&#8592;</button>
-        <div class="month-label" id="monthLabel">Marzo 2026</div>
-        <button class="arrow" id="nextMonth" title="Mes siguiente">&#8594;</button>
-      </div>
-      <div class="pill-toggle" id="sectionToggle">
-        <button class="pill-opt active" data-section="asignaciones">Asignaciones</button>
-        <button class="pill-opt" data-section="discursos">Discursos Públicos</button>
-      </div>
+    <div class="month-nav">
+      <button class="arrow" id="prevMonth" title="Mes anterior">&#8592;</button>
+      <div class="month-label" id="monthLabel">Marzo 2026</div>
+      <button class="arrow" id="nextMonth" title="Mes siguiente">&#8594;</button>
     </div>
-    <div class="toolbar-row">
-      <div class="toolbar-actions">
-        <div class="pill-toggle" id="sizeToggle">
-          <button class="pill-opt active" data-size="carta">Carta</button>
-          <button class="pill-opt" data-size="a4">A4</button>
-        </div>
-        <div class="switch-wrap" id="inkToggleWrap">
-          <div class="switch" id="inkSwitch"></div>
-          <span>Modo ahorro de tinta</span>
-        </div>
-        <button class="btn" id="btnClear" title="Borrar los datos guardados de este mes">🗑 Limpiar</button>
-      </div>
-      <div class="toolbar-actions">
-        <button class="btn" id="btnPNG">&#8681; PNG</button>
-        <button class="btn" id="btnJPG">&#8681; JPG</button>
-        <button class="btn primary" id="btnPDF">&#8681; PDF</button>
-      </div>
+
+    <select class="tb-select" id="sectionSelect">
+      <option value="asignaciones">Asignaciones</option>
+      <option value="discursos">Discursos Públicos</option>
+    </select>
+
+    <select class="tb-select" id="sizeSelect">
+      <option value="carta">Tamaño: Carta</option>
+      <option value="a4">Tamaño: A4</option>
+    </select>
+
+    <div class="switch-wrap" id="inkToggleWrap">
+      <div class="switch" id="inkSwitch"></div>
+      <span>Ahorro de tinta</span>
     </div>
+
+    <div class="toolbar-fill"></div>
+
+    <button class="btn" id="btnClear" title="Borrar los datos guardados de este mes">🗑 Limpiar</button>
+    <button class="btn" id="btnPNG">&#8681; PNG</button>
+    <button class="btn" id="btnJPG">&#8681; JPG</button>
+    <button class="btn primary" id="btnPDF">&#8681; PDF</button>
   </div>
 
   <div class="sheet-scroll">
 
-    <div id="sheetAsignaciones">
+    <div id="sheetAsignaciones" class="sheet">
       <h1>Programa de Asignaciones</h1>
       <h2 class="subtitle">Centro&nbsp;–&nbsp;San Francisco, Atl.</h2>
 
-      <h3 class="section-title">Asignaciones</h3>
       <div class="card-grid" id="assignCards"></div>
 
       <div class="reminders">
@@ -390,12 +384,11 @@
       </div>
     </div>
 
-    <div id="sheetDiscursos" class="is-hidden">
+    <div id="sheetDiscursos" class="sheet is-hidden">
       <h1>Programa de Discursos Públicos</h1>
       <h2 class="subtitle">Centro&nbsp;–&nbsp;San Francisco, Atl.</h2>
 
-      <h3 class="section-title">Discursos Públicos</h3>
-      <div class="card-grid" id="talkCards"></div>
+      <div class="card-grid single-col" id="talkCards"></div>
 
       <div class="reminders">
         <h4>Recordatorios</h4>
@@ -505,7 +498,6 @@ const TITULOS = [
 ];
 
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-const MESES_ABR = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
 const CANCIONES = [
 "Las cualidades principales de Jehová","Tu nombre es Jehová","Tú me das fuerza, confianza y valor","“Jehová es mi Pastor”",
@@ -559,6 +551,7 @@ const CANCIONES_LIST = CANCIONES.map((c,i) => `${i+1}. ${c}`);
 let current = new Date();
 current.setDate(1);
 let activeSection = 'asignaciones';
+let pageFormat = 'letter';
 
 /* ---------------- Utilidades de fecha ---------------- */
 function firstMondayOnOrAfter(date){
@@ -573,17 +566,10 @@ function addDays(date, n){
   d.setDate(d.getDate() + n);
   return d;
 }
-function fmtShort(d){
-  return `${d.getDate()} ${MESES_ABR[d.getMonth()]}`;
-}
-function fmtLong(d){
-  return `${d.getDate()} de ${MESES[d.getMonth()].toLowerCase()}`;
-}
 
-/* Las semanas siempre inician en el primer lunes del mes. Si la última
-   semana se extiende hacia el mes siguiente, esos días finales se quedan
-   como parte de la última semana de este mes (no se repiten al generar
-   el mes siguiente, que arrancará en su propio primer lunes). */
+/* Las semanas de asignaciones siempre inician en el primer lunes del mes.
+   Si la última semana se extiende hacia el mes siguiente, esos días finales
+   se quedan como parte de la última semana de este mes. */
 function getWeeksForMonth(year, month){
   const firstOfMonth = new Date(year, month, 1);
   const lastOfMonth = new Date(year, month + 1, 0);
@@ -591,22 +577,53 @@ function getWeeksForMonth(year, month){
   let weekStart = firstMondayOnOrAfter(firstOfMonth);
   while (weekStart <= lastOfMonth){
     const weekEnd = addDays(weekStart, 6);
-    weeks.push({ start: new Date(weekStart), end: weekEnd, saturday: addDays(weekStart, 5) });
+    weeks.push({ start: new Date(weekStart), end: weekEnd });
     weekStart = addDays(weekStart, 7);
   }
   return weeks;
 }
 
+/* Formato "Semana del 6 al 12 de julio" o, si cruza de mes,
+   "Semana del 27 de julio al 2 de agosto" */
+function fmtWeekRange(w){
+  const d1 = w.start.getDate(), m1 = w.start.getMonth();
+  const d2 = w.end.getDate(), m2 = w.end.getMonth();
+  if (m1 === m2){
+    return `Semana del ${d1} al ${d2} de ${MESES[m1].toLowerCase()}`;
+  }
+  return `Semana del ${d1} de ${MESES[m1].toLowerCase()} al ${d2} de ${MESES[m2].toLowerCase()}`;
+}
+
+/* Los discursos públicos se agrupan por el mes calendario real en el
+   que cae cada sábado, independientemente de las semanas de asignación. */
+function getSaturdaysForMonth(year, month){
+  const firstOfMonth = new Date(year, month, 1);
+  const lastOfMonth = new Date(year, month + 1, 0);
+  const days = [];
+  const day = firstOfMonth.getDay(); // 0=domingo...6=sábado
+  let firstSaturday = new Date(firstOfMonth);
+  firstSaturday.setDate(1 + ((6 - day + 7) % 7));
+  let d = firstSaturday;
+  while (d <= lastOfMonth){
+    days.push(new Date(d));
+    d = addDays(d, 7);
+  }
+  return days;
+}
+function fmtSaturday(d){
+  return `Sábado, ${d.getDate()} de ${MESES[d.getMonth()].toLowerCase()}`;
+}
+
 /* ---------------- Construcción de controles ---------------- */
-function buildSelectHTML(options){
-  let html = `<select class="field-control"><option value=""></option>`;
+function buildSelectHTML(options, extraClass){
+  let html = `<select class="field-control${extraClass ? ' ' + extraClass : ''}"><option value=""></option>`;
   options.forEach(o => html += `<option value="${o}">${o}</option>`);
   html += `</select>`;
   return html;
 }
 
-function fieldRow(icon, label, controlHTML, full){
-  return `<div class="field-row${full ? ' full' : ''}">
+function fieldRow(icon, label, controlHTML){
+  return `<div class="field-row">
     <span class="field-label">${icon} ${label}:</span>
     <div class="field-value-wrap">${controlHTML}</div>
   </div>`;
@@ -617,28 +634,27 @@ function renderAll(){
   const month = current.getMonth();
   document.getElementById('monthLabel').textContent = `${MESES[month]} ${year}`;
 
+  /* -------- Tarjetas de Asignaciones (por semana de asignación) -------- */
   const weeks = getWeeksForMonth(year, month);
-
-  /* -------- Tarjetas de Asignaciones -------- */
   const assignCards = document.getElementById('assignCards');
   assignCards.innerHTML = weeks.map(w => `
     <div class="info-card">
-      <div class="card-header">🗓️ Semana del ${fmtShort(w.start)} al ${fmtShort(w.end)}</div>
-      <div class="fields-grid">
+      <div class="card-header">🗓️ ${fmtWeekRange(w)}</div>
+      <div class="fields-stack">
         ${fieldRow('🫂','Acomodador', buildSelectHTML(ROLE_OPTIONS.acomodador))}
         ${fieldRow('🔊','Audio y Video', buildSelectHTML(ROLE_OPTIONS.audioVideo))}
-        ${fieldRow('🎤','Micrófono 1', buildSelectHTML(ROLE_OPTIONS.microfono))}
-        ${fieldRow('🎤','Micrófono 2', buildSelectHTML(ROLE_OPTIONS.microfono))}
+        ${fieldRow('🎤','Micrófonos', `<div class="mic-pair">${buildSelectHTML(ROLE_OPTIONS.microfono,'mic1')}<span class="mic-sep">–</span>${buildSelectHTML(ROLE_OPTIONS.microfono,'mic2')}</div>`)}
         ${fieldRow('🎙️','Plataforma', buildSelectHTML(ROLE_OPTIONS.plataforma))}
         ${fieldRow('🧹','Aseo', buildSelectHTML(ROLE_OPTIONS.aseo))}
       </div>
     </div>`).join('');
 
-  /* -------- Tarjetas de Discursos Públicos -------- */
+  /* -------- Tarjetas de Discursos Públicos (por mes calendario real) -------- */
+  const saturdays = getSaturdaysForMonth(year, month);
   const talkCards = document.getElementById('talkCards');
-  talkCards.innerHTML = weeks.map(w => `
+  talkCards.innerHTML = saturdays.map(d => `
     <div class="info-card">
-      <div class="card-header">🗓️ Sábado, ${fmtLong(w.saturday)}</div>
+      <div class="card-header">🗓️ ${fmtSaturday(d)}</div>
       <div class="fields-stack">
         ${fieldRow('👨‍💼','Presidente y Lector', buildSelectHTML(ROLE_OPTIONS.presidente))}
         ${fieldRow('🎶','Canción', `<textarea class="field-control suggest-field" data-suggest="cancion" rows="1"></textarea><div class="suggest-box"></div>`)}
@@ -775,28 +791,18 @@ document.getElementById('btnClear').addEventListener('click', () => {
 });
 
 /* ---------------- Alternar sección (Asignaciones / Discursos) ---------------- */
-document.querySelectorAll('#sectionToggle .pill-opt').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#sectionToggle .pill-opt').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeSection = btn.dataset.section;
-    const showAsign = activeSection === 'asignaciones';
-    document.getElementById('sheetAsignaciones').classList.toggle('is-hidden', !showAsign);
-    document.getElementById('sheetDiscursos').classList.toggle('is-hidden', showAsign);
-    requestAnimationFrame(() => document.querySelectorAll('textarea.field-control').forEach(autoGrow));
-  });
+document.getElementById('sectionSelect').addEventListener('change', (e) => {
+  activeSection = e.target.value;
+  const showAsign = activeSection === 'asignaciones';
+  document.getElementById('sheetAsignaciones').classList.toggle('is-hidden', !showAsign);
+  document.getElementById('sheetDiscursos').classList.toggle('is-hidden', showAsign);
+  requestAnimationFrame(() => document.querySelectorAll('textarea.field-control').forEach(autoGrow));
 });
 
 /* ---------------- Tamaño de página (Carta / A4) ---------------- */
-let pageFormat = 'letter';
-document.querySelectorAll('#sizeToggle .pill-opt').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#sizeToggle .pill-opt').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const size = btn.dataset.size;
-    pageFormat = size === 'a4' ? 'a4' : 'letter';
-    document.documentElement.classList.toggle('a4', size === 'a4');
-  });
+document.getElementById('sizeSelect').addEventListener('change', (e) => {
+  pageFormat = e.target.value === 'a4' ? 'a4' : 'letter';
+  document.documentElement.classList.toggle('a4', pageFormat === 'a4');
 });
 
 /* ---------------- Interruptor modo ahorro de tinta ---------------- */
@@ -806,16 +812,57 @@ function toggleInk(){ document.documentElement.classList.toggle('ink-saver'); }
 inkSwitch.addEventListener('click', toggleInk);
 inkWrap.addEventListener('click', (e) => { if(e.target !== inkSwitch) toggleInk(); });
 
-/* ---------------- Exportar JPG / PNG / PDF (siempre la sección activa) ---------------- */
+/* ---------------- Exportar JPG / PNG / PDF (siempre la sección activa) ----------------
+   Los controles nativos <select> y <textarea> no siempre se dibujan bien con
+   html2canvas (el texto puede verse recortado). Para exportar de forma fiel,
+   se genera un clon del contenido donde cada control se reemplaza por texto
+   plano equivalente, y se captura ese clon en vez del formulario interactivo. */
 function activeSheetEl(){
   return activeSection === 'asignaciones'
     ? document.getElementById('sheetAsignaciones')
     : document.getElementById('sheetDiscursos');
 }
-function captureSheet(){
-  const el = activeSheetEl();
-  return html2canvas(el, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+
+function buildExportClone(sourceEl){
+  const clone = sourceEl.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.classList.remove('is-hidden');
+
+  clone.querySelectorAll('select.field-control').forEach(sel => {
+    const div = document.createElement('div');
+    div.className = sel.className + ' static-value';
+    const opt = sel.options[sel.selectedIndex];
+    div.textContent = (opt && opt.value) ? opt.textContent : '\u00A0';
+    sel.parentNode.replaceChild(div, sel);
+  });
+
+  clone.querySelectorAll('textarea.field-control').forEach(ta => {
+    const div = document.createElement('div');
+    div.className = ta.className + ' static-value';
+    div.textContent = ta.value && ta.value.trim() ? ta.value : '\u00A0';
+    ta.parentNode.replaceChild(div, ta);
+  });
+
+  clone.querySelectorAll('.suggest-box').forEach(b => b.remove());
+
+  return clone;
 }
+
+async function captureSheet(){
+  const el = activeSheetEl();
+  const clone = buildExportClone(el);
+  clone.style.position = 'fixed';
+  clone.style.top = '0';
+  clone.style.left = '-99999px';
+  clone.style.margin = '0';
+  document.body.appendChild(clone);
+  // Deja que el navegador calcule el layout antes de capturar
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const canvas = await html2canvas(clone, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+  document.body.removeChild(clone);
+  return canvas;
+}
+
 function triggerDownload(dataUrl, filename){
   const a = document.createElement('a');
   a.href = dataUrl;
@@ -829,16 +876,20 @@ function fileTag(){
   const section = activeSection === 'asignaciones' ? 'asignaciones' : 'discursos';
   return `${section}_${base}`;
 }
+async function withLoadingState(btn, fn){
+  btn.classList.add('loading');
+  try{ await fn(); } finally { btn.classList.remove('loading'); }
+}
 
-document.getElementById('btnPNG').addEventListener('click', async () => {
+document.getElementById('btnPNG').addEventListener('click', (e) => withLoadingState(e.currentTarget, async () => {
   const canvas = await captureSheet();
   triggerDownload(canvas.toDataURL('image/png'), `${fileTag()}.png`);
-});
-document.getElementById('btnJPG').addEventListener('click', async () => {
+}));
+document.getElementById('btnJPG').addEventListener('click', (e) => withLoadingState(e.currentTarget, async () => {
   const canvas = await captureSheet();
   triggerDownload(canvas.toDataURL('image/jpeg', 0.92), `${fileTag()}.jpg`);
-});
-document.getElementById('btnPDF').addEventListener('click', async () => {
+}));
+document.getElementById('btnPDF').addEventListener('click', (e) => withLoadingState(e.currentTarget, async () => {
   const canvas = await captureSheet();
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: pageFormat });
@@ -859,7 +910,7 @@ document.getElementById('btnPDF').addEventListener('click', async () => {
     heightLeft -= pageH;
   }
   pdf.save(`${fileTag()}.pdf`);
-});
+}));
 
 renderAll();
 </script>
