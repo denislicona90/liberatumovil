@@ -90,17 +90,20 @@
     letter-spacing:.2px;
   }
   .toolbar-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .toolbar-row + .toolbar-row{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--line); }
+  .toolbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; width:100%; }
 
-  .size-toggle{
+  .pill-toggle{
     display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden;
   }
-  .size-opt{
+  .pill-opt{
     font-family:'Inter',sans-serif;
     font-size:12px; font-weight:600;
     border:none; background:var(--panel); color:var(--muted);
     padding:7px 14px; cursor:pointer;
+    white-space:nowrap;
   }
-  .size-opt.active{ background:var(--accent); color:#fff; }
+  .pill-opt.active{ background:var(--accent); color:#fff; }
 
   .switch-wrap{
     display:flex; align-items:center; gap:8px;
@@ -136,21 +139,22 @@
   .btn.primary:hover{ opacity:.92; background:var(--accent); }
 
   /* ---------- Contenido exportable / imprimible ---------- */
-  #sheet{
+  #sheetAsignaciones, #sheetDiscursos{
     width: var(--page-w);
     max-width: none;
     flex: none;
     background: var(--panel);
     border:1px solid var(--line);
     border-radius: var(--radius);
-    padding: 34px 38px 26px;
+    padding: 30px 36px 24px;
     box-shadow: var(--shadow);
   }
+  #sheetAsignaciones.is-hidden, #sheetDiscursos.is-hidden{ display:none; }
 
   h1{
     font-family:'Lora', Georgia, serif;
     text-align:center;
-    font-size: 24px;
+    font-size: 22px;
     font-weight:600;
     letter-spacing:.3px;
     margin: 0 0 4px;
@@ -158,36 +162,21 @@
   }
   h2.subtitle{
     text-align:center;
-    font-size: 13px;
+    font-size: 12px;
     font-weight:500;
     text-transform:uppercase;
     letter-spacing: 1.6px;
     color: var(--muted);
-    margin: 0 0 22px;
-    padding-bottom: 16px;
+    margin: 0 0 18px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--line);
   }
 
-  /* Cinta de semanas: el elemento distintivo del diseño */
-  .week-ribbon{
-    display:flex; gap:8px; flex-wrap:wrap;
-    margin: 0 0 18px;
-  }
-  .week-pill{
-    font-size:11.5px; font-weight:600; color:var(--accent);
-    background: var(--accent-soft);
-    border:1px solid var(--line);
-    padding:5px 11px;
-    border-radius:999px;
-    letter-spacing:.2px;
-  }
-  html.ink-saver .week-pill{ color:#000; }
-
   h3.section-title{
     font-family:'Lora', Georgia, serif;
-    font-size: 14.5px;
+    font-size: 14px;
     font-weight:600;
-    margin: 26px 0 10px;
+    margin: 4px 0 12px;
     color: var(--ink);
     display:flex; align-items:center; gap:10px;
   }
@@ -195,130 +184,142 @@
     content:''; flex:1; height:1px; background: var(--line);
   }
 
-  table{
-    width:100%;
-    border-collapse: collapse;
-    margin-bottom: 6px;
-    font-size: 12px;
-  }
-  th, td{
-    border:1px solid var(--line);
-    padding: 9px 5px;
-    text-align:left;
-    vertical-align:middle;
-  }
-  th{
-    background: var(--header-bg);
-    font-size: 8.6px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.2px;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  tr:nth-child(even) td{ background: rgba(0,0,0,0.012); }
-  html.ink-saver tr:nth-child(even) td{ background:#fff; }
-
-  td.week-cell{
-    font-weight:600;
-    color: var(--accent);
-    white-space:nowrap;
-  }
-  html.ink-saver td.week-cell{ color:#000; }
-
-  select, input[type="text"]{
-    width:100%;
-    border:none;
-    background: transparent;
-    font-family:inherit;
-    font-size: 11.5px;
-    padding: 3px 2px;
-    color: var(--ink);
-  }
-  select:focus, input:focus{ outline:none; border-bottom: 1px solid var(--accent); }
-
-  /* Tarjetas de discursos públicos */
-  .talk-cards{
+  /* Tarjetas compartidas (semanas y discursos) */
+  .card-grid{
     display:grid;
     grid-template-columns: 1fr 1fr;
     gap:10px;
     margin-bottom: 6px;
   }
-  .talk-card{
+  .info-card{
     border:1px solid var(--line);
     border-radius:8px;
     background: var(--header-bg);
-    padding: 12px 14px 10px;
+    padding: 10px 13px 9px;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
-  html.ink-saver .talk-card{ background:#fff; }
-  .talk-date{
+  html.ink-saver .info-card{ background:#fff; }
+  .card-header{
     font-family:'Lora', Georgia, serif;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight:600;
     color: var(--accent);
-    margin-bottom: 8px;
-    padding-bottom: 7px;
+    margin-bottom: 7px;
+    padding-bottom: 6px;
     border-bottom: 1px solid var(--line);
   }
-  html.ink-saver .talk-date{ color:#000; }
-  .talk-fields{
+  html.ink-saver .card-header{ color:#000; }
+
+  /* Fila de campo: etiqueta + valor en línea, sin recortes */
+  .field-row{
+    position:relative;
     display:flex;
-    flex-direction:column;
-    gap: 8px;
+    align-items:baseline;
+    gap:5px;
+    min-width:0;
   }
-  .talk-field .f-label{
-    display:block;
-    font-size: 9.5px;
+  .field-row.full{ grid-column: 1 / -1; }
+  .field-label{
+    flex:none;
+    font-size: 10px;
     font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.4px;
     color: var(--muted);
-    margin-bottom:1px;
+    white-space:nowrap;
   }
-  .talk-field select, .talk-field input{
-    font-size: 11.5px;
-    padding: 1px 2px;
+  .field-value-wrap{ flex:1; min-width:0; }
+
+  select.field-control, textarea.field-control, input.field-control{
+    display:block;
+    width:100%;
+    border:none;
+    border-bottom:1px dotted transparent;
+    background: transparent;
+    font-family:inherit;
+    color: var(--ink);
+    font-size: 11px;
+    line-height:1.35;
+    padding: 0 0 1px;
+    margin:0;
+    resize:none;
+    overflow:hidden;
+    white-space:normal;
+    word-break: break-word;
+  }
+  select.field-control{ white-space:nowrap; overflow:visible; }
+  textarea.field-control{ min-height: 1.35em; }
+  select.field-control:focus, textarea.field-control:focus, input.field-control:focus{
+    outline:none; border-bottom-color: var(--accent);
   }
 
+  /* Cuadrícula de campos para Asignaciones: dos columnas */
+  .fields-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 14px;
+  }
+
+  /* Pila de campos para Discursos: una columna, permite envolver */
+  .fields-stack{
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+  }
+
+  /* Lista de sugerencias (autocompletar Canción / Título) */
+  .suggest-box{
+    position:absolute;
+    left:0; right:0; top:100%;
+    margin-top:2px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:6px;
+    box-shadow: var(--shadow);
+    max-height:150px;
+    overflow-y:auto;
+    z-index:30;
+    display:none;
+  }
+  .suggest-box.open{ display:block; }
+  .suggest-item{
+    padding:6px 9px;
+    font-size:10.5px;
+    color: var(--ink);
+    cursor:pointer;
+  }
+  .suggest-item:hover, .suggest-item.active{ background: var(--accent-soft); }
+
   .reminders{
-    margin-top: 26px;
+    margin-top: 18px;
     border-top: 1px solid var(--line);
-    padding-top: 14px;
+    padding-top: 12px;
   }
   .reminders h4{
     font-family:'Lora', Georgia, serif;
-    margin:0 0 9px;
-    font-size: 11.5px;
+    margin:0 0 8px;
+    font-size: 11px;
     text-transform:uppercase;
     letter-spacing:1px;
     color: var(--muted);
   }
   .reminder-full{
-    font-size: 10.5px;
+    font-size: 10px;
     color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 0 0 8px;
+    margin: 0 0 7px;
   }
   .reminder-full strong{ color: var(--ink); }
-  .reminders ul{ list-style:none; padding:0; margin:0; columns:2; column-gap:28px; }
+  .reminders ul{ list-style:none; padding:0; margin:0; columns:2; column-gap:26px; }
   .reminders li{
-    font-size: 10.5px;
+    font-size: 10px;
     color: var(--muted);
-    margin-bottom:6px;
+    margin-bottom:5px;
     break-inside: avoid;
   }
   .reminders strong{ color: var(--ink); }
 
-  .footer-note{
-    text-align:center;
-    font-size:10.5px;
-    color: var(--muted);
-    margin-top:18px;
-  }
-
   @media (max-width: 720px){
+    .card-grid{ grid-template-columns: 1fr; }
+    .fields-grid{ grid-template-columns: 1fr; }
     .reminders ul{ columns:1; }
     .page{ padding:16px; }
   }
@@ -329,7 +330,8 @@
     body{ background:#fff; filter:grayscale(1); }
     .page{ padding:0; }
     .sheet-scroll{ overflow:visible; }
-    #sheet{ border:none; box-shadow:none; padding:6mm; border-radius:0; width:100%; }
+    #sheetAsignaciones, #sheetDiscursos{ border:none; box-shadow:none; padding:6mm; border-radius:0; width:100%; }
+    #sheetAsignaciones.is-hidden, #sheetDiscursos.is-hidden{ display:none; }
     @page{ size: letter; margin:9mm; }
   }
 </style>
@@ -338,71 +340,74 @@
 <div class="page">
 
   <div class="toolbar">
-    <div class="month-nav">
-      <button class="arrow" id="prevMonth" title="Mes anterior">&#8592;</button>
-      <div class="month-label" id="monthLabel">Marzo 2026</div>
-      <button class="arrow" id="nextMonth" title="Mes siguiente">&#8594;</button>
+    <div class="toolbar-row">
+      <div class="month-nav">
+        <button class="arrow" id="prevMonth" title="Mes anterior">&#8592;</button>
+        <div class="month-label" id="monthLabel">Marzo 2026</div>
+        <button class="arrow" id="nextMonth" title="Mes siguiente">&#8594;</button>
+      </div>
+      <div class="pill-toggle" id="sectionToggle">
+        <button class="pill-opt active" data-section="asignaciones">Asignaciones</button>
+        <button class="pill-opt" data-section="discursos">Discursos Públicos</button>
+      </div>
     </div>
-
-    <div class="toolbar-actions">
-      <div class="size-toggle" id="sizeToggle">
-        <button class="size-opt active" data-size="carta">Carta</button>
-        <button class="size-opt" data-size="a4">A4</button>
+    <div class="toolbar-row">
+      <div class="toolbar-actions">
+        <div class="pill-toggle" id="sizeToggle">
+          <button class="pill-opt active" data-size="carta">Carta</button>
+          <button class="pill-opt" data-size="a4">A4</button>
+        </div>
+        <div class="switch-wrap" id="inkToggleWrap">
+          <div class="switch" id="inkSwitch"></div>
+          <span>Modo ahorro de tinta</span>
+        </div>
+        <button class="btn" id="btnClear" title="Borrar los datos guardados de este mes">🗑 Limpiar</button>
       </div>
-      <div class="switch-wrap" id="inkToggleWrap">
-        <div class="switch" id="inkSwitch"></div>
-        <span>Modo ahorro de tinta</span>
+      <div class="toolbar-actions">
+        <button class="btn" id="btnPNG">&#8681; PNG</button>
+        <button class="btn" id="btnJPG">&#8681; JPG</button>
+        <button class="btn primary" id="btnPDF">&#8681; PDF</button>
       </div>
-      <button class="btn" id="btnClear" title="Borrar los datos guardados de este mes">🗑 Limpiar</button>
-      <button class="btn" id="btnPNG">&#8681; PNG</button>
-      <button class="btn" id="btnJPG">&#8681; JPG</button>
-      <button class="btn primary" id="btnPDF">&#8681; PDF</button>
     </div>
   </div>
 
   <div class="sheet-scroll">
-  <div id="sheet">
-    <h1>Programa de Asignaciones</h1>
-    <h2 class="subtitle">Centro&nbsp;–&nbsp;San Francisco, Atl.</h2>
 
-    <div class="week-ribbon" id="weekRibbon"></div>
+    <div id="sheetAsignaciones">
+      <h1>Programa de Asignaciones</h1>
+      <h2 class="subtitle">Centro&nbsp;–&nbsp;San Francisco, Atl.</h2>
 
-    <h3 class="section-title">Asignaciones</h3>
-    <table id="tableAsignaciones">
-      <thead>
-        <tr>
-          <th style="width:13%;">📆 Semana</th>
-          <th style="width:14%;">🫂 Acomodador</th>
-          <th style="width:14%;">🔊 Audio y Video</th>
-          <th style="width:14%;">🎤 Micrófono 1</th>
-          <th style="width:14%;">🎤 Micrófono 2</th>
-          <th style="width:16%;">🎙️ Plataforma</th>
-          <th style="width:15%;">🧹 Aseo</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <h3 class="section-title">Asignaciones</h3>
+      <div class="card-grid" id="assignCards"></div>
 
-    <h3 class="section-title">Discursos Públicos</h3>
-    <div class="talk-cards" id="talkCards"></div>
-
-    <div class="reminders">
-      <h4>Recordatorios</h4>
-      <p class="reminder-full"><strong>Plataforma, Audio y Video, Micrófonos:</strong> Consultar S-261 – Instrucciones de audio y video para reuniones híbridas</p>
-      <ul>
-        <li><strong>Acomodador:</strong> Consultar od 11.14</li>
-        <li><strong>Presidente:</strong> Consultar km 5/07 pág. 3</li>
-        <li><strong>Lector:</strong> Consultar th 8; be págs. 83–85</li>
-        <li><strong>Aseo:</strong> Consultar od 11.7, 8</li>
-      </ul>
+      <div class="reminders">
+        <h4>Recordatorios</h4>
+        <p class="reminder-full"><strong>Plataforma, Audio y Video, Micrófonos:</strong> Consultar S-261 – Instrucciones de audio y video para reuniones híbridas</p>
+        <ul>
+          <li><strong>Acomodador:</strong> Consultar od 11.14</li>
+          <li><strong>Aseo:</strong> Consultar od 11.7, 8</li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-note" id="genNote"></div>
-  </div>
+
+    <div id="sheetDiscursos" class="is-hidden">
+      <h1>Programa de Discursos Públicos</h1>
+      <h2 class="subtitle">Centro&nbsp;–&nbsp;San Francisco, Atl.</h2>
+
+      <h3 class="section-title">Discursos Públicos</h3>
+      <div class="card-grid" id="talkCards"></div>
+
+      <div class="reminders">
+        <h4>Recordatorios</h4>
+        <ul>
+          <li><strong>Presidente:</strong> Consultar km 5/07 pág. 3</li>
+          <li><strong>Lector:</strong> Consultar th 8; be págs. 83–85</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </div>
-
-<datalist id="titulos"></datalist>
-<datalist id="canciones"></datalist>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -547,8 +552,13 @@ const CANCIONES = [
 "Danos paciencia","Demos gloria a Jehová","¡Buenas noticias!","Hacer tu voluntad","Mi necesidad espiritual","Ya puedo ver"
 ];
 
+/* Listas ya numeradas, listas para autocompletar */
+const TITULOS_LIST = TITULOS.map((t,i) => `${i+1}. ${t}`);
+const CANCIONES_LIST = CANCIONES.map((c,i) => `${i+1}. ${c}`);
+
 let current = new Date();
 current.setDate(1);
+let activeSection = 'asignaciones';
 
 /* ---------------- Utilidades de fecha ---------------- */
 function firstMondayOnOrAfter(date){
@@ -587,12 +597,19 @@ function getWeeksForMonth(year, month){
   return weeks;
 }
 
-/* ---------------- Construcción de celdas ---------------- */
-function buildSelect(options){
-  let html = `<select><option value=""></option>`;
+/* ---------------- Construcción de controles ---------------- */
+function buildSelectHTML(options){
+  let html = `<select class="field-control"><option value=""></option>`;
   options.forEach(o => html += `<option value="${o}">${o}</option>`);
   html += `</select>`;
   return html;
+}
+
+function fieldRow(icon, label, controlHTML, full){
+  return `<div class="field-row${full ? ' full' : ''}">
+    <span class="field-label">${icon} ${label}:</span>
+    <div class="field-value-wrap">${controlHTML}</div>
+  </div>`;
 }
 
 function renderAll(){
@@ -602,56 +619,84 @@ function renderAll(){
 
   const weeks = getWeeksForMonth(year, month);
 
-  // Cinta de semanas (elemento visual distintivo + resumen rápido)
-  const ribbon = document.getElementById('weekRibbon');
-  ribbon.innerHTML = weeks.map(w => `<span class="week-pill">${fmtShort(w.start)} – ${fmtShort(w.end)}</span>`).join('');
-
-  // Tabla de asignaciones
-  const tbodyA = document.querySelector('#tableAsignaciones tbody');
-  tbodyA.innerHTML = weeks.map(w => `
-    <tr>
-      <td class="week-cell">${fmtShort(w.start)} – ${fmtShort(w.end)}</td>
-      <td>${buildSelect(ROLE_OPTIONS.acomodador)}</td>
-      <td>${buildSelect(ROLE_OPTIONS.audioVideo)}</td>
-      <td>${buildSelect(ROLE_OPTIONS.microfono)}</td>
-      <td>${buildSelect(ROLE_OPTIONS.microfono)}</td>
-      <td>${buildSelect(ROLE_OPTIONS.plataforma)}</td>
-      <td>${buildSelect(ROLE_OPTIONS.aseo)}</td>
-    </tr>`).join('');
-
-  // Tarjetas de discursos públicos (fecha = sábado de cada semana)
-  const cards = document.getElementById('talkCards');
-  cards.innerHTML = weeks.map(w => `
-    <div class="talk-card">
-      <div class="talk-date">🗓️ Sábado, ${fmtLong(w.saturday)}</div>
-      <div class="talk-fields">
-        <div class="talk-field">
-          <span class="f-label">👨‍💼 Presidente y Lector</span>
-          ${buildSelect(ROLE_OPTIONS.presidente)}
-        </div>
-        <div class="talk-field">
-          <span class="f-label">🎶 Canción</span>
-          <input type="text" list="canciones" placeholder="Núm. o título">
-        </div>
-        <div class="talk-field">
-          <span class="f-label">🏡 Congregación</span>
-          <input type="text" placeholder="Congregación">
-        </div>
-        <div class="talk-field">
-          <span class="f-label">🗣️ Discursante</span>
-          <input type="text" placeholder="Nombre">
-        </div>
-        <div class="talk-field">
-          <span class="f-label">📑 Título</span>
-          <input type="text" list="titulos" placeholder="Escriba o seleccione…">
-        </div>
+  /* -------- Tarjetas de Asignaciones -------- */
+  const assignCards = document.getElementById('assignCards');
+  assignCards.innerHTML = weeks.map(w => `
+    <div class="info-card">
+      <div class="card-header">🗓️ Semana del ${fmtShort(w.start)} al ${fmtShort(w.end)}</div>
+      <div class="fields-grid">
+        ${fieldRow('🫂','Acomodador', buildSelectHTML(ROLE_OPTIONS.acomodador))}
+        ${fieldRow('🔊','Audio y Video', buildSelectHTML(ROLE_OPTIONS.audioVideo))}
+        ${fieldRow('🎤','Micrófono 1', buildSelectHTML(ROLE_OPTIONS.microfono))}
+        ${fieldRow('🎤','Micrófono 2', buildSelectHTML(ROLE_OPTIONS.microfono))}
+        ${fieldRow('🎙️','Plataforma', buildSelectHTML(ROLE_OPTIONS.plataforma))}
+        ${fieldRow('🧹','Aseo', buildSelectHTML(ROLE_OPTIONS.aseo))}
       </div>
     </div>`).join('');
 
-  document.getElementById('genNote').textContent =
-    `Generado automáticamente para ${MESES[month]} de ${year} · ${weeks.length} semanas`;
+  /* -------- Tarjetas de Discursos Públicos -------- */
+  const talkCards = document.getElementById('talkCards');
+  talkCards.innerHTML = weeks.map(w => `
+    <div class="info-card">
+      <div class="card-header">🗓️ Sábado, ${fmtLong(w.saturday)}</div>
+      <div class="fields-stack">
+        ${fieldRow('👨‍💼','Presidente y Lector', buildSelectHTML(ROLE_OPTIONS.presidente))}
+        ${fieldRow('🎶','Canción', `<textarea class="field-control suggest-field" data-suggest="cancion" rows="1"></textarea><div class="suggest-box"></div>`)}
+        ${fieldRow('🏡','Congregación', `<textarea class="field-control" rows="1"></textarea>`)}
+        ${fieldRow('🗣️','Discursante', `<textarea class="field-control" rows="1"></textarea>`)}
+        ${fieldRow('📑','Título', `<textarea class="field-control suggest-field" data-suggest="titulo" rows="1"></textarea><div class="suggest-box"></div>`)}
+      </div>
+    </div>`).join('');
 
+  attachAutoGrow();
+  attachSuggestions();
   loadState();
+  requestAnimationFrame(() => document.querySelectorAll('textarea.field-control').forEach(autoGrow));
+}
+
+/* ---------------- Auto-crecimiento de campos de texto ---------------- */
+function autoGrow(el){
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+function attachAutoGrow(){
+  document.querySelectorAll('textarea.field-control').forEach(t => {
+    t.addEventListener('input', () => autoGrow(t));
+  });
+}
+
+/* ---------------- Autocompletar Canción / Título ---------------- */
+function normalize(str){
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+function attachSuggestions(){
+  document.querySelectorAll('.suggest-field').forEach(field => {
+    const box = field.nextElementSibling;
+    const source = field.dataset.suggest === 'cancion' ? CANCIONES_LIST : TITULOS_LIST;
+
+    field.addEventListener('input', () => {
+      const q = normalize(field.value.trim());
+      if (q.length < 1){ box.classList.remove('open'); box.innerHTML=''; return; }
+      const matches = source.filter(item => normalize(item).includes(q)).slice(0, 7);
+      if (!matches.length){ box.classList.remove('open'); box.innerHTML=''; return; }
+      box.innerHTML = matches.map(m => `<div class="suggest-item">${m}</div>`).join('');
+      box.classList.add('open');
+    });
+
+    field.addEventListener('blur', () => {
+      setTimeout(() => { box.classList.remove('open'); }, 150);
+    });
+
+    box.addEventListener('mousedown', (e) => {
+      const item = e.target.closest('.suggest-item');
+      if (!item) return;
+      field.value = item.textContent;
+      autoGrow(field);
+      box.classList.remove('open');
+      box.innerHTML = '';
+      saveState();
+    });
+  });
 }
 
 /* ---------------- Guardado automático (localStorage) ---------------- */
@@ -661,18 +706,18 @@ function storageKey(){
 
 function saveState(){
   const data = {
-    asign: Array.from(document.querySelectorAll('#tableAsignaciones tbody tr')).map(tr =>
-      Array.from(tr.querySelectorAll('select')).map(s => s.value)
+    asign: Array.from(document.querySelectorAll('#assignCards .info-card')).map(card =>
+      Array.from(card.querySelectorAll('select.field-control')).map(s => s.value)
     ),
-    discursos: Array.from(document.querySelectorAll('.talk-card')).map(card => {
-      const select = card.querySelector('select');
-      const inputs = card.querySelectorAll('input');
+    discursos: Array.from(document.querySelectorAll('#talkCards .info-card')).map(card => {
+      const select = card.querySelector('select.field-control');
+      const textareas = card.querySelectorAll('textarea.field-control');
       return {
         presidente: select ? select.value : '',
-        cancion: inputs[0] ? inputs[0].value : '',
-        congregacion: inputs[1] ? inputs[1].value : '',
-        discursante: inputs[2] ? inputs[2].value : '',
-        titulo: inputs[3] ? inputs[3].value : ''
+        cancion: textareas[0] ? textareas[0].value : '',
+        congregacion: textareas[1] ? textareas[1].value : '',
+        discursante: textareas[2] ? textareas[2].value : '',
+        titulo: textareas[3] ? textareas[3].value : ''
       };
     })
   };
@@ -685,34 +730,27 @@ function loadState(){
   if(!raw) return;
   try{
     const data = JSON.parse(raw);
-    const rows = document.querySelectorAll('#tableAsignaciones tbody tr');
-    rows.forEach((tr, i) => {
-      const selects = tr.querySelectorAll('select');
+    const assignCardsEls = document.querySelectorAll('#assignCards .info-card');
+    assignCardsEls.forEach((card, i) => {
+      const selects = card.querySelectorAll('select.field-control');
       const vals = (data.asign && data.asign[i]) || [];
       selects.forEach((s, j) => { if (vals[j] !== undefined) s.value = vals[j]; });
     });
-    const cards = document.querySelectorAll('.talk-card');
-    cards.forEach((card, i) => {
+    const talkCardsEls = document.querySelectorAll('#talkCards .info-card');
+    talkCardsEls.forEach((card, i) => {
       const d = data.discursos && data.discursos[i];
       if (!d) return;
-      const select = card.querySelector('select');
-      const inputs = card.querySelectorAll('input');
+      const select = card.querySelector('select.field-control');
+      const textareas = card.querySelectorAll('textarea.field-control');
       if (select) select.value = d.presidente || '';
-      if (inputs[0]) inputs[0].value = d.cancion || '';
-      if (inputs[1]) inputs[1].value = d.congregacion || '';
-      if (inputs[2]) inputs[2].value = d.discursante || '';
-      if (inputs[3]) inputs[3].value = d.titulo || '';
+      if (textareas[0]) textareas[0].value = d.cancion || '';
+      if (textareas[1]) textareas[1].value = d.congregacion || '';
+      if (textareas[2]) textareas[2].value = d.discursante || '';
+      if (textareas[3]) textareas[3].value = d.titulo || '';
     });
+    document.querySelectorAll('textarea.field-control').forEach(autoGrow);
   } catch(e){ /* datos guardados corruptos, se ignoran */ }
 }
-
-/* Datalist de títulos */
-document.getElementById('titulos').innerHTML =
-  TITULOS.map((t,i) => `<option value="${i+1}. ${t.replace(/"/g,'&quot;')}">`).join('');
-
-/* Datalist de canciones */
-document.getElementById('canciones').innerHTML =
-  CANCIONES.map((c,i) => `<option value="${i+1}. ${c.replace(/"/g,'&quot;')}">`).join('');
 
 /* ---------------- Navegación de mes ---------------- */
 document.getElementById('prevMonth').addEventListener('click', () => {
@@ -725,8 +763,8 @@ document.getElementById('nextMonth').addEventListener('click', () => {
 });
 
 /* Guarda automáticamente cualquier cambio en los campos del mes actual */
-document.getElementById('sheet').addEventListener('input', saveState);
-document.getElementById('sheet').addEventListener('change', saveState);
+document.querySelector('.sheet-scroll').addEventListener('input', saveState);
+document.querySelector('.sheet-scroll').addEventListener('change', saveState);
 
 /* Botón Limpiar: borra los datos guardados del mes que se está viendo */
 document.getElementById('btnClear').addEventListener('click', () => {
@@ -736,11 +774,24 @@ document.getElementById('btnClear').addEventListener('click', () => {
   renderAll();
 });
 
+/* ---------------- Alternar sección (Asignaciones / Discursos) ---------------- */
+document.querySelectorAll('#sectionToggle .pill-opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#sectionToggle .pill-opt').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeSection = btn.dataset.section;
+    const showAsign = activeSection === 'asignaciones';
+    document.getElementById('sheetAsignaciones').classList.toggle('is-hidden', !showAsign);
+    document.getElementById('sheetDiscursos').classList.toggle('is-hidden', showAsign);
+    requestAnimationFrame(() => document.querySelectorAll('textarea.field-control').forEach(autoGrow));
+  });
+});
+
 /* ---------------- Tamaño de página (Carta / A4) ---------------- */
 let pageFormat = 'letter';
-document.querySelectorAll('.size-opt').forEach(btn => {
+document.querySelectorAll('#sizeToggle .pill-opt').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.size-opt').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#sizeToggle .pill-opt').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const size = btn.dataset.size;
     pageFormat = size === 'a4' ? 'a4' : 'letter';
@@ -755,9 +806,14 @@ function toggleInk(){ document.documentElement.classList.toggle('ink-saver'); }
 inkSwitch.addEventListener('click', toggleInk);
 inkWrap.addEventListener('click', (e) => { if(e.target !== inkSwitch) toggleInk(); });
 
-/* ---------------- Exportar JPG / PNG / PDF ---------------- */
+/* ---------------- Exportar JPG / PNG / PDF (siempre la sección activa) ---------------- */
+function activeSheetEl(){
+  return activeSection === 'asignaciones'
+    ? document.getElementById('sheetAsignaciones')
+    : document.getElementById('sheetDiscursos');
+}
 function captureSheet(){
-  const el = document.getElementById('sheet');
+  const el = activeSheetEl();
   return html2canvas(el, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
 }
 function triggerDownload(dataUrl, filename){
@@ -769,16 +825,18 @@ function triggerDownload(dataUrl, filename){
   a.remove();
 }
 function fileTag(){
-  return `${MESES[current.getMonth()]}_${current.getFullYear()}`.toLowerCase();
+  const base = `${MESES[current.getMonth()]}_${current.getFullYear()}`.toLowerCase();
+  const section = activeSection === 'asignaciones' ? 'asignaciones' : 'discursos';
+  return `${section}_${base}`;
 }
 
 document.getElementById('btnPNG').addEventListener('click', async () => {
   const canvas = await captureSheet();
-  triggerDownload(canvas.toDataURL('image/png'), `programa_${fileTag()}.png`);
+  triggerDownload(canvas.toDataURL('image/png'), `${fileTag()}.png`);
 });
 document.getElementById('btnJPG').addEventListener('click', async () => {
   const canvas = await captureSheet();
-  triggerDownload(canvas.toDataURL('image/jpeg', 0.92), `programa_${fileTag()}.jpg`);
+  triggerDownload(canvas.toDataURL('image/jpeg', 0.92), `${fileTag()}.jpg`);
 });
 document.getElementById('btnPDF').addEventListener('click', async () => {
   const canvas = await captureSheet();
@@ -800,7 +858,7 @@ document.getElementById('btnPDF').addEventListener('click', async () => {
     pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
     heightLeft -= pageH;
   }
-  pdf.save(`programa_${fileTag()}.pdf`);
+  pdf.save(`${fileTag()}.pdf`);
 });
 
 renderAll();
