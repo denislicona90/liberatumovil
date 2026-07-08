@@ -409,7 +409,26 @@ const TITULOS = [
 "¿Quién es como Jehová nuestro Dios?","Utilice la educación para alabar a Jehová","Confiemos en que Jehová tiene el poder para salvarnos",
 "¿Ve usted la vida como la ve Dios?","¿Anda usted con Dios?","¿Está este mundo condenado a la destrucción?",
 "Jehová es “una altura segura” para su pueblo","¿Cuándo y por qué vendrá el verdadero Armagedón?",
-"Estemos muy pendientes del “impresionante día de Jehová”","El gobierno del hombre, pesado en la balanza"
+"Estemos muy pendientes del “impresionante día de Jehová”","El gobierno del hombre, pesado en la balanza",
+"¿Ha llegado la hora del juicio de Babilonia?","¿Es el Día del Juicio un tiempo de temor, o de esperanza?",
+"Cómo adornan los cristianos la enseñanza divina","Seamos valerosos y confiemos en Jehová",
+"Cómo encontrar seguridad en un mundo peligroso","Protejamos nuestra identidad cristiana",
+"¿Por qué sufrió y murió Jesús?","Liberados de un mundo de oscuridad","¿Por qué temer al Dios verdadero?",
+"¿Sigue Dios ejerciendo la soberanía sobre la Tierra?","¿A qué valores concedemos más importancia?",
+"¿Qué es la verdadera fe, y cómo se demuestra?","Actuemos con sabiduría en este mundo insensato",
+"Cómo sentirse seguro en este mundo turbulento","¿Por qué debemos guiarnos por la Biblia?",
+"¿Quién es el único que puede gobernar bien a la humanidad?","Usted puede disfrutar de la vida en paz ahora y para siempre",
+"¿Qué posición tenemos ante Dios?","¿Le importa a Dios qué religión tengamos?",
+"¿Quién será digno de entrar en el nuevo mundo de Dios?","¿Qué pruebas demuestran la autenticidad de la Biblia?",
+"¿Cuándo tendremos verdadera paz y seguridad?","¿A quién podemos acudir en tiempos de angustia?",
+"Andemos en el camino de la integridad","Rechace las fantasías mundanales; busque las realidades del Reino",
+"¿Por qué debe ser real para nosotros la esperanza de la resurrección?","¿Faltará menos de lo que usted cree?",
+"¿Qué está haciendo por nosotros el Reino de Dios?","Apartemos la mirada de lo que no sirve para nada",
+"¿Es la muerte el final de todo?","¿Influye la verdad en su vida?","Unidos al feliz pueblo de Dios",
+"¿Cómo es posible que un Dios de amor permita la maldad?","¿Ha puesto usted su confianza en Jehová?",
+"Andar con Dios nos beneficia ahora y para siempre","Una familia unida y feliz para siempre",
+"Cómo vencen al mundo la fe y el amor","¿Anda usted por el camino que lleva a la vida eterna?",
+"Pronto se nos librará de la angustia mundial","Cómo nos beneficia la sabiduría divina"
 ];
 
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -419,11 +438,11 @@ let current = new Date();
 current.setDate(1);
 
 /* ---------------- Utilidades de fecha ---------------- */
-function mondayOnOrBefore(date){
+function firstMondayOnOrAfter(date){
   const d = new Date(date);
-  const day = d.getDay(); // 0=domingo
-  const diff = (day === 0) ? 6 : day - 1;
-  d.setDate(d.getDate() - diff);
+  const day = d.getDay(); // 0=domingo ... 6=sábado
+  const diff = (1 - day + 7) % 7;
+  d.setDate(d.getDate() + diff);
   return d;
 }
 function addDays(date, n){
@@ -438,14 +457,18 @@ function fmtLong(d){
   return `${d.getDate()} de ${MESES[d.getMonth()].toLowerCase()}`;
 }
 
+/* Las semanas siempre inician en el primer lunes del mes. Si la última
+   semana se extiende hacia el mes siguiente, esos días finales se quedan
+   como parte de la última semana de este mes (no se repiten al generar
+   el mes siguiente, que arrancará en su propio primer lunes). */
 function getWeeksForMonth(year, month){
   const firstOfMonth = new Date(year, month, 1);
   const lastOfMonth = new Date(year, month + 1, 0);
   const weeks = [];
-  let weekStart = mondayOnOrBefore(firstOfMonth);
+  let weekStart = firstMondayOnOrAfter(firstOfMonth);
   while (weekStart <= lastOfMonth){
     const weekEnd = addDays(weekStart, 6);
-    weeks.push({ start: new Date(weekStart), end: weekEnd, sunday: addDays(weekStart, 6) });
+    weeks.push({ start: new Date(weekStart), end: weekEnd, saturday: addDays(weekStart, 5) });
     weekStart = addDays(weekStart, 7);
   }
   return weeks;
@@ -483,11 +506,11 @@ function renderAll(){
       <td>${buildSelect(ROLE_OPTIONS.aseo)}</td>
     </tr>`).join('');
 
-  // Tabla de discursos públicos (fecha = domingo de cada semana)
+  // Tabla de discursos públicos (fecha = sábado de cada semana)
   const tbodyD = document.querySelector('#tableDiscursos tbody');
   tbodyD.innerHTML = weeks.map(w => `
     <tr>
-      <td class="week-cell">${fmtLong(w.sunday)}</td>
+      <td class="week-cell">${fmtLong(w.saturday)}</td>
       <td>${buildSelect(ROLE_OPTIONS.presidente)}</td>
       <td><input type="text" placeholder="Nombre"></td>
       <td><input type="text" placeholder="Congregación"></td>
