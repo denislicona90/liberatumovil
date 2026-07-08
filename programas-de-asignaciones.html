@@ -203,17 +203,18 @@
   }
   th, td{
     border:1px solid var(--line);
-    padding: 9px 8px;
+    padding: 9px 5px;
     text-align:left;
     vertical-align:middle;
   }
   th{
     background: var(--header-bg);
-    font-size: 10px;
+    font-size: 8.6px;
     font-weight:700;
     text-transform:uppercase;
-    letter-spacing:.5px;
+    letter-spacing:.2px;
     color: var(--muted);
+    white-space: nowrap;
   }
   tr:nth-child(even) td{ background: rgba(0,0,0,0.012); }
   html.ink-saver tr:nth-child(even) td{ background:#fff; }
@@ -238,8 +239,8 @@
 
   /* Tarjetas de discursos públicos */
   .talk-cards{
-    display:flex;
-    flex-direction:column;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
     gap:10px;
     margin-bottom: 6px;
   }
@@ -261,12 +262,10 @@
   }
   html.ink-saver .talk-date{ color:#000; }
   .talk-fields{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px 18px;
+    display:flex;
+    flex-direction:column;
+    gap: 8px;
   }
-  .talk-field{ min-width:0; }
-  .talk-field.full{ grid-column: 1 / -1; }
   .talk-field .f-label{
     display:block;
     font-size: 9.5px;
@@ -354,6 +353,7 @@
         <div class="switch" id="inkSwitch"></div>
         <span>Modo ahorro de tinta</span>
       </div>
+      <button class="btn" id="btnClear" title="Borrar los datos guardados de este mes">🗑 Limpiar</button>
       <button class="btn" id="btnPNG">&#8681; PNG</button>
       <button class="btn" id="btnJPG">&#8681; JPG</button>
       <button class="btn primary" id="btnPDF">&#8681; PDF</button>
@@ -641,7 +641,7 @@ function renderAll(){
           <span class="f-label">🗣️ Discursante</span>
           <input type="text" placeholder="Nombre">
         </div>
-        <div class="talk-field full">
+        <div class="talk-field">
           <span class="f-label">📑 Título</span>
           <input type="text" list="titulos" placeholder="Escriba o seleccione…">
         </div>
@@ -650,6 +650,60 @@ function renderAll(){
 
   document.getElementById('genNote').textContent =
     `Generado automáticamente para ${MESES[month]} de ${year} · ${weeks.length} semanas`;
+
+  loadState();
+}
+
+/* ---------------- Guardado automático (localStorage) ---------------- */
+function storageKey(){
+  return `progAsignaciones_${current.getFullYear()}_${current.getMonth()}`;
+}
+
+function saveState(){
+  const data = {
+    asign: Array.from(document.querySelectorAll('#tableAsignaciones tbody tr')).map(tr =>
+      Array.from(tr.querySelectorAll('select')).map(s => s.value)
+    ),
+    discursos: Array.from(document.querySelectorAll('.talk-card')).map(card => {
+      const select = card.querySelector('select');
+      const inputs = card.querySelectorAll('input');
+      return {
+        presidente: select ? select.value : '',
+        cancion: inputs[0] ? inputs[0].value : '',
+        congregacion: inputs[1] ? inputs[1].value : '',
+        discursante: inputs[2] ? inputs[2].value : '',
+        titulo: inputs[3] ? inputs[3].value : ''
+      };
+    })
+  };
+  try{ localStorage.setItem(storageKey(), JSON.stringify(data)); } catch(e){ /* almacenamiento no disponible */ }
+}
+
+function loadState(){
+  let raw;
+  try{ raw = localStorage.getItem(storageKey()); } catch(e){ return; }
+  if(!raw) return;
+  try{
+    const data = JSON.parse(raw);
+    const rows = document.querySelectorAll('#tableAsignaciones tbody tr');
+    rows.forEach((tr, i) => {
+      const selects = tr.querySelectorAll('select');
+      const vals = (data.asign && data.asign[i]) || [];
+      selects.forEach((s, j) => { if (vals[j] !== undefined) s.value = vals[j]; });
+    });
+    const cards = document.querySelectorAll('.talk-card');
+    cards.forEach((card, i) => {
+      const d = data.discursos && data.discursos[i];
+      if (!d) return;
+      const select = card.querySelector('select');
+      const inputs = card.querySelectorAll('input');
+      if (select) select.value = d.presidente || '';
+      if (inputs[0]) inputs[0].value = d.cancion || '';
+      if (inputs[1]) inputs[1].value = d.congregacion || '';
+      if (inputs[2]) inputs[2].value = d.discursante || '';
+      if (inputs[3]) inputs[3].value = d.titulo || '';
+    });
+  } catch(e){ /* datos guardados corruptos, se ignoran */ }
 }
 
 /* Datalist de títulos */
@@ -667,6 +721,18 @@ document.getElementById('prevMonth').addEventListener('click', () => {
 });
 document.getElementById('nextMonth').addEventListener('click', () => {
   current.setMonth(current.getMonth() + 1);
+  renderAll();
+});
+
+/* Guarda automáticamente cualquier cambio en los campos del mes actual */
+document.getElementById('sheet').addEventListener('input', saveState);
+document.getElementById('sheet').addEventListener('change', saveState);
+
+/* Botón Limpiar: borra los datos guardados del mes que se está viendo */
+document.getElementById('btnClear').addEventListener('click', () => {
+  const ok = confirm('¿Borrar toda la información capturada para este mes? Esta acción no se puede deshacer.');
+  if (!ok) return;
+  try{ localStorage.removeItem(storageKey()); } catch(e){}
   renderAll();
 });
 
