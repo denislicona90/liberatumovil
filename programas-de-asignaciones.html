@@ -206,14 +206,12 @@
   select, input[type="text"]{
     width:100%;
     border:none;
-    border-bottom: 1px dashed #C9C5B8;
     background: transparent;
     font-family:inherit;
     font-size: 11.5px;
     padding: 3px 2px;
     color: var(--ink);
   }
-  html.ink-saver select, html.ink-saver input[type="text"]{ border-bottom:1px dashed #999; }
   select:focus, input:focus{ outline:none; border-bottom: 1px solid var(--accent); }
 
   .reminders{
@@ -229,6 +227,15 @@
     letter-spacing:1px;
     color: var(--muted);
   }
+  .reminder-full{
+    font-size: 10.5px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 0 8px;
+  }
+  .reminder-full strong{ color: var(--ink); }
   .reminders ul{ list-style:none; padding:0; margin:0; columns:2; column-gap:28px; }
   .reminders li{
     font-size: 10.5px;
@@ -257,7 +264,6 @@
     body{ background:#fff; filter:grayscale(1); }
     .page{ padding:0; max-width:100%; }
     #sheet{ border:none; box-shadow:none; padding:6mm; border-radius:0; }
-    select, input[type="text"]{ border-bottom:1px dashed #999; }
     @page{ size: letter landscape; margin:9mm; }
   }
 </style>
@@ -309,12 +315,12 @@
     <table id="tableDiscursos">
       <thead>
         <tr>
-          <th style="width:13%;">Fecha</th>
-          <th style="width:14%;">Presidente y Lector</th>
-          <th style="width:16%;">Discursante</th>
-          <th style="width:14%;">Congregación</th>
-          <th style="width:27%;">Título</th>
-          <th style="width:10%;">Canción</th>
+          <th style="width:10%;">Fecha</th>
+          <th style="width:11%;">Presidente y Lector</th>
+          <th style="width:14%;">Discursante</th>
+          <th style="width:17%;">Congregación</th>
+          <th style="width:34%;">Título</th>
+          <th style="width:14%;">Canción</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -322,8 +328,8 @@
 
     <div class="reminders">
       <h4>Recordatorios</h4>
+      <p class="reminder-full"><strong>Plataforma, Audio y Video, Micrófonos:</strong> Consultar S-261 – Instrucciones de audio y video para reuniones híbridas</p>
       <ul>
-        <li><strong>Plataforma, Audio y Video, Micrófonos:</strong> Consultar S-261 – Instrucciones de audio y video para reuniones híbridas</li>
         <li><strong>Acomodador:</strong> Consultar od 11.14</li>
         <li><strong>Presidente:</strong> Consultar km 5/07 pág. 3</li>
         <li><strong>Lector:</strong> Consultar th 8; be págs. 83–85</li>
@@ -335,6 +341,7 @@
 </div>
 
 <datalist id="titulos"></datalist>
+<datalist id="canciones"></datalist>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -434,6 +441,51 @@ const TITULOS = [
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 const MESES_ABR = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
+const CANCIONES = [
+"Las cualidades principales de Jehová","Tu nombre es Jehová","Tú me das fuerza, confianza y valor","“Jehová es mi Pastor”",
+"Las maravillosas obras de Dios","Los cielos proclaman la gloria de Dios","Jehová es mi fuerza y mi salvación","Jehová es mi Refugio",
+"¡Jehová es nuestro Rey!","¡Alabemos a nuestro Dios, Jehová!","La creación alaba a Jehová","Jehová, nuestro gran Dios",
+"Cristo es nuestro modelo","Honremos al nuevo Rey de la Tierra","Alabemos al Primogénito de Jehová",
+"Alabemos a Jehová por su Hijo, el Ungido","“Quiero”","Gracias por el rescate","La Cena del Señor",
+"Enviaste a Jesús, tu Hijo amado","Busquemos primero el Reino","¡Que venga el Reino que Dios ha establecido!",
+"Jehová ha empezado su gobierno","Subamos a la montaña de Jehová","Una posesión especial",
+"“Si lo haces por él, lo haces por mí”","La revelación de los hijos de Dios","Cómo hacernos amigos de Jehová",
+"Hagamos honor a nuestro nombre","Mi Amigo, mi Padre, mi Dios","Camina siempre con Jehová","¡Ponte de parte de Dios!",
+"Echa sobre Dios tu carga","Caminaré en integridad","Asegurémonos de lo más importante","Cuidemos nuestro corazón",
+"Serviré a Jehová con el corazón","Jehová te cuidará","Un buen nombre ante Dios","¿A quién servimos?",
+"Padre, escucha mi oración","La oración del siervo de Dios","Una oración para dar gracias a Dios","Una súplica ferviente",
+"“La meditación de mi corazón”","Gracias, Jehová","Oremos a Dios todos los días","Caminemos diariamente con Jehová",
+"Alegremos el corazón de Jehová","Mi oración de dedicación","Estamos dedicados a Dios","La dedicación cristiana",
+"Hoy voy a salir a predicar","“Este es el camino”","¡No los temas!","Vive la verdad","Predicamos a toda clase de personas",
+"Voy a buscar a los amigos de la paz","Ven a alabar a Jehová","Hay vidas en juego","¡Avancen, Testigos!","La nueva canción",
+"¡Soy testigo de Jehová!","Participemos con gozo en la cosecha","Lucha por progresar","Proclamemos las buenas noticias",
+"“Predica la palabra”","Sembremos semillas del Reino","Prediquen las nuevas del Reino","Busquemos a los merecedores",
+"¡Somos los guerreros de Jehová!","Anunciaré la verdad del Reino","Danos fuerzas y valor",
+"Ven a cantar la gran canción del Reino","“¡Aquí estoy, envíame!”","Cuéntame lo que sientes","Luz en un mundo oscuro",
+"Enseñemos la Palabra de Dios","Que sigan firmes en la fe","“Prueben y vean que Jehová es bueno”","La vida del precursor",
+"Hagamos que brille nuestra luz","“De casa en casa”","Servimos donde se nos necesite","“Recíbanse con gusto unos a otros”",
+"Necesitamos que Jehová nos enseñe","Ven a recibir ánimo","Hazme conocer tus caminos",
+"Jehová bendice al que escucha y obedece","Animémonos unos a otros","Una obra de amor","Un lugar que lleva tu nombre",
+"Bendice nuestras reuniones","Agradecidos por la Palabra de Dios","La luz brilla más cada día","El libro de Dios es un tesoro",
+"Nuestra vida depende de la Palabra de Dios","Las Escrituras están inspiradas por Dios","Miles de fieles hermanos",
+"Seamos hospitalarios","Sirvamos a Dios en unidad","Ayudemos a los débiles","Nuestros pastores son un regalo de Dios",
+"El espíritu santo es un regalo de Dios","“Dios es amor”","Cultivemos amor verdadero","Dios nos enseñó a amar",
+"El amor leal de Jehová","Amémonos de todo corazón","El gozo de Jehová","Los motivos de nuestro gozo",
+"Jehová, el Dios de la paz","La paz del pueblo de Dios","Demostremos paciencia","Gratitud por la paciencia de Dios",
+"Seamos amables y bondadosos","Imitemos la bondad de Jehová","“Danos más fe”","Necesitamos una fe fuerte",
+"Seamos apacibles y humildes como Cristo","Necesitamos autodominio","¡Mantengámonos firmes, inmovibles!",
+"Seamos leales y sumisos al orden teocrático","Siempre fieles y leales","Felices los misericordiosos",
+"Siempre fuertes, fieles y firmes","La clase de persona que debo ser","Aguantemos hasta el fin","Servimos con aguante",
+"Aprendamos a perdonar","“Lo que Dios ha unido”","Ahora ya somos uno","Sirvamos a Jehová en nuestra juventud",
+"Los hijos son un regalo de Dios","Jehová te pide: “Sé sabio, hijo mío”","Que Jehová te bendiga","Fieles, valiosas, amadas",
+"Los cabellos blancos, una hermosa corona","¿Te ves en el nuevo mundo?","¡Vida sin fin, al fin!",
+"El maravilloso regalo de la vida","Aferrémonos a nuestra esperanza","¡Hay que seguir vigilantes!",
+"No dejes de mirar allí","Dios prometió un Paraíso","“Estoy haciendo todo nuevo”","Dios nos promete la vida eterna",
+"Jehová es mi Roca de salvación","La canción de la victoria","¡Jehová será tu Salvador!","Jehová los llamará",
+"Un lugar que te honrará","Por ti seré valiente","Un amor sin final","Mi mayor felicidad","Si tienes fe","Solo paz",
+"Danos paciencia","Demos gloria a Jehová","¡Buenas noticias!","Hacer tu voluntad","Mi necesidad espiritual","Ya puedo ver"
+];
+
 let current = new Date();
 current.setDate(1);
 
@@ -515,7 +567,7 @@ function renderAll(){
       <td><input type="text" placeholder="Nombre"></td>
       <td><input type="text" placeholder="Congregación"></td>
       <td><input type="text" list="titulos" placeholder="Escriba o seleccione…"></td>
-      <td><input type="text" placeholder="Núm."></td>
+      <td><input type="text" list="canciones" placeholder="Núm. o título"></td>
     </tr>`).join('');
 
   document.getElementById('genNote').textContent =
@@ -525,6 +577,10 @@ function renderAll(){
 /* Datalist de títulos */
 document.getElementById('titulos').innerHTML =
   TITULOS.map((t,i) => `<option value="${i+1}. ${t.replace(/"/g,'&quot;')}">`).join('');
+
+/* Datalist de canciones */
+document.getElementById('canciones').innerHTML =
+  CANCIONES.map((c,i) => `<option value="${i+1}. ${c.replace(/"/g,'&quot;')}">`).join('');
 
 /* ---------------- Navegación de mes ---------------- */
 document.getElementById('prevMonth').addEventListener('click', () => {
