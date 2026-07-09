@@ -893,6 +893,49 @@ function buildExportClone(sourceEl){
   return clone;
 }
 
+/* Calcula manualmente en qué punto debe partirse cada línea de texto,
+   usando el ancho real ya calculado por el navegador para ese campo.
+   Esto evita depender del algoritmo interno de salto de línea de
+   html2canvas, que en ciertos casos "pierde" el espacio justo donde
+   parte la línea (por eso palabras como "identifica" y "a" terminaban
+   pegadas: "identificaa"). Cada línea resultante se coloca en su propio
+   bloque con white-space: nowrap, así no hay ningún corte que calcular
+   durante la captura de la imagen. */
+function wrapTextForExport(div){
+  const text = div.textContent;
+  if (!text || !text.trim()) return;
+  const width = div.clientWidth;
+  if (!width) return;
+
+  const cs = getComputedStyle(div);
+  const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  if (!wrapTextForExport._canvas) wrapTextForExport._canvas = document.createElement('canvas');
+  const ctx = wrapTextForExport._canvas.getContext('2d');
+  ctx.font = font;
+
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  words.forEach(word => {
+    const test = line ? line + ' ' + word : word;
+    if (line && ctx.measureText(test).width > width){
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  });
+  if (line) lines.push(line);
+
+  div.innerHTML = '';
+  lines.forEach(l => {
+    const lineDiv = document.createElement('div');
+    lineDiv.style.whiteSpace = 'nowrap';
+    lineDiv.textContent = l;
+    div.appendChild(lineDiv);
+  });
+}
+
 async function captureSheet(sheetKey){
   const el = sheetElFor(sheetKey);
   const clone = buildExportClone(el);
@@ -903,6 +946,9 @@ async function captureSheet(sheetKey){
   document.body.appendChild(clone);
   // Deja que el navegador calcule el layout antes de capturar
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  // Ahora que el layout ya está calculado y los anchos son reales,
+  // partimos manualmente el texto de cada campo exportado
+  clone.querySelectorAll('.static-value').forEach(wrapTextForExport);
   const canvas = await html2canvas(clone, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
   document.body.removeChild(clone);
   return canvas;
