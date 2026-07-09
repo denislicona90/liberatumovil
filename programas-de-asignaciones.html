@@ -50,7 +50,9 @@
     width:100%;
     overflow-x:auto;
     display:flex;
-    justify-content:center;
+    flex-direction:column;
+    align-items:center;
+    gap:26px;
   }
 
   /* ---------- Barra de control (no se imprime) ---------- */
@@ -139,6 +141,16 @@
   .btn.primary{ background: var(--accent); border-color: var(--accent); color:#fff; }
   .btn.primary:hover{ opacity:.92; background:var(--accent); }
   .btn.loading{ opacity:.6; pointer-events:none; }
+  .btn.small{ font-size:11.5px; padding:5px 9px; }
+
+  /* Barra de acciones propia de cada programa (Limpiar / PNG / JPG / PDF) */
+  .sheet-toolbar{
+    display:flex;
+    justify-content:flex-end;
+    flex-wrap:wrap;
+    gap:7px;
+    margin: -10px 0 16px;
+  }
 
   /* ---------- Contenido exportable / imprimible ---------- */
   .sheet{
@@ -244,6 +256,16 @@
   select.field-control:focus, textarea.field-control:focus{
     outline:none; border-bottom-color: var(--accent);
   }
+  /* El texto exportado (static-value) usa un ajuste de línea distinto al de los
+     campos editables: pre-wrap + word-break juntos hacen que html2canvas
+     calcule mal el punto de corte y "pierda" el espacio al saltar de línea.
+     overflow-wrap normal es más predecible para la captura de imagen. */
+  .static-value{
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+    overflow: visible;
+  }
 
   /* Fila de Micrófonos: dos selects en una sola línea */
   .mic-pair{
@@ -324,11 +346,12 @@
   /* ---------- Impresión: fuerza escala de grises y ahorra tinta ---------- */
   @media print{
     .toolbar{ display:none; }
+    .sheet-toolbar{ display:none; }
     body{ background:#fff; filter:grayscale(1); }
     .page{ padding:0; }
-    .sheet-scroll{ overflow:visible; }
+    .sheet-scroll{ overflow:visible; gap:0; }
     .sheet{ border:none; box-shadow:none; padding:6mm; border-radius:0; width:100%; }
-    .sheet.is-hidden{ display:none; }
+    #sheetAsignaciones{ page-break-after: always; }
     @page{ size: letter; margin:9mm; }
   }
 </style>
@@ -343,11 +366,6 @@
       <button class="arrow" id="nextMonth" title="Mes siguiente">&#8594;</button>
     </div>
 
-    <select class="tb-select" id="sectionSelect">
-      <option value="asignaciones">Asignaciones</option>
-      <option value="discursos">Discursos Públicos</option>
-    </select>
-
     <select class="tb-select" id="sizeSelect">
       <option value="carta">Tamaño: Carta</option>
       <option value="a4">Tamaño: A4</option>
@@ -359,11 +377,6 @@
     </div>
 
     <div class="toolbar-fill"></div>
-
-    <button class="btn" id="btnClear" title="Borrar los datos guardados de este mes">🗑 Limpiar</button>
-    <button class="btn" id="btnPNG">&#8681; PNG</button>
-    <button class="btn" id="btnJPG">&#8681; JPG</button>
-    <button class="btn primary" id="btnPDF">&#8681; PDF</button>
   </div>
 
   <div class="sheet-scroll">
@@ -371,6 +384,13 @@
     <div id="sheetAsignaciones" class="sheet">
       <h1>Programa de Asignaciones</h1>
       <h2 class="subtitle">Centro&nbsp;–&nbsp;San Francisco, Atl.</h2>
+
+      <div class="sheet-toolbar">
+        <button class="btn small" data-clear="asignaciones" title="Borrar los datos guardados de Asignaciones para este mes">🗑 Limpiar</button>
+        <button class="btn small" data-export="png" data-target="asignaciones">&#8681; PNG</button>
+        <button class="btn small" data-export="jpg" data-target="asignaciones">&#8681; JPG</button>
+        <button class="btn small primary" data-export="pdf" data-target="asignaciones">&#8681; PDF</button>
+      </div>
 
       <div class="card-grid" id="assignCards"></div>
 
@@ -384,9 +404,16 @@
       </div>
     </div>
 
-    <div id="sheetDiscursos" class="sheet is-hidden">
+    <div id="sheetDiscursos" class="sheet">
       <h1>Programa de Discursos Públicos</h1>
       <h2 class="subtitle">Centro&nbsp;–&nbsp;San Francisco, Atl.</h2>
+
+      <div class="sheet-toolbar">
+        <button class="btn small" data-clear="discursos" title="Borrar los datos guardados de Discursos para este mes">🗑 Limpiar</button>
+        <button class="btn small" data-export="png" data-target="discursos">&#8681; PNG</button>
+        <button class="btn small" data-export="jpg" data-target="discursos">&#8681; JPG</button>
+        <button class="btn small primary" data-export="pdf" data-target="discursos">&#8681; PDF</button>
+      </div>
 
       <div class="card-grid single-col" id="talkCards"></div>
 
@@ -550,7 +577,6 @@ const CANCIONES_LIST = CANCIONES.map((c,i) => `${i+1}. ${c}`);
 
 let current = new Date();
 current.setDate(1);
-let activeSection = 'asignaciones';
 let pageFormat = 'letter';
 
 /* ---------------- Utilidades de fecha ---------------- */
@@ -782,21 +808,23 @@ document.getElementById('nextMonth').addEventListener('click', () => {
 document.querySelector('.sheet-scroll').addEventListener('input', saveState);
 document.querySelector('.sheet-scroll').addEventListener('change', saveState);
 
-/* Botón Limpiar: borra los datos guardados del mes que se está viendo */
-document.getElementById('btnClear').addEventListener('click', () => {
-  const ok = confirm('¿Borrar toda la información capturada para este mes? Esta acción no se puede deshacer.');
+/* Botón Limpiar: borra solo los datos del programa indicado (Asignaciones o
+   Discursos), sin afectar los datos del otro programa, ya que ambos se
+   guardan juntos bajo la misma llave del mes. */
+function clearSection(key){
+  const label = key === 'asignaciones' ? 'Asignaciones' : 'Discursos Públicos';
+  const ok = confirm(`¿Borrar toda la información capturada de ${label} para este mes? Esta acción no se puede deshacer.`);
   if (!ok) return;
-  try{ localStorage.removeItem(storageKey()); } catch(e){}
-  renderAll();
-});
-
-/* ---------------- Alternar sección (Asignaciones / Discursos) ---------------- */
-document.getElementById('sectionSelect').addEventListener('change', (e) => {
-  activeSection = e.target.value;
-  const showAsign = activeSection === 'asignaciones';
-  document.getElementById('sheetAsignaciones').classList.toggle('is-hidden', !showAsign);
-  document.getElementById('sheetDiscursos').classList.toggle('is-hidden', showAsign);
-  requestAnimationFrame(() => document.querySelectorAll('textarea.field-control').forEach(autoGrow));
+  if (key === 'asignaciones'){
+    document.querySelectorAll('#assignCards select.field-control').forEach(s => { s.value = ''; });
+  } else {
+    document.querySelectorAll('#talkCards select.field-control').forEach(s => { s.value = ''; });
+    document.querySelectorAll('#talkCards textarea.field-control').forEach(t => { t.value = ''; autoGrow(t); });
+  }
+  saveState();
+}
+document.querySelectorAll('button[data-clear]').forEach(btn => {
+  btn.addEventListener('click', () => clearSection(btn.dataset.clear));
 });
 
 /* ---------------- Tamaño de página (Carta / A4) ---------------- */
@@ -824,8 +852,8 @@ inkWrap.addEventListener('click', (e) => { if(e.target !== inkSwitch) toggleInk(
    en vivo (por eso antes se exportaban los campos vacíos). Por eso aquí
    leemos los valores directamente de los controles ORIGINALES (sourceEl),
    no de los controles ya clonados. */
-function activeSheetEl(){
-  return activeSection === 'asignaciones'
+function sheetElFor(sheetKey){
+  return sheetKey === 'asignaciones'
     ? document.getElementById('sheetAsignaciones')
     : document.getElementById('sheetDiscursos');
 }
@@ -860,12 +888,13 @@ function buildExportClone(sourceEl){
   });
 
   clone.querySelectorAll('.suggest-box').forEach(b => b.remove());
+  clone.querySelectorAll('.sheet-toolbar').forEach(b => b.remove());
 
   return clone;
 }
 
-async function captureSheet(){
-  const el = activeSheetEl();
+async function captureSheet(sheetKey){
+  const el = sheetElFor(sheetKey);
   const clone = buildExportClone(el);
   clone.style.position = 'fixed';
   clone.style.top = '0';
@@ -887,46 +916,47 @@ function triggerDownload(dataUrl, filename){
   a.click();
   a.remove();
 }
-function fileTag(){
+function fileTag(sheetKey){
   const base = `${MESES[current.getMonth()]}_${current.getFullYear()}`.toLowerCase();
-  const section = activeSection === 'asignaciones' ? 'asignaciones' : 'discursos';
-  return `${section}_${base}`;
+  return `${sheetKey}_${base}`;
 }
 async function withLoadingState(btn, fn){
   btn.classList.add('loading');
   try{ await fn(); } finally { btn.classList.remove('loading'); }
 }
 
-document.getElementById('btnPNG').addEventListener('click', (e) => withLoadingState(e.currentTarget, async () => {
-  const canvas = await captureSheet();
-  triggerDownload(canvas.toDataURL('image/png'), `${fileTag()}.png`);
-}));
-document.getElementById('btnJPG').addEventListener('click', (e) => withLoadingState(e.currentTarget, async () => {
-  const canvas = await captureSheet();
-  triggerDownload(canvas.toDataURL('image/jpeg', 0.92), `${fileTag()}.jpg`);
-}));
-document.getElementById('btnPDF').addEventListener('click', (e) => withLoadingState(e.currentTarget, async () => {
-  const canvas = await captureSheet();
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: pageFormat });
-  const pageW = pdf.internal.pageSize.getWidth();
-  const pageH = pdf.internal.pageSize.getHeight();
-  const imgW = pageW;
-  const imgH = (canvas.height * imgW) / canvas.width;
-  const imgData = canvas.toDataURL('image/jpeg', 0.95);
+document.querySelectorAll('button[data-export]').forEach(btn => {
+  const format = btn.dataset.export;
+  const sheetKey = btn.dataset.target;
+  btn.addEventListener('click', (e) => withLoadingState(e.currentTarget, async () => {
+    const canvas = await captureSheet(sheetKey);
+    if (format === 'png'){
+      triggerDownload(canvas.toDataURL('image/png'), `${fileTag(sheetKey)}.png`);
+    } else if (format === 'jpg'){
+      triggerDownload(canvas.toDataURL('image/jpeg', 0.92), `${fileTag(sheetKey)}.jpg`);
+    } else if (format === 'pdf'){
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: pageFormat });
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+      const imgW = pageW;
+      const imgH = (canvas.height * imgW) / canvas.width;
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
 
-  let heightLeft = imgH;
-  let position = 0;
-  pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
-  heightLeft -= pageH;
-  while (heightLeft > 0){
-    position = heightLeft - imgH;
-    pdf.addPage();
-    pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
-    heightLeft -= pageH;
-  }
-  pdf.save(`${fileTag()}.pdf`);
-}));
+      let heightLeft = imgH;
+      let position = 0;
+      pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
+      heightLeft -= pageH;
+      while (heightLeft > 0){
+        position = heightLeft - imgH;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
+        heightLeft -= pageH;
+      }
+      pdf.save(`${fileTag(sheetKey)}.pdf`);
+    }
+  }));
+});
 
 renderAll();
 </script>
