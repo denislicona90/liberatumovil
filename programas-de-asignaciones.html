@@ -816,7 +816,14 @@ inkWrap.addEventListener('click', (e) => { if(e.target !== inkSwitch) toggleInk(
    Los controles nativos <select> y <textarea> no siempre se dibujan bien con
    html2canvas (el texto puede verse recortado). Para exportar de forma fiel,
    se genera un clon del contenido donde cada control se reemplaza por texto
-   plano equivalente, y se captura ese clon en vez del formulario interactivo. */
+   plano equivalente, y se captura ese clon en vez del formulario interactivo.
+
+   IMPORTANTE: el valor seleccionado/escrito por el usuario es una propiedad
+   "viva" del DOM (selectedIndex / value), NO un atributo HTML. Al clonar con
+   cloneNode(true), el clon reproduce el HTML original pero pierde esos valores
+   en vivo (por eso antes se exportaban los campos vacíos). Por eso aquí
+   leemos los valores directamente de los controles ORIGINALES (sourceEl),
+   no de los controles ya clonados. */
 function activeSheetEl(){
   return activeSection === 'asignaciones'
     ? document.getElementById('sheetAsignaciones')
@@ -828,18 +835,27 @@ function buildExportClone(sourceEl){
   clone.removeAttribute('id');
   clone.classList.remove('is-hidden');
 
-  clone.querySelectorAll('select.field-control').forEach(sel => {
+  // Selects: leer el valor seleccionado desde el select ORIGINAL (con estado real)
+  const origSelects = sourceEl.querySelectorAll('select.field-control');
+  const cloneSelects = clone.querySelectorAll('select.field-control');
+  cloneSelects.forEach((sel, i) => {
+    const origSel = origSelects[i];
     const div = document.createElement('div');
     div.className = sel.className + ' static-value';
-    const opt = sel.options[sel.selectedIndex];
+    const opt = origSel ? origSel.options[origSel.selectedIndex] : null;
     div.textContent = (opt && opt.value) ? opt.textContent : '\u00A0';
     sel.parentNode.replaceChild(div, sel);
   });
 
-  clone.querySelectorAll('textarea.field-control').forEach(ta => {
+  // Textareas: leer el .value real (lo escrito por el usuario) desde el original
+  const origTextareas = sourceEl.querySelectorAll('textarea.field-control');
+  const cloneTextareas = clone.querySelectorAll('textarea.field-control');
+  cloneTextareas.forEach((ta, i) => {
+    const origTa = origTextareas[i];
     const div = document.createElement('div');
     div.className = ta.className + ' static-value';
-    div.textContent = ta.value && ta.value.trim() ? ta.value : '\u00A0';
+    const val = origTa ? origTa.value : '';
+    div.textContent = (val && val.trim()) ? val : '\u00A0';
     ta.parentNode.replaceChild(div, ta);
   });
 
