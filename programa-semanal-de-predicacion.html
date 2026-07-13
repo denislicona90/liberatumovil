@@ -427,7 +427,7 @@ body {
   .card { min-height: auto; padding: 9px 10px 8px; }
 }
 
-@page { size: A4 portrait; margin: 10mm; }
+@page { size: letter portrait; margin: 10mm; }
 </style>
 </head>
 <body>
@@ -463,7 +463,7 @@ body {
 
 <!-- PREDICACIÓN -->
 <div class="seccion-titulo">📋 Predicación</div>
-<div class="grid grid-predicación" id="gridPredicación"></div>
+<div class="grid grid-regular" id="gridPredicación"></div>
 
 <!-- PREDICACIÓN PÚBLICA -->
 <div class="seccion-titulo">🏠 Predicación Pública</div>
@@ -608,7 +608,7 @@ poblarSelect("mLugar",      lugares);
 
 // ─── Cards ────────────────────────────────────────────────
 function construirCards() {
-  // Regular
+  // Predicación
   const gridReg = document.getElementById("gridPredicación");
   gridReg.innerHTML = "";
   diasPredicación.forEach(nombre => {
@@ -721,7 +721,7 @@ function guardarModal() {
   const { tipo, fecha } = modalActivo;
   if(!tipo) return;
   if(tipo === "predicación") {
-    setDatos("pre", fecha, {
+    setDatos("reg", fecha, {
       hora:       document.getElementById("mHora").value,
       reunion:    document.getElementById("mReunion").value,
       territorio: document.getElementById("mTerritorio").value,
@@ -747,7 +747,7 @@ function limpiarSemana() {
   const domingo = new Date(martes); domingo.setDate(martes.getDate() + 5);
   const rango   = `${formatCorto(martes)} – ${formatCorto(domingo)}`;
   if(!confirm(`¿Limpiar todos los datos de la semana ${rango}?`)) return;
-  diasRegular.forEach(d => localStorage.removeItem(storageKey("reg", getIso(fechaDia(d)))));
+  diasPredicación.forEach(d => localStorage.removeItem(storageKey("reg", getIso(fechaDia(d)))));
   diasPublica.forEach(d => localStorage.removeItem(storageKey("pub", getIso(fechaDia(d)))));
   construirCards();
 }
@@ -762,15 +762,18 @@ document.addEventListener("click", e => {
 });
 
 // ─── Exportar ─────────────────────────────────────────────
+// Ancho fijo tipo Carta (816px = 8.5in a 96dpi) para que la exportación
+// tenga siempre el mismo tamaño sin importar el dispositivo desde el
+// que se edite o descargue el programa.
+const CARTA_ANCHO_PX = 816;
+
 function construirContenedorExport() {
   const cont = document.createElement("div");
-  // Ancho fijo tipo escritorio: html2canvas lo captura así
-  // sin importar si el dispositivo es móvil
   cont.style.cssText = `
     background:#eef3ee;
     padding:24px;
     font-family:'Nunito',sans-serif;
-    width:820px;
+    width:${CARTA_ANCHO_PX}px;
   `;
 
   const martes  = martesDeLaSemana(weekOffset);
@@ -786,7 +789,7 @@ function construirContenedorExport() {
 
   ["gridPredicación","gridPublica"].forEach(id => {
     const lbl = document.createElement("div");
-    lbl.textContent = id === "gridRegular" ? "📋 Predicación" : "🏠 Predicación Pública";
+    lbl.textContent = id === "gridPredicación" ? "📋 Predicación" : "🏠 Predicación Pública";
     lbl.style.cssText = "font-size:.78em;font-weight:900;color:#3a6463;text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px;";
     cont.appendChild(lbl);
 
@@ -826,7 +829,7 @@ async function descargarComoImagen(tipo) {
   const cont = construirContenedorExport();
   cont.style.position = "absolute"; cont.style.top = "-9999px";
   document.body.appendChild(cont);
-  html2canvas(cont, {scale:2, useCORS:true, logging:false}).then(canvas => {
+  html2canvas(cont, {scale:2, useCORS:true, logging:false, width: CARTA_ANCHO_PX}).then(canvas => {
     const link = document.createElement("a");
     link.download = `programa-predicacion.${tipo}`;
     link.href = canvas.toDataURL(`image/${tipo}`);
@@ -839,10 +842,11 @@ async function descargarComoPDF() {
   const cont = construirContenedorExport();
   cont.style.position = "absolute"; cont.style.top = "-9999px";
   document.body.appendChild(cont);
-  html2canvas(cont, {scale:2, useCORS:true, logging:false}).then(canvas => {
+  html2canvas(cont, {scale:2, useCORS:true, logging:false, width: CARTA_ANCHO_PX}).then(canvas => {
     const imgData = canvas.toDataURL("image/png");
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF("portrait","mm","a4");
+    // Formato Carta (Letter) fijo, sin importar el dispositivo de origen
+    const pdf = new jsPDF("portrait","mm","letter");
     const w = pdf.internal.pageSize.getWidth();
     const h = pdf.internal.pageSize.getHeight();
     const s = Math.min(w/canvas.width, h/canvas.height);
