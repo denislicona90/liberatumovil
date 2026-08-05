@@ -162,6 +162,13 @@
     border-radius: var(--radius);
     padding: 30px 36px 24px;
     box-shadow: var(--shadow);
+    /* Tamaño base de referencia: todo el contenido de las tarjetas usa
+       unidades "em" relativas a este valor, así que para achicar el
+       contenido y que quepa en una sola página basta con cambiar este
+       font-size (ver captureSheet) — es un cambio real de layout, a
+       diferencia de "zoom" o "transform", que html2canvas no siempre
+       captura de forma fiel. */
+    font-size: 13.5px;
   }
   .sheet.is-hidden{ display:none; }
 
@@ -190,8 +197,8 @@
   .card-grid{
     display:grid;
     grid-template-columns: 1fr 1fr;
-    gap:12px;
-    margin-bottom: 8px;
+    gap:0.89em;
+    margin-bottom: 0.6em;
   }
   .card-grid.single-col{ grid-template-columns: 1fr; }
 
@@ -199,19 +206,20 @@
     border:1px solid var(--line);
     border-radius:9px;
     background: var(--header-bg);
-    padding: 12px 16px 12px;
+    padding: 0.89em 1.19em 0.89em;
     break-inside: avoid;
     page-break-inside: avoid;
   }
   html.ink-saver .info-card{ background:#fff; }
   .card-header{
     font-family:'Lora', Georgia, serif;
-    font-size: 14.5px;
+    font-size: 1.07em;
     font-weight:600;
     color: var(--accent);
-    margin-bottom: 8px;
-    padding-bottom: 7px;
+    margin-bottom: 0.59em;
+    padding-bottom: 0.52em;
     border-bottom: 1px solid var(--line);
+    letter-spacing: 0.01px;
   }
   html.ink-saver .card-header{ color:#000; }
 
@@ -220,17 +228,18 @@
     position:relative;
     display:flex;
     align-items:baseline;
-    gap:6px;
+    gap:0.44em;
     min-width:0;
-    padding: 3px 0;
+    padding: 0.22em 0;
   }
   .field-row.full{ grid-column: 1 / -1; }
   .field-label{
     flex:none;
-    font-size: 12px;
+    font-size: 0.89em;
     font-weight:700;
     color: var(--muted);
     white-space:nowrap;
+    letter-spacing: 0.01px;
   }
   .field-value-wrap{ flex:1; min-width:0; }
 
@@ -242,7 +251,7 @@
     background: transparent;
     font-family:inherit;
     color: var(--ink);
-    font-size: 13.5px;
+    font-size: 1em;
     line-height:1.4;
     padding: 0 0 1px;
     margin:0;
@@ -279,11 +288,11 @@
   .mic-pair{
     display:flex;
     align-items:center;
-    gap:8px;
+    gap:0.59em;
     width:100%;
   }
   .mic-pair select, .mic-pair .static-value{ flex:1; min-width:0; }
-  .mic-pair .mic-sep{ flex:none; color: var(--muted); font-size:13px; }
+  .mic-pair .mic-sep{ flex:none; color: var(--muted); font-size:0.96em; }
 
   /* Pila de campos: siempre una columna, permite envolver */
   .fields-stack{
@@ -423,7 +432,7 @@
         <button class="btn small primary" data-export="pdf" data-target="discursos">&#8681; PDF</button>
       </div>
 
-      <div class="card-grid single-col" id="talkCards"></div>
+      <div class="card-grid" id="talkCards"></div>
 
       <div class="reminders">
         <h4>Recordatorios</h4>
@@ -924,6 +933,7 @@ async function captureSheet(sheetKey){
   const el = sheetElFor(sheetKey);
   const clone = buildExportClone(el);
   const page = pagePixelSize();
+  const BASE_FONT_PX = 13.5; // debe coincidir con el font-size de .sheet en el CSS
 
   // "Escenario" con el tamaño EXACTO de una hoja Carta/A4.
   const stage = document.createElement('div');
@@ -948,18 +958,25 @@ async function captureSheet(sheetKey){
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   const naturalHeight = clone.scrollHeight;
 
-  // Si el contenido no cabe en una página, se reduce con "zoom" (que SÍ
-  // recalcula el layout a un tamaño real más chico) en vez de con
-  // "transform: scale()" (que solo es un efecto visual de pintura: html2canvas
-  // no recorta bien el contenido transformado y termina capturando el
-  // tamaño original completo, produciendo una imagen más alta que una
-  // página — que es justo lo que causaba la segunda página en el PDF).
+  // Si el contenido no cabe en una página, se reduce cambiando el font-size
+  // REAL del contenedor (todo el espaciado de las tarjetas está en unidades
+  // "em", así que se reduce en cascada junto con el texto). Esto reemplaza
+  // el intento anterior con "zoom", que html2canvas no siempre respeta bien
+  // y terminaba deformando/pegando el texto. Se hacen hasta 2 pasadas para
+  // afinar el resultado, porque el título y la cabecera no escalan (usan
+  // tamaño fijo), así que la reducción no es perfectamente proporcional.
   if (naturalHeight > page.h){
-    const ratio = page.h / naturalHeight;
-    clone.style.zoom = ratio;
+    let ratio = page.h / naturalHeight;
+    clone.style.fontSize = (BASE_FONT_PX * ratio) + 'px';
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const secondHeight = clone.scrollHeight;
+    if (secondHeight > page.h){
+      ratio = ratio * (page.h / secondHeight);
+      clone.style.fontSize = (BASE_FONT_PX * ratio) + 'px';
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    }
   }
 
-  await new Promise(r => requestAnimationFrame(r));
   const canvas = await html2canvas(stage, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
   document.body.removeChild(stage);
   return canvas;
