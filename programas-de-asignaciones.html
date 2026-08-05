@@ -265,6 +265,14 @@
     word-break: normal;
     overflow-wrap: break-word;
     overflow: visible;
+    /* Bug conocido de html2canvas: con letter-spacing "normal" a veces
+       calcula mal el ancho de los espacios entre palabras y los renderiza
+       casi invisibles (el texto se ve pegado: "creaciónalaba"). Forzar un
+       letter-spacing explícito, aunque sea mínimo, obliga a html2canvas a
+       usar su ruta de renderizado carácter por carácter, que sí mide bien
+       los espacios. */
+    letter-spacing: 0.01px;
+    word-spacing: 0.01px;
   }
 
   /* Fila de Micrófonos: dos selects en una sola línea */
@@ -917,9 +925,7 @@ async function captureSheet(sheetKey){
   const clone = buildExportClone(el);
   const page = pagePixelSize();
 
-  // "Escenario" con el tamaño EXACTO de una hoja Carta/A4: todo lo que se
-  // dibuje fuera de esta caja queda recortado, así el resultado nunca puede
-  // ocupar más de una página.
+  // "Escenario" con el tamaño EXACTO de una hoja Carta/A4.
   const stage = document.createElement('div');
   stage.style.position = 'fixed';
   stage.style.top = '0';
@@ -928,28 +934,33 @@ async function captureSheet(sheetKey){
   stage.style.height = page.h + 'px';
   stage.style.overflow = 'hidden';
   stage.style.background = '#ffffff';
+  stage.style.display = 'flex';
+  stage.style.justifyContent = 'center';
+  stage.style.alignItems = 'flex-start';
   document.body.appendChild(stage);
 
-  clone.style.position = 'absolute';
-  clone.style.top = '0';
-  clone.style.left = '50%';
-  clone.style.transform = 'translateX(-50%)';
-  clone.style.transformOrigin = 'top center';
   clone.style.margin = '0';
   clone.style.width = page.w + 'px';
+  clone.style.flex = 'none';
   stage.appendChild(clone);
 
-  // Deja que el navegador calcule el layout antes de medir
+  // Deja que el navegador calcule el layout antes de medir la altura natural
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-
   const naturalHeight = clone.scrollHeight;
+
+  // Si el contenido no cabe en una página, se reduce con "zoom" (que SÍ
+  // recalcula el layout a un tamaño real más chico) en vez de con
+  // "transform: scale()" (que solo es un efecto visual de pintura: html2canvas
+  // no recorta bien el contenido transformado y termina capturando el
+  // tamaño original completo, produciendo una imagen más alta que una
+  // página — que es justo lo que causaba la segunda página en el PDF).
   if (naturalHeight > page.h){
-    const scale = page.h / naturalHeight;
-    clone.style.transform = `translateX(-50%) scale(${scale})`;
+    const ratio = page.h / naturalHeight;
+    clone.style.zoom = ratio;
   }
 
   await new Promise(r => requestAnimationFrame(r));
-  const canvas = await html2canvas(stage, { scale: 2, backgroundColor: '#ffffff', useCORS: true, width: page.w, height: page.h });
+  const canvas = await html2canvas(stage, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
   document.body.removeChild(stage);
   return canvas;
 }
