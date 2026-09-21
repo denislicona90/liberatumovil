@@ -433,7 +433,7 @@ body {
         <option>Km 16</option><option>Hicaque</option><option>Jazmín Arriba</option>
         <option>Jazmín Abajo</option><option>París de Leán</option><option>Flores de Leán</option>
         <option>Las Delicias</option><option>Nueva Esperanza</option><option>Ceibita Way</option>
-        <option>Colorado Barra</option><option>La Florida</option><option>Sombra Verde</option>
+        <option>Colorado Barra</option><option>La Florida</option><option>Cayo Venado</option><option>Sombra Verde</option>
         <option>Campo Nuevo</option><option>Guachipilín</option><option>Tarraloza</option>
         <option>Cerritos</option><option>El Verdún</option><option>San José</option>
         <option>La Colmena</option><option>Esparta</option><option>El Embarcadero</option>
@@ -513,28 +513,29 @@ body {
 // ══════════════════════════════════
 const baseDatos = {
   "Río Chiquito":["X Fe","Onix"],
-  "Arizona":["La Unión (Gasolinera)","San Alejo","Torres","Golosinas Lidia","Paola","Wi-Fi Café","Ying Yeng","El Almendro","FV El Chamaco","Dinora","La Bendición (2)","Reyes (Salida)"],
+  "Arizona":["La Unión (Gasolinera)","San Alejo","Torres","Golosinas Lidia","Paola","Wi-Fi Café","Yin Yeng","El Almendro","FV El Chamaco","Dinora","La Bendición (2)","Reyes (Salida)"],
   "Las Mercedes":["Emanuel (Heydi)","Las Gemelas (Janeth)","David (Estip Iberton)","Suyapa","Gómez (QQ Chocolate)","Wilmer (Fondo)","Los Hermanos","Oneida (Acetona)","Evelio (Cuadrícula)","Antonia Cartagena","Ángela (Callejón)","Emanuel (Policía)","Keyli (Policía)","V&M Beltrán (Salida)"],
   "Lombardía":["Kenzi"],
-  "Km 17":["Saby","Saúl (Ebanistería)","La Caseta","Marisol","De León","José (Magda)","Heydi Matute","Wendy (Carpintero)","Peña (TJ)","Velásquez (Carmen)","Marcos Damián (Génesis)","Geovanny Vásquez","Marilyn (Comedor)","Kimberly","Zúniga","MS García","Ortiz","El Almendro (TJ)","Avícola Orellana"],
-  "Zizama":["Závala (Víctor)","Osorio (Madera)","Fabiana (Meñique)"],
-  "Km 16":["Wilton (Matriculado)"],
-  "Hicaque":["Karol (Refresco)","Shekinah (Lester)","Los Coquitos","Rivera","Flor","López","Blessing","Adalid","(Daysi y Tino)"],
+  "Km 17":["Saby","Saúl (Ebanistería)","La Caseta","Marisol","De León","José (Magda)","Heydi Matute","Wendy","Peña (TJ)","Velásquez (Carmen)","Marcos Damián (Génesis)","Geovanny Vásquez","Marilyn (Comedor)","Kimberly","Zúniga","MS García","Ortiz","El Almendro (TJ)","Avícola Orellana"],
+  "Zizama":["Závala (Víctor)","Osorio (Madera)","Fabiana (Chico)"],
+  "Km 16":["Wilton"],
+  "Hicaque":["Karol (Refresco)","Shekinah (Lester)","Los Coquitos","Rivera","Flor","López","Blessing","Adalid","Deysi","(Daysi y Tino)"],
   "Jazmín Arriba":["El Almendro (Raúl)"],
   "Jazmín Abajo":["Yonary (Enna)","La Bendición, Estela","Hernández (Maylin)","El Jazmín (Don Pancho)","Jorgito","Jordy (Isidro, Erika)"],
-  "París de Leán":["Ana","Ramos (Viejitos)","Perdomo","La Bendición (91)","Matías","El Tamarindo","Los Tres Hermanos (Tomasito)","Susana","Jeffrey (Callejón)","(125)"],
+  "París de Leán":["Ana","Ramos (Viejitos)","Perdomo","La Bendición (91)","Matías","El Tamarindo","Los Tres Hermanos (Tomasito)","Susana","Jeffrey (Callejón)","Santos"],
   "Flores de Leán":["Los Tres Hermanos","Maynor","Carolina (Chamo y Alma)","Neylan (Claudia)","Nolvia Izaguirre","Belén"],
-  "Las Delicias":["Any (TJ)","Adrián Bonilla"],
+  "Las Delicias":["Any (TJ)","Vanessa (Riccy)","Adrián Bonilla"],
   "Nueva Esperanza":["Yerly (Toño Pineda)"],
   "Ceibita Way":["Murillo (Motocarga)","Maura Ramírez","Golosinas Lidia","Lucas Mendoza","Mi Pollo (Sara)","Lety (Campo)","M&M","Sara","Valery","Comercial Cindy","Castro","Nicol","Barrera","El Almendro","Bessy Murillo (Madera)","Mayra (Mamá de Bessy)","Felicita","Chávez","Enamorado (Campo)"],
   "Colorado Barra":["Génesis (Senia)","Delmi (Mexicana)","Sandra (Pastora)","Xiomara"],
   "La Florida":["Ana Díaz (Hacienda)"],
+  "Cayo Venado":["Los Coquitos (Juan López)"],
   "Sombra Verde":["María","Josselyn","Jovel"],
   "Campo Nuevo":["Mareylis"],
   "Guachipilín":["Golosinas Familiar Felipa","Bonilla (Tres pisos)","Kevin (Vanessa y Carmen)"],
   "Tarraloza":["El Paraíso","Dubón (Olvin)","Lesly","Meléndez","Zoila","Yadira (Maira)"],
-  "Cerritos":["Alejandro","La Fortaleza"],
-  "El Verdún":["Ortiz","Dos Hermanos","Las Dos Hermanas (Escuela)","(Miskita)","Márquez","Katy (Madera Verde)","Nicole","Glendy (Última)"],
+  "Cerritos":["Alejandro","La Fortaleza","Carrazco"],
+  "El Verdún":["Ortiz","Dos Hermanos","Márquez","Las Dos Hermanas (Escuela)","Yeilyn","Katy (Madera Verde)","Nicole","Glendy (Última)"],
   "San José":["Jackeline (Doris)","Evelin (Virginia)","La Guata","Las Gemelas (Escuela)","Perla","Yeylin","Dolores","La Bendición (Iglesia)","Camila (Nayeli)","Anita (Comedor)","Zamira (Madera)"],
   "La Colmena":["Las Dos Hermanas (F. iglesia)","Maryuri","La Colmenita","Eben-Ezer"],
   "Esparta":["Comedor Nancy","Arroz Chino","Pollolandia","Samantha","Gladys","El Vaquero","Bessy (F. iglesia)","La Bendición (F. Salón)","J&M (D. Salón)","MS La Hacienda","El Jordán","Lilian (Antes de Guadalupe)","La Económica","Paty","Mi Esperanza (F. La Granja)","Farmacia Mejía","D&G"],
@@ -547,25 +548,25 @@ const baseDatos = {
 // ── SECTIONS ──
 const SECCIONES = [
   { id:"pan",        nombre:"Pan",        emoji:"🫓", bgVar:"--pan-bg", bdVar:"--pan-bd", hdVar:"--pan-hd",
-    productos:[{n:"Casera",p:16},{n:"Larga",p:15},{n:"Arroz 10U",p:25},{n:"Arroz 6U",p:15},{n:"Arroz 4U",p:10},
-               {n:"Gigante",p:25},{n:"Q Especial",p:20},{n:"Quequito",p:8},
-               {n:"Marquesote",p:40},{n:"Panqueque",p:30},{n:"Mini queque",p:15}] },
+    productos:[{n:"Casera 6U",p:20},{n:"Larga 6U",p:20},{n:"Arroz 10U",p:35},{n:"Arroz 6U",p:20},{n:"Arroz 4U",p:15},
+               {n:"Gigante",p:35},{n:"Quequito 6U",p:26},{n:"Quequito 2U",p:10},
+               {n:"Marquesote",p:60},{n:"Panqueque",p:35},{n:"Mini queque",p:21}] },
   { id:"tostado",    nombre:"Tostado",    emoji:"🍪", bgVar:"--tos-bg", bdVar:"--tos-bd", hdVar:"--tos-hd",
-    productos:[{n:"Lengua",p:15},{n:"Alpora",p:20},{n:"M Bandeja",p:25},{n:"M Suelta",p:16},
-               {n:"Margarita",p:10},{n:"Elena",p:10},{n:"Polvorón",p:10},
-               {n:"Maíz",p:10},{n:"Maicena",p:10},{n:"Rosquita",p:10}] },
-  { id:"moldes",     nombre:"Masa Suave", emoji:"🍞", bgVar:"--mol-bg", bdVar:"--mol-bd", hdVar:"--mol-hd",
-    productos:[{n:"Simple 6U",p:15},{n:"Simple 12U",p:30},{n:"M Económico",p:33},
-               {n:"M Leche",p:44},{n:"M Integral",p:44},
-               {n:"Hamburguesa 12U",p:90},{n:"Hamburguesa 8U",p:65},{n:"Bollito",p:25},{n:"P Ajo",p:25}] },
+    productos:[{n:"Lengua 6U",p:20},{n:"Alpora 30U",p:25},{n:"Margarita 18U",p:32},{n:"Margarita 12U",p:20},
+               {n:"Margarita 6U",p:12},{n:"Elena 6U",p:12},{n:"Polvorón 6U",p:12},
+               {n:"Maíz 6U",p:12},{n:"Maicena 6U",p:12},{n:"Rosquita 6U",p:12}] },
+  { id:"moldes",     nombre:"Bollería", emoji:"🍞", bgVar:"--mol-bg", bdVar:"--mol-bd", hdVar:"--mol-hd",
+    productos:[{n:"Simple 12U",p:40},{n:"Simple 6U",p:20},{n:"M Económico",p:45},
+               {n:"M Leche",p:55},{n:"M Integral",p:55},
+               {n:"Hamburguesa 12U",p:115},{n:"Hamburguesa 8U",p:99},{n:"Bollito 16U",p:36},{n:"P Ajo",p:30}] },
   { id:"reposteria", nombre:"Repostería", emoji:"🎂", bgVar:"--rep-bg", bdVar:"--rep-bd", hdVar:"--rep-hd",
-    productos:[{n:"Biscocho",p:30},{n:"Q Lustre",p:30},{n:"Relámpago",p:65},{n:"Punto Piña",p:15},
-               {n:"Torta Piña",p:100},{n:"Pastelito Piña",p:80},{n:"Cono",p:90},{n:"Flauta",p:100},
-               {n:"Quesadilla",p:100},{n:"Quesadilla 2U",p:15},
+    productos:[{n:"Bizcocho 18U",p:40},{n:"Q Lustre 6U",p:40},{n:"Relámpago 5U",p:90},{n:"Punto Piña 4U",p:25},
+               {n:"Torta Piña 10U",p:120},{n:"Pastelito Piña 8U",p:90},{n:"Cono 10U",p:100},{n:"Flauta 10U",p:110},
+               {n:"Quesadilla 10U",p:120},{n:"Quesadilla 2U",p:20},
                {n:"Magdalena",p:100},{n:"M Magdalena",p:25},
-               {n:"Encanelado",p:84},{n:"Roles",p:15},{n:"Pastel P",p:120},{n:"Pastel G",p:190}] },
+               {n:"Encanelado 4U",p:100},{n:"Encanelado 2U",p:30},{n:"Pastel P",p:150},{n:"Pastel G",p:260}] },
   { id:"otros",      nombre:"Otros",      emoji:"☕", bgVar:"--otr-bg", bdVar:"--otr-bd", hdVar:"--otr-hd",
-    productos:[{n:"Pizza",p:25},{n:"Café",p:100}] }
+    productos:[{n:"Pizza",p:40},{n:"Café",p:110}] }
 ];
 
 const extraCounters = {};
